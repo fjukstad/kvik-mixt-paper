@@ -1,16 +1,52 @@
-\section*{Background}
-\section*{Methods}
-\subsection*{My Subsection}
+% TODO: 
+% - Draw up a sketch of what is MIxT and what is Kvik
+% - What interfaces does Kvik provide? 
+% - Spark, look at their papers and the app / abstractions. 
+% - What are the ops done most frequent? Get data from KEGG/Msigdb etc? 
+% - Scrap hard line breaks for LA (soft lines instead) 
+% - add pdf to git. 
 
-% \begin{figure*}[t!]
-%   \centering
-%   \includegraphics[height=3.5in]{placeholder.eps}
-%   \caption{Example two-column figure. To insert a single column figure, remove the * in the two figure tags. }
-%   \label{fig:interface}
-% \end{figure*}
+
+
+
+\section*{Background}
+% Snakk litt om de forskjellige systemene i hver disciplin
+% --> Standing on the shoulders of giants 
+% Analysis frameworks: R, Bioconductor, Galaxy
+% Visualization: Cytoscape, BioJS, D3
+% Databases: MSiGDB, KEGG, GeneCards, PubMed
+% Parallelized and distributed computation: Hadoop, Spark, Kubernets, Azure
+Analysis frameworks: Bioconductor in R, Python.
+Visualization: Cytoscpape, D3, BioJS.
+Databases: MSigDB, KEGG, PubMed.
+Parallel and distributed: Hadoop, Spark, Kubernetes, Azure. 
+
+Data wrangling and analysis done in R or other languages.
+Visualization and presentation of final datasets by external tools.
+Manual database lookup is tedious and gets out of date.
+
+Related work: OpenCPU, biogo, renjin, 
+
+\emph{The big issue: There is no link between analysis and final presentation} 
+
+\section*{Methods}
+Collection of packages in the Go programming language for building data
+exploration applications.  Interfaces with popular online databases such as
+MSigDB and KEGG.  Provides an interface to the R programming language.
+Typically used to build web apps, but commandline tools are also possible!
 
 
 \section*{Results and Discussion}
+MIxT. 
+Interactive web application for exploring WGCNA modules from blood and biopsy.
+Integrate results with known genesets and online databases.
+Docker containers for reproducibility and portability.
+
+Data analysis: R package  + Kvik = R in the browser. 
+Visualization: D3, SigmaJS, R Plots 
+
+How can we improve Kvik and its features: R user input sanitation, security, 
+
 
 \section*{Conclusions}
-
+Sum it all up. 
