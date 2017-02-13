@@ -1,0 +1,4 @@
+cmd: 'make'
+name: 'make'
+sh: true
+
