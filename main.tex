@@ -35,7 +35,7 @@
 % 4. Requirements mener jeg er:
 %    i. "JavaScript + R"
 %   ii. Easy to add new functionality (viz or stat)
-%  iii. Short reponse times 
+%  iii. Short reponse times
 %   iv. Reference databases: up-to-date with provenance and space effecient storage
 %    v. Integration with (big data/ distributed) data analysis and exploration engines
 %   vi. Noe jeg ikke har fått med meg?
@@ -58,16 +58,25 @@ R (Statistical analysis)  Other engines (scale/speed)
 %  iii. Performance evaluation
 
 
-In the past decade the generation of biological datasets has been unprecedented, and the famous "\$1000k genome, \$1M analysis"\cite{} has become more apparent. To decrease both time and cost of analysing biological data, there is now a growing number of analysis framework in various programming languages. \cite{}
+In the past decade the generation of biological datasets has been unprecedented,
+and the famous "\$1000k genome, \$1M analysis"\cite{} has become more apparent.
+To decrease both time and cost of analysing biological data, there is now a
+growing number of analysis framework in various programming languages. \cite{}
 
-In R, there are popular package repositories such as CRAN \url{cran.r-project.org} or Bioconductor \url{bioconductor.org} where developers can share software packages and keep them up-to-date. In these repositories researchers can find software for analysing high-throughput genomic data in one environment. Analysing includes both pre-processing, e.g. cleaning, removing outliers, and analysing it with know statistical methods.
+In R, there are popular package repositories such as CRAN
+\url{cran.r-project.org} or Bioconductor \url{bioconductor.org} where developers
+can share software packages and keep them up-to-date. In these repositories
+researchers can find software for analysing high-throughput genomic data in one
+environment. Analysing includes both pre-processing, e.g. cleaning, removing
+outliers, and analysing it with know statistical methods.
 
-Especially large datasets in biology require sophisticated methods for visualizing and communicating the data. In
+Especially large datasets in biology require sophisticated methods for
+visualizing and communicating the data. In
 
 
 % The big issue: There is no link between analysis and final presentation
 
-\subsection{Motivating example}
+\subsection*{Motivating example}
 
 % MIxT.
 % Interactive web application for exploring WGCNA modules from blood and biopsy.
@@ -77,7 +86,13 @@ Especially large datasets in biology require sophisticated methods for visualizi
 % Visualization: D3, SigmaJS, R Plots
 % How can we improve Kvik and its features: R user input sanitation, security,
 
-We motivate the need for Kvik by describing the Kvik-MIxT application for... We describe its functionality, implementation (uten fokus på Kvik) and performance requirements. OG ANDRE VIKTIGE TING (SECURITY, ETC). Then we describe how MIxT is designed to seperate concerns and allow for a layered implementation. We use this to motivate the need and opportunities to abstract away common functionality of these type of applications. 
+We motivate the need for Kvik by describing the Kvik-MIxT application for... We
+describe its functionality, implementation (uten fokus på Kvik) and performance
+requirements. OG ANDRE VIKTIGE TING (SECURITY, ETC). Then we describe how MIxT
+is designed to seperate concerns and allow for a layered implementation. We use
+this to motivate the need and opportunities to abstract away common
+functionality of these type of applications.
+
 % Gir dette mening?
 
 \section*{Methods}
@@ -86,10 +101,21 @@ We motivate the need for Kvik by describing the Kvik-MIxT application for... We 
 % MSigDB and KEGG.  Provides an interface to the R programming language.
 % Typically used to build web apps, but commandline tools are also possible!
 
+\subsection*{Statistical analyses}
+Describe how we've designed the interface with R: Build an R-package and call
+functions from it, we provide four different output formats to the user
+ (json, csv, pdf, png),  as well as four different http endpoints (call, get and
+rpc).
+
+\subsection*{Databases}
+Describe the interface to the databases and what we use it for. Could be
+interesting to talk about provenance/caching.
+
 
 
 \section*{Results and Discussion}
-
+Describe the MIxT application. Also talk about how our R interface scales and
+what makes it better than opencpu/renji.
 
 
 
