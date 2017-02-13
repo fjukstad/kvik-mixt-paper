@@ -101,22 +101,62 @@ functionality of these type of applications.
 % MSigDB and KEGG.  Provides an interface to the R programming language.
 % Typically used to build web apps, but commandline tools are also possible!
 
+% LAB: denne bør begynne med Architecture/overview: ASCII figuren fra Intro, kanskje litt rafinert:
+%  * Interface mot JavaScript er en mer generell REST API, så kan være cli eller noe annet som bruker den.
+%  * Reference databases er kanskje en egen "ting" i Kvik. Dvs abstraksjoner som gjør det enkelt å implementere disse for MSigDB, KEGG. Dvs de tar seg av caching og provenance.
+%
+% Her passer det også å vise hvordan MIxT mappes til figuren. 
+
+% LAB: jeg tenker på dette som en slags execution engine, og at dette er laget mellom R og JS. 
+% Hva slags interface exporter den til JS? Og hvorfor?
+% Hva gjør den? Og hvorfor kan ikke dette gjøres i JS eller R?
+% Hva er det som er generelt? Og hva er app spesifikt?
+% Hva er gjort for å få god performance?
+% Andre ting denne tar seg av?
+% Hvorfor, og hvordan, det er lett å legge til ny funksjonalitet
 \subsection*{Statistical analyses}
 Describe how we've designed the interface with R: Build an R-package and call
 functions from it, we provide four different output formats to the user
  (json, csv, pdf, png),  as well as four different http endpoints (call, get and
 rpc).
 
+% LAB: jeg tenker på dette som en måte å implementere støtte for ulike refDBs. Dvs den tilbyr abstraksjoner/ data strukturer/ wrappere/ metoder for:
+% * Hente data fra online DBs (feilhåndtering, etc)
+% * Caching av data hentet fra online DBs
+% * Provenance logging / managemnt for data fra online DBs
+% * En måte å effektivt lagre disse DB på, både for god performance og lite space
+% * En måte å gjenbruke kode (og data) for en DB som feks KEGG
+% * Eventuelt andre ting denne tar seg av?
+%
+% I tillegg:
+% Hvorfor ikke gjøre dette i JS eller R?
+% Hvordan implementerer man KEGG etc?
 \subsection*{Databases}
 Describe the interface to the databases and what we use it for. Could be
 interesting to talk about provenance/caching.
 
+% LAB: her er stedet for alle Go bibliotek og andre lavnivå detlajer
+\subsection*{Implementation}
 
+% LAB: Litt usikker på om dette hører til i Results eller Methods
+\subsection*{Applications}
+
+% LAB: kort beskrivelse av hva alle apps gjør
+
+% LAB: Figur som viser hva som er felles og ulikt for alle appene. Her bør noe være likt ellers har vi bare 3-4 applikasjoner :)
+
+% LAB: mer detaljert beskrivelse av hvordan hver app er implementert med Kvik
 
 \section*{Results and Discussion}
 Describe the MIxT application. Also talk about how our R interface scales and
 what makes it better than opencpu/renji.
 
-
+% LAB: Questions:
+% 1. Er execution engine raskere en andre alternativer? Svar: måle mot andre alternativer.
+% 2. Gir ref DB caching bedre performance? Svar: som i master thesis.
+% 3. Har provenance mangement høy overhead (response tid & storage)? Svar: måle disse.
+% 4. Er det lett å legge til ny funksjonalitet (viz & stat & optimizations)? Svar: beskrive hvordan ikke-MIxT apps ble laget
+% 5. Er Kvik apps raske? Svar: performance analyze av MiXT, inkl. bottlenecks, skalerbarhet, etc.
+% 6. Er Kvik apps enkle å utvikle/vedlikeholde? Svar: beskrive hvordan MiXT ble laget (fra mess til den vakre nåværende kodebasen).
 
 \section*{Conclusions}
