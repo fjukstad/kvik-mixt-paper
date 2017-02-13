@@ -25,6 +25,39 @@
 %
 % Related work: OpenCPU, biogo, renjin,
 
+% LAB: overodnet, så er det en grei intro i Kvik Framework, så den kan kanskje modifiseres hvis ikke det er en helt annen vinkling i dette paperet
+
+% LAB: forlag til struktur i Intro:
+%
+% 1. Jeg ville begynt med å beskrive "explorative data analysis" for å tolke eksperiment data. Motiver behovet for visualisering + statistisk analyse + referenase databaser. Jeg tror §1 og §2 fra "Kvik Framework.docx" kan brukes som utgangs punkt (men med System Epidemiology fjernet). Konklusjon: det er stort behov for slike verktøy.
+% 2. Deretter ville jeg beskrevet behovet for å lage spesialiserte data exploration verktøy. Jeg tror "Such special purpose..." § fra Framwork kan omskrives. Konklusjon: det er behov for å raskt kunne skrive exploration apps prototyper. Reviwerene av app note likte dette poenget, og i mitt hode er dette hoved målet/bidraget i dette paperet.
+% 3. Jeg er usikker på om vi skal argumentere for at det ofte blir behov for å skalere/ optimalisere/ deploye de prototype appene. Det passer kanskje godt med bidraget i dette paperet?
+% 4. Requirements mener jeg er:
+%    i. "JavaScript + R"
+%   ii. Easy to add new functionality (viz or stat)
+%  iii. Short reponse times 
+%   iv. Reference databases: up-to-date with provenance and space effecient storage
+%    v. Integration with (big data/ distributed) data analysis and exploration engines
+%   vi. Noe jeg ikke har fått med meg?
+% 5. Deretter hvorfor previous work ikke løser alle 5
+% 6. Hva Kvik er:
+%    i. Lag mellom viz & stat & DBs (merk usikker på hvor input/output data passer inn)
+%
+           JavaScript (Visualization)
+                       ||
+Inpup/output data? == KVIK == Reference databases
+                    //   \\
+R (Statistical analysis)  Other engines (scale/speed)
+
+%   ii. Abstraksjoner/ interfaces som gjør det raskt å protype exploration apps
+%iii/v. En slags execution engine som router requests til rett sted. Dvs den tilbyr funksjonalitet i seg selv (ikke sikker på hva dette er :)
+%   iv. Caching, logging, etc. Dette er en viktig bit vil jeg tro, særlig når ref DBs begynner å bli veldig store.
+% 7. Contributions:
+%    i. Approach for vis + stat + DB m. enkel implementering
+%   ii. Demonstrasjon ved å ha implementert 3-4 apps
+%  iii. Performance evaluation
+
+
 In the past decade the generation of biological datasets has been unprecedented, and the famous "\$1000k genome, \$1M analysis"\cite{} has become more apparent. To decrease both time and cost of analysing biological data, there is now a growing number of analysis framework in various programming languages. \cite{}
 
 In R, there are popular package repositories such as CRAN \url{cran.r-project.org} or Bioconductor \url{bioconductor.org} where developers can share software packages and keep them up-to-date. In these repositories researchers can find software for analysing high-throughput genomic data in one environment. Analysing includes both pre-processing, e.g. cleaning, removing outliers, and analysing it with know statistical methods.
