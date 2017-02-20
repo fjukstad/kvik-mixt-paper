@@ -12,7 +12,7 @@
 % Analysis frameworks: R, Bioconductor, Galaxy
 % Visualization: Cytoscape, BioJS, D3
 % Databases: MSiGDB, KEGG, GeneCards, PubMed
-% Reprodicibility: Docker, R Packages, Kube
+% Reproducibility: Docker, R Packages, Kube
 % Parallelized and distributed computation: Hadoop, Spark, Kubernets, Azure
 
 % Analysis frameworks: Bioconductor in R, Python.
@@ -25,25 +25,43 @@
 %
 % Related work: OpenCPU, biogo, renjin,
 
-% LAB: overodnet, så er det en grei intro i Kvik Framework, så den kan kanskje modifiseres hvis ikke det er en helt annen vinkling i dette paperet
+% LAB: overodnet, så er det en grei intro i Kvik Framework, så den kan kanskje
+% modifiseres hvis ikke det er en helt annen vinkling i dette paperet
 
 % LAB: forlag til struktur i Intro:
 %
 % 1. Jeg ville begynt med å beskrive "explorative data analysis" for å tolke
 %  eksperiment data. Motiver behovet for visualisering + statistisk analyse +
 %  referenase databaser. Jeg tror §1 og §2 fra "Kvik Framework.docx" kan brukes
-%  som utgangs punkt (men med System Epidemiology fjernet). Konklusjon: det er
+%  som utgangspunkt (men med System Epidemiology fjernet). Konklusjon: det er
 %  stort behov for slike verktøy.
+%
+% BF: Tror det her egentlig er mer snakk om tolkning av resultater enn
+% 'explorative data analysis'. Hvertfall i mitt hode er 'explorative data
+% analysis' noe man gjør i R, man laster inn data, prøver ut forskjellige typer
+% analyser og ser hvordan ting ser ut. Dette er ikke nødvendigvis det vi trenger
+% Kvik til. Kvik kan brukes når man allerede har plugget inn dataen sin, og
+% prøvd ut noen ting før man vil dele det med andre. 
 
 % 2. Deretter ville jeg beskrevet behovet for å lage spesialiserte data
 %  exploration verktøy. Jeg tror "Such special purpose..." § fra Framwork kan
 %  omskrives. Konklusjon: det er behov for å raskt kunne skrive exploration apps
 %  prototyper. Reviwerene av app note likte dette poenget, og i mitt hode er
 %  dette hoved målet/bidraget i dette paperet.
+%
+% BF: Enig. Man kan jo egentlig tenke litt på det som en iPython Notebook / R
+% Notebook, bare som er skikkelig verktøy. 
+% BF: Et poeng med måten jeg har valgt å bygge Kvik er at man kan skrive seg en
+% R-pakke som man gjør når man gjør analyser, og så kan man ta den med seg inn i
+% nettleseren for å vise fram det man har gjort + koble sammen med andre greier. 
 
 % 3. Jeg er usikker på om vi skal argumentere for at det ofte blir behov for å
 %   skalere/ optimalisere/ deploye de prototype appene. Det passer kanskje godt
 %   med bidraget i dette paperet?
+%
+% BF: Tja, hvertfall at performance er viktig når det kommer til større analyser
+% er jo et poeng. Vi kan jo la det ligge litt og se hva vi får ut. Når det
+% kommer til hva som er gjort kan vi jo si at kvik er raskere enn opencpu. 
 
 % 4. Requirements mener jeg er:
 %    i. "JavaScript + R"
@@ -53,8 +71,15 @@
 %    v. Integration with (big data/ distributed) data analysis and exploration engines
 %   vi. Noe jeg ikke har fått med meg?
 
-% 5. Deretter hvorfor previous work ikke løser alle 5
+% BF: 
+%   i: AnyLang + R 
+%   ii. Mulighet for å installere egne/andres R-pakker 
+%   iii. Fast (short response times) 
+%   iv: up-to-date reference databases
+%   v: 
+    
 
+% 5. Deretter hvorfor previous work ikke løser alle 5
 % 6. Hva Kvik er:
 %    i. Lag mellom viz & stat & DBs (merk usikker på hvor input/output data passer inn)
 %
@@ -66,29 +91,96 @@
 
 
 %  ii. Abstraksjoner/ interfaces som gjør det raskt å protype exploration apps
-%  iii/v. En slags execution engine som router requests til rett sted. Dvs den tilbyr funksjonalitet i seg selv (ikke sikker på hva dette er :)
-%  iv. Caching, logging, etc. Dette er en viktig bit vil jeg tro, særlig når ref DBs begynner å bli veldig store.
+%  iii/v. En slags execution engine som router requests til rett sted. Dvs den
+%  tilbyr funksjonalitet i seg selv (ikke sikker på hva dette er :) 
+% BF: Denne må
+%  du fortelle meg hva er, skjønner ikke helt her. 
+
+%  iv. Caching, logging, etc. Dette er en viktig bit vil jeg tro, særlig når ref
+%  DBs begynner å bli veldig store.
+% BF: Yes, det som er på plass nå er caching av alt av DB requests (om jeg ikke
+%   husker feil) 
 
 % 7. Contributions:
 %  i. Approach for vis + stat + DB m. enkel implementering
 %  ii. Demonstrasjon ved å ha implementert 3-4 apps
 %  iii. Performance evaluation
 
-
 In the past decade the generation of biological datasets has been unprecedented,
 and the famous "\$1000k genome, \$1M analysis"\cite{} has become more apparent.
 To decrease both time and cost of analysing biological data, there is now a
-growing number of analysis framework in various programming languages. \cite{}
+growing number of analysis framework in various programming languages.\cite{}
 
 In R, there are popular package repositories such as CRAN
 \url{cran.r-project.org} or Bioconductor \url{bioconductor.org} where developers
 can share software packages and keep them up-to-date. In these repositories
 researchers can find software for analysing high-throughput genomic data in one
 environment. Analysing includes both pre-processing, e.g. cleaning, removing
-outliers, and analysing it with know statistical methods.
+outliers, and analysing it with known statistical methods.
+
+Interpreting the analysis results require integration of known biology, either
+from biological databases such as MSigDB\cite{} or KEGG\cite{}, or through
+scientific publications from databases such as PubMed\cite{}. Performing manual
+lookup into these databases is often tedious and error-prone, making it
+necessary to automate the task. % ikke så bra avsnitt dette... 
 
 Especially large datasets in biology require sophisticated methods for
-visualizing and communicating the data. In
+visualizing and interpreting the results, as well as communicating and sharing
+the findings.
+
+\subsection*{Data analysis and presentation} 
+In this section we describe our typical approach for doing analysing gene
+expression data in systems biology, and how it shaped the design of Kvik's
+R interface. 
+
+We typically start off with a messy dataset that needs to go through
+several stages of clean-up and preprocessing before we can analyze it. Then we
+typically develop some simple visualizations that can highlight simple patterns
+in the data. After this quick dirty data exploration we start to apply more
+advanced statistical methods to look for more intricate patterns in the data.
+After this analysis we often end up with genes or lists of genes of interest. 
+
+In terms of data analysis code, the preprocessing steps typically consist of
+one or more R scripts that we knit \cite{knitr} into PDF reports that we can
+revisit later. From these scripts we end up with analysis-ready datasets that
+can be shared within the group. The remaining downstream analysis often starts
+out in scripts, that are built into R packages with analysis code that can be
+shared between researchers. 
+
+With this process in mind, we designed the interface to the R programming
+language in Kvik. We want to make it possible to call any function from an R
+package and return its results either as plain text, such as comma-separated
+tables, or binaries such as images. Enforcing that R code is built into R
+packages ensures that the analysis code can be used by power users through an
+ordinary R session or in the data exploration application itself. 
+
+
+\subsection*{Databases} 
+Similar to how our analysis process shaped the R interface, it also defined how
+we want to build interfaces to online databases. 
+
+In its initial state we wanted an interface to interactively query databases
+such as KEGG or MSigDB for up-to-date information about genes, gene sets or
+biological pathways. This interface should be available within the data
+exploration applications to provide valuable metadata for the researchers
+exploring results.  
+
+\subsubsection*{Requirements} 
+\begin{enumerate}
+    \item A language-independent approach for integrating statistical software,
+    such as R, directly in interactive data exploration applications.
+    \item Up-to-date interfaces to online databases providing meta-data for
+    understanding results from statistical analyses. 
+\end{enumerate} 
+
+\subsubsection*{Contributions} 
+Our contributions are: 
+\begin{enumerate}
+\item An approach for developing data exploration applications in systems
+biology that combine statistical analyses with online databases.  
+\item A demonstration of its viability through N different applications. 
+\item Performance evaluation of its central data analysis component. 
+\end{enumerate} 
 
 
 % The big issue: There is no link between analysis and final presentation
@@ -103,12 +195,79 @@ visualizing and communicating the data. In
 % Visualization: D3, SigmaJS, R Plots
 % How can we improve Kvik and its features: R user input sanitation, security,
 
-We motivate the need for Kvik by describing the Kvik-MIxT application for... We
-describe its functionality, implementation (uten fokus på Kvik) and performance
-requirements. OG ANDRE VIKTIGE TING (SECURITY, ETC). Then we describe how MIxT
-is designed to seperate concerns and allow for a layered implementation. We use
+% Data analyse og livet: 
+% Det som oftest gjøres er at man skriver et R-scriot
+
+We motivate the need for Kvik by describing the MIxT application for exploring
+and comparing transcriptional profiles from blood and tumor samples. We
+describe its functionality, implementation 
+% (uten fokus på Kvik)
+and performance requirements.
+%OG ANDRE VIKTIGE TING (SECURITY, ETC). 
+Then we describe how MIxT
+is designed to separate concerns and allow for a layered implementation. We use
 this to motivate the need and opportunities to abstract away common
 functionality of these type of applications.
+
+% Det kan godt være at vi bør flytte denne et sted, men her beskriver vi hvordan 
+% MIxT-appen fungerer. 
+\subsection*{Matched Interaction Across Tissues (MIxT)}
+We have built a system to identify genes and pathways in the primary tumor that
+are tightly linked to genes and pathways in the patient systemic
+response\cite{dumeaux2017}. MIxT blood-tumor is an open-source web application
+for exploring and link molecular processes expressed in each tissue.  
+
+For the web application we defined six analysis tasks: 
+\textbf{Explore co-expression relationships between genes}. Create an
+interactive network visualization that visualizes each gene as a node and
+significan co-expression relationship as an edge. 
+
+\textbf{Explore co-expression gene sets in tumor and blood tissue}.
+Visualize gene expression together with clinicopathological variables associated
+with each module. Include results of gene set analyses that describe the
+underlying biological functions of the modules. 
+
+\textbf{A3}: Explore relationships between modules from each tissue.
+Visualize how modules from each tissue are related using two different
+metrics, ranksum and gene overlap. Also enable subtype selection,
+enabling users to investigate relationships within a particular subtype. 
+
+\textbf{A4}: Explore relationships between clinical variables and modules.
+Visualize significant associations between module expression and
+clinical variables.
+
+\textbf{A5}: Explore association between user-submitted gene lists and computed
+modules. Allow users to upload own gene lists and have the application compute
+modules which the gene list is enriched for. 
+
+\textbf{A6}: Search for genes or gene lists of intrest. Allow users to search
+for specific genes or genelists and show 
+
+% Vi kan godt kutte én av figurene under, f.eks c eller d som er veldig lik. 
+\begin{figure*}[!t]
+\centering
+\subfloat[A1: Network visualization of gene
+co-expression]{\includegraphics[width=2.7in]{figures/network.png}%
+\label{fig_first_case}}
+\hfil
+\subfloat[A2: Module visualization.]{\includegraphics[width=2.5in]{figures/module.png}%
+\label{fig_second_case}}
+\hfil
+\centering
+\subfloat[A3: Visualization of ranksum.]{\includegraphics[width=2.5in]{figures/tissue-comp.png}%
+\label{fig_first_case}}
+\hfil
+\subfloat[A4: Visualization of significant clinical variable
+association]{\includegraphics[width=2.8in]{figures/clinical-comp.png}%
+\label{fig_second_case}}
+\caption{Screenshots of the user interface in four of the six analysis tasks.
+Note that we combine visualization frameworks for both JavaScript and R to
+generate the visualizations. Specifically,
+sigmajs (a, \protect\url{sigmajs.org}), ggplot2(b, \protect\url{ggplot2.org}), and 
+D3 (c and d, \protect\url{d3js.org})} 
+\label{fig_sim}
+\end{figure*}
+
 
 % Gir dette mening?
 
