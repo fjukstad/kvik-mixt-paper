@@ -128,17 +128,18 @@ Especially large datasets in biology require sophisticated methods for
 visualizing and interpreting the results, as well as communicating and sharing
 the findings.
 
-\subsection*{Data analysis and presentation} 
+\subsection*{Data analysis} 
 In this section we describe our typical approach for doing analysing gene
 expression data in systems biology, and how it shaped the design of Kvik's
 R interface. 
 
 We typically start off with a messy dataset that needs to go through
-several stages of clean-up and preprocessing before we can analyze it. Then we
-typically develop some simple visualizations that can highlight simple patterns
-in the data. After this quick dirty data exploration we start to apply more
-advanced statistical methods to look for more intricate patterns in the data.
-After this analysis we often end up with genes or lists of genes of interest. 
+several stages of clean-up and preprocessing before we can analyze it. After the
+preprocessing we typically develop some simple visualizations that can highlight
+simple patterns in the data. After this quick dirty data exploration we start to
+apply more advanced statistical methods to look for more intricate patterns in
+the data.  After this analysis we often end up with genes or lists of genes of
+interest. 
 
 In terms of data analysis code, the preprocessing steps typically consist of
 one or more R scripts that we knit \cite{knitr} into PDF reports that we can
@@ -164,6 +165,29 @@ such as KEGG or MSigDB for up-to-date information about genes, gene sets or
 biological pathways. This interface should be available within the data
 exploration applications to provide valuable metadata for the researchers
 exploring results.  
+
+\subsection*{Building applications} 
+With Kvik there are multiple aveues developers can take to build data
+exploration applications. They can choose to develop a single tiered
+applications with bindings to data analysis and databases, or
+multitier architectures where data analysis can be moved to powerful compute
+clusters to improve performance. In this paper we discuss how to develop
+applications that follow a multitier architecture. 
+
+In Kvik we use R packages as the fundamental building block for data exploration
+applications. They provide an interface to data and analyses, and especially in
+the field of systems biology, the R programming language provide the largest
+collection of data analysis packages. % litt vagt kanskje? 
+We discovered that the most sensible way to build applications on top of our
+existing code base was to build a system that could interface with our analysis
+code directly. 
+
+Applications built with Kvik start out as R packages where the functions provide
+interface between the data and 
+
+for the application. 
+
+
 
 \subsubsection*{Requirements} 
 \begin{enumerate}
@@ -215,9 +239,10 @@ functionality of these type of applications.
 We have built a system to identify genes and pathways in the primary tumor that
 are tightly linked to genes and pathways in the patient systemic
 response\cite{dumeaux2017}. MIxT blood-tumor is an open-source web application
-for exploring and link molecular processes expressed in each tissue.  
+for exploring the molecular processes expressed in each tissue.  
 
 For the web application we defined six analysis tasks: 
+
 \textbf{Explore co-expression relationships between genes}. Create an
 interactive network visualization that visualizes each gene as a node and
 significan co-expression relationship as an edge. 
@@ -227,20 +252,20 @@ Visualize gene expression together with clinicopathological variables associated
 with each module. Include results of gene set analyses that describe the
 underlying biological functions of the modules. 
 
-\textbf{A3}: Explore relationships between modules from each tissue.
+\textbf{Explore relationships between modules from each tissue.}
 Visualize how modules from each tissue are related using two different
 metrics, ranksum and gene overlap. Also enable subtype selection,
 enabling users to investigate relationships within a particular subtype. 
 
-\textbf{A4}: Explore relationships between clinical variables and modules.
+\textbf{Explore relationships between clinical variables and modules.}
 Visualize significant associations between module expression and
 clinical variables.
 
-\textbf{A5}: Explore association between user-submitted gene lists and computed
-modules. Allow users to upload own gene lists and have the application compute
+\textbf{Explore association between user-submitted gene lists and computed
+modules.} Allow users to upload own gene lists and have the application compute
 modules which the gene list is enriched for. 
 
-\textbf{A6}: Search for genes or gene lists of intrest. Allow users to search
+\textbf{Search for genes or gene lists of intrest.} Allow users to search
 for specific genes or genelists and show 
 
 % Vi kan godt kutte én av figurene under, f.eks c eller d som er veldig lik. 
@@ -267,6 +292,8 @@ sigmajs (a, \protect\url{sigmajs.org}), ggplot2(b, \protect\url{ggplot2.org}), a
 D3 (c and d, \protect\url{d3js.org})} 
 \label{fig_sim}
 \end{figure*}
+
+
 
 
 % Gir dette mening?
