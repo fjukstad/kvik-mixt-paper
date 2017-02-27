@@ -7,22 +7,11 @@
 % - add pdf to git.
 
 \section*{Background}
-% Snakk litt om de forskjellige systemene i hver disciplin
-% --> Standing on the shoulders of giants
-% Analysis frameworks: R, Bioconductor, Galaxy
-% Visualization: Cytoscape, BioJS, D3
-% Databases: MSiGDB, KEGG, GeneCards, PubMed
-% Reproducibility: Docker, R Packages, Kube
-% Parallelized and distributed computation: Hadoop, Spark, Kubernets, Azure
-
-% Analysis frameworks: Bioconductor in R, Python.
-% Visualization: Cytoscpape, D3, BioJS.
-% Databases: MSigDB, KEGG, PubMed.
-%
 % Data wrangling and analysis done in R or other languages.
 % Visualization and presentation of final datasets by external tools.
 % Manual database lookup is tedious and gets out of date.
 %
+
 % Related work: OpenCPU, biogo, renjin,
 
 % LAB: overodnet, så er det en grei intro i Kvik Framework, så den kan kanskje
@@ -55,13 +44,6 @@
 % R-pakke som man gjør når man gjør analyser, og så kan man ta den med seg inn i
 % nettleseren for å vise fram det man har gjort + koble sammen med andre greier. 
 
-% 3. Jeg er usikker på om vi skal argumentere for at det ofte blir behov for å
-%   skalere/ optimalisere/ deploye de prototype appene. Det passer kanskje godt
-%   med bidraget i dette paperet?
-%
-% BF: Tja, hvertfall at performance er viktig når det kommer til større analyser
-% er jo et poeng. Vi kan jo la det ligge litt og se hva vi får ut. Når det
-% kommer til hva som er gjort kan vi jo si at kvik er raskere enn opencpu. 
 
 % 4. Requirements mener jeg er:
 %    i. "JavaScript + R"
@@ -73,11 +55,11 @@
 
 % BF: 
 %   i: AnyLang + R 
-%   ii. Mulighet for å installere egne/andres R-pakker 
+%   ii. Mulighet for å installere egne/andres R-pakker (det kan ikke den
+%   renjin-greia) 
 %   iii. Fast (short response times) 
 %   iv: up-to-date reference databases
 %   v: 
-    
 
 % 5. Deretter hvorfor previous work ikke løser alle 5
 % 6. Hva Kvik er:
@@ -128,6 +110,65 @@ Especially large datasets in biology require sophisticated methods for
 visualizing and interpreting the results, as well as communicating and sharing
 the findings.
 
+
+\subsubsection*{Requirements} 
+\begin{enumerate}
+    \item A language-independent approach for integrating statistical software,
+    such as R, directly in interactive data exploration applications.
+    \item Up-to-date interfaces to online databases providing meta-data for
+    understanding results from statistical analyses. 
+\end{enumerate} 
+
+\subsubsection*{Contributions} 
+Our contributions are: 
+\begin{enumerate}
+\item An approach for developing data exploration applications in systems
+biology that combine statistical analyses with online databases.  
+\item A demonstration of its viability through N different applications. 
+\item Performance evaluation of its central data analysis component. 
+\end{enumerate} 
+
+
+\subsection*{Related Work} 
+In this section we aim to cover the existing approaches for building interactive
+data exploration applications in systems biology. 
+
+\subsubsection*{OpenCPU} 
+OpenCPU is a system for embedded scientific computing and reproducible
+research.\cite{opencpu} It provides an HTTP API to the R programming language,
+where users can either user public servers or host their own. OpenCPU provides
+a Javascript library for interfacing with R, as well as Docker containers for
+easy installation. 
+The R interface in Kvik follows many of the design patterns in OpenCPU. Both
+systems interface with R packages in a stateless pattern using an HTTP
+interface. Both systems provide the same interface to execute analyses and
+retrieve results. While OpenCPU is implemented on top of R and Apache, Kvik is
+implemented from the ground up in go. 
+
+\subsubsection*{Renjin} 
+Renjin is a JVM-based interpreter for the R programming language.\cite{renjin}
+It targets developers who want to integrate the R interpreter in web
+applications.  Since it is built on top of the JVM it allows developers to write
+data exploration applications that interact directly with R code. Although
+Renjin supports a large number of CRAN packages it cannot access any R package
+(e.g. from BioConductor) without modification. This makes it less 
+
+\subsubsection*{Shiny} 
+Shiny is a web application framework for R.\cite{shiny} It allows developers to
+build web applications in R without having to have any knowledge about HTML, CSS
+or Javascript. It provides a widget library to provide more advanced Javascript
+visualizations such as Leaflet for maps or threejs for WebGL-accellerated
+graphics. 
+
+\subsubsection*{Biogo} 
+Biogo is a bioinformatics library in Go. It provides functionality to analyse
+genomic and metagenomc datasets in the go programming
+language.\cite{Kortschak005033} Using the go programming language the developers
+are able to provide high-performance parallel processing in a clean and simple
+programming language. 
+
+
+\section*{Methods} 
 \subsection*{Data analysis} 
 In this section we describe our typical approach for doing analysing gene
 expression data in systems biology, and how it shaped the design of Kvik's
@@ -180,34 +221,78 @@ the field of systems biology, the R programming language provide the largest
 collection of data analysis packages. % litt vagt kanskje? 
 We discovered that the most sensible way to build applications on top of our
 existing code base was to build a system that could interface with our analysis
-code directly. 
-
-Applications built with Kvik start out as R packages where the functions provide
-interface between the data and 
-
-for the application. 
-
-
-
-\subsubsection*{Requirements} 
-\begin{enumerate}
-    \item A language-independent approach for integrating statistical software,
-    such as R, directly in interactive data exploration applications.
-    \item Up-to-date interfaces to online databases providing meta-data for
-    understanding results from statistical analyses. 
-\end{enumerate} 
-
-\subsubsection*{Contributions} 
-Our contributions are: 
-\begin{enumerate}
-\item An approach for developing data exploration applications in systems
-biology that combine statistical analyses with online databases.  
-\item A demonstration of its viability through N different applications. 
-\item Performance evaluation of its central data analysis component. 
-\end{enumerate} 
-
+code directly. In Kvik we built an HTTP interface on top of R that allows users
+to call functions and get results using any programming language with an HTTP
+library. This allows developers to build data exploration applications in the
+programming language that is most suitable, or has the best support, for
+presenting that specific data type. 
 
 % The big issue: There is no link between analysis and final presentation
+
+% Gir dette mening?
+% Collection of packages in the Go programming language for building data
+% exploration applications.  Interfaces with popular online databases such as
+% MSigDB and KEGG.  Provides an interface to the R programming language.
+% Typically used to build web apps, but commandline tools are also possible!
+
+% LAB: denne bør begynne med Architecture/overview: ASCII figuren fra Intro,
+% kanskje litt rafinert:
+%  * Interface mot JavaScript er en mer generell REST API, så kan være cli eller
+%  noe annet som bruker den.
+%  * Reference databases er kanskje en egen "ting" i Kvik. Dvs abstraksjoner som
+%  gjør det enkelt å implementere disse for MSigDB, KEGG. Dvs de tar seg av
+%  caching og provenance.
+%
+% Her passer det også å vise hvordan MIxT mappes til figuren. 
+
+% LAB: jeg tenker på dette som en slags execution engine, og at dette er laget
+% mellom R og JS. 
+% Hva slags interface exporter den til JS? Og hvorfor?
+% Hva gjør den? Og hvorfor kan ikke dette gjøres i JS eller R?
+% Hva er det som er generelt? Og hva er app spesifikt?
+% Hva er gjort for å få god performance?
+% Andre ting denne tar seg av?
+% Hvorfor, og hvordan, det er lett å legge til ny funksjonalitet
+\subsection*{Statistical analyses}
+Describe how we've designed the interface with R: Build an R-package and call
+functions from it, we provide four different output formats to the user
+ (json, csv, pdf, png),  as well as four different http endpoints (call, get and
+rpc).
+
+% LAB: jeg tenker på dette som en måte å implementere støtte for ulike refDBs.
+% Dvs den tilbyr abstraksjoner/ data strukturer/ wrappere/ metoder for:
+% * Hente data fra online DBs (feilhåndtering, etc)
+% * Caching av data hentet fra online DBs
+% * Provenance logging / managemnt for data fra online DBs
+% * En måte å effektivt lagre disse DB på, både for god performance og lite
+% space
+% * En måte å gjenbruke kode (og data) for en DB som feks KEGG
+% * Eventuelt andre ting denne tar seg av?
+%
+% I tillegg:
+% Hvorfor ikke gjøre dette i JS eller R?
+% Hvordan implementerer man KEGG etc?
+\subsection*{Databases}
+Describe the interface to the databases and what we use it for. Could be
+interesting to talk about provenance/caching.
+
+% LAB: her er stedet for alle Go bibliotek og andre lavnivå detlajer
+\subsection*{Implementation}
+
+% LAB: Litt usikker på om dette hører til i Results eller Methods
+\subsection*{Applications}
+
+% LAB: kort beskrivelse av hva alle apps gjør
+
+% LAB: Figur som viser hva som er felles og ulikt for alle appene. Her bør noe
+% være likt ellers har vi bare 3-4 applikasjoner :)
+
+% LAB: mer detaljert beskrivelse av hvordan hver app er implementert med Kvik
+
+\section*{Results and Discussion}
+Describe the MIxT application. Also talk about how our R interface scales and
+what makes it better than opencpu/renji.
+
 
 \subsection*{Motivating example}
 
@@ -239,7 +324,7 @@ functionality of these type of applications.
 We have built a system to identify genes and pathways in the primary tumor that
 are tightly linked to genes and pathways in the patient systemic
 response\cite{dumeaux2017}. MIxT blood-tumor is an open-source web application
-for exploring the molecular processes expressed in each tissue.  
+for exploring the molecular processes expressed in each tissue. 
 
 For the web application we defined six analysis tasks: 
 
@@ -266,7 +351,8 @@ modules.} Allow users to upload own gene lists and have the application compute
 modules which the gene list is enriched for. 
 
 \textbf{Search for genes or gene lists of intrest.} Allow users to search
-for specific genes or genelists and show 
+for specific genes or genelists of intrest and show what modules they are
+associated with. 
 
 % Vi kan godt kutte én av figurene under, f.eks c eller d som er veldig lik. 
 \begin{figure*}[!t]
@@ -294,72 +380,25 @@ D3 (c and d, \protect\url{d3js.org})}
 \end{figure*}
 
 
+\subsubsection*{Design and Implementation}
+The MIxT application is designed as a multitier web application that consists of
+a compute backend and a webserver frontend. From our initial analyses we built
+an R package with functions to provide data to perform the different
+analysis tasks. Using the 
 
 
-% Gir dette mening?
-
-\section*{Methods}
-% Collection of packages in the Go programming language for building data
-% exploration applications.  Interfaces with popular online databases such as
-% MSigDB and KEGG.  Provides an interface to the R programming language.
-% Typically used to build web apps, but commandline tools are also possible!
-
-% LAB: denne bør begynne med Architecture/overview: ASCII figuren fra Intro, kanskje litt rafinert:
-%  * Interface mot JavaScript er en mer generell REST API, så kan være cli eller noe annet som bruker den.
-%  * Reference databases er kanskje en egen "ting" i Kvik. Dvs abstraksjoner som gjør det enkelt å implementere disse for MSigDB, KEGG. Dvs de tar seg av caching og provenance.
-%
-% Her passer det også å vise hvordan MIxT mappes til figuren. 
-
-% LAB: jeg tenker på dette som en slags execution engine, og at dette er laget mellom R og JS. 
-% Hva slags interface exporter den til JS? Og hvorfor?
-% Hva gjør den? Og hvorfor kan ikke dette gjøres i JS eller R?
-% Hva er det som er generelt? Og hva er app spesifikt?
-% Hva er gjort for å få god performance?
-% Andre ting denne tar seg av?
-% Hvorfor, og hvordan, det er lett å legge til ny funksjonalitet
-\subsection*{Statistical analyses}
-Describe how we've designed the interface with R: Build an R-package and call
-functions from it, we provide four different output formats to the user
- (json, csv, pdf, png),  as well as four different http endpoints (call, get and
-rpc).
-
-% LAB: jeg tenker på dette som en måte å implementere støtte for ulike refDBs. Dvs den tilbyr abstraksjoner/ data strukturer/ wrappere/ metoder for:
-% * Hente data fra online DBs (feilhåndtering, etc)
-% * Caching av data hentet fra online DBs
-% * Provenance logging / managemnt for data fra online DBs
-% * En måte å effektivt lagre disse DB på, både for god performance og lite space
-% * En måte å gjenbruke kode (og data) for en DB som feks KEGG
-% * Eventuelt andre ting denne tar seg av?
-%
-% I tillegg:
-% Hvorfor ikke gjøre dette i JS eller R?
-% Hvordan implementerer man KEGG etc?
-\subsection*{Databases}
-Describe the interface to the databases and what we use it for. Could be
-interesting to talk about provenance/caching.
-
-% LAB: her er stedet for alle Go bibliotek og andre lavnivå detlajer
-\subsection*{Implementation}
-
-% LAB: Litt usikker på om dette hører til i Results eller Methods
-\subsection*{Applications}
-
-% LAB: kort beskrivelse av hva alle apps gjør
-
-% LAB: Figur som viser hva som er felles og ulikt for alle appene. Her bør noe være likt ellers har vi bare 3-4 applikasjoner :)
-
-% LAB: mer detaljert beskrivelse av hvordan hver app er implementert med Kvik
-
-\section*{Results and Discussion}
-Describe the MIxT application. Also talk about how our R interface scales and
-what makes it better than opencpu/renji.
 
 % LAB: Questions:
-% 1. Er execution engine raskere en andre alternativer? Svar: måle mot andre alternativer.
+% 1. Er execution engine raskere en andre alternativer? Svar: måle mot andre
+% alternativer.
 % 2. Gir ref DB caching bedre performance? Svar: som i master thesis.
-% 3. Har provenance mangement høy overhead (response tid & storage)? Svar: måle disse.
-% 4. Er det lett å legge til ny funksjonalitet (viz & stat & optimizations)? Svar: beskrive hvordan ikke-MIxT apps ble laget
-% 5. Er Kvik apps raske? Svar: performance analyze av MiXT, inkl. bottlenecks, skalerbarhet, etc.
-% 6. Er Kvik apps enkle å utvikle/vedlikeholde? Svar: beskrive hvordan MiXT ble laget (fra mess til den vakre nåværende kodebasen).
+% 3. Har provenance mangement høy overhead (response tid & storage)? Svar: måle
+% disse.
+% 4. Er det lett å legge til ny funksjonalitet (viz & stat & optimizations)?
+% Svar: beskrive hvordan ikke-MIxT apps ble laget
+% 5. Er Kvik apps raske? Svar: performance analyze av MiXT, inkl. bottlenecks,
+% skalerbarhet, etc.
+% 6. Er Kvik apps enkle å utvikle/vedlikeholde? Svar: beskrive hvordan MiXT ble
+% laget (fra mess til den vakre nåværende kodebasen).
 
 \section*{Conclusions}
