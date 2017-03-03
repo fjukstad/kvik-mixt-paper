@@ -96,15 +96,15 @@ growing number of analysis framework in various programming languages.\cite{}
 In R, there are popular package repositories such as CRAN
 \url{cran.r-project.org} or Bioconductor \url{bioconductor.org} where developers
 can share software packages and keep them up-to-date. In these repositories
-researchers can find software for analysing high-throughput genomic data in one
-environment. Analysing includes both pre-processing, e.g. cleaning, removing
-outliers, and analysing it with known statistical methods.
+researchers can find software for exploring high-throughput genomic data in one
+environment. This includes both pre-processing, e.g. cleaning, removing
+liers, and analysing it with known statistical methods.
 
 Interpreting the analysis results require integration of known biology, either
 from biological databases such as MSigDB\cite{} or KEGG\cite{}, or through
 scientific publications from databases such as PubMed\cite{}. Performing manual
 lookup into these databases is often tedious and error-prone, making it
-necessary to automate the task. % ikke så bra avsnitt dette... 
+necessary to automate the task. % Hvorfor bryr vi oss om både stats + DBs? 
 
 Especially large datasets in biology require sophisticated methods for
 visualizing and interpreting the results, as well as communicating and sharing
@@ -133,17 +133,17 @@ biology that combine statistical analyses with online databases.
 In this section we aim to cover the existing approaches for building interactive
 data exploration applications in systems biology. 
 
+% TODO: Add related work where somebody has built a system for exploring some
+% data where 
+
 \subsubsection*{OpenCPU} 
 OpenCPU is a system for embedded scientific computing and reproducible
 research.\cite{opencpu} It provides an HTTP API to the R programming language,
-where users can either user public servers or host their own. OpenCPU provides
-a Javascript library for interfacing with R, as well as Docker containers for
-easy installation. 
-The R interface in Kvik follows many of the design patterns in OpenCPU. Both
-systems interface with R packages in a stateless pattern using an HTTP
-interface. Both systems provide the same interface to execute analyses and
-retrieve results. While OpenCPU is implemented on top of R and Apache, Kvik is
-implemented from the ground up in go. 
+which can be used from any modern programming language. Users can chose to host
+their own R servers or use public servers. 
+OpenCPU provides a Javascript library for interfacing with R, as well as Docker
+containers for easy installation. OpenCPU has been used to build multiple
+applications.\footnote{\url{opencpu.org/apps.html}}
 
 \subsubsection*{Renjin} 
 Renjin is a JVM-based interpreter for the R programming language.\cite{renjin}
@@ -158,7 +158,7 @@ Shiny is a web application framework for R.\cite{shiny} It allows developers to
 build web applications in R without having to have any knowledge about HTML, CSS
 or Javascript. It provides a widget library to provide more advanced Javascript
 visualizations such as Leaflet for maps or threejs for WebGL-accellerated
-graphics. 
+graphics. Developers can choose to host their own web server for  
 
 \subsubsection*{Biogo} 
 Biogo is a bioinformatics library in Go. It provides functionality to analyse
@@ -176,11 +176,11 @@ R interface.
 
 We typically start off with a messy dataset that needs to go through
 several stages of clean-up and preprocessing before we can analyze it. After the
-preprocessing we typically develop some simple visualizations that can highlight
+preprocessing we typically develop some simple visualizations that help discover 
 simple patterns in the data. After this quick dirty data exploration we start to
 apply more advanced statistical methods to look for more intricate patterns in
-the data.  After this analysis we often end up with genes or lists of genes of
-interest. 
+the data. After this analysis we often end up with genes or lists of genes of
+interest that we can use to guide database lookup. 
 
 In terms of data analysis code, the preprocessing steps typically consist of
 one or more R scripts that we knit \cite{knitr} into PDF reports that we can
@@ -207,13 +207,15 @@ biological pathways. This interface should be available within the data
 exploration applications to provide valuable metadata for the researchers
 exploring results.  
 
+% TODO: Describe the interfaces/API. 
+
 \subsection*{Building applications} 
 With Kvik there are multiple aveues developers can take to build data
-exploration applications. They can choose to develop a single tiered
-applications with bindings to data analysis and databases, or
-multitier architectures where data analysis can be moved to powerful compute
-clusters to improve performance. In this paper we discuss how to develop
-applications that follow a multitier architecture. 
+exploration applications. Either bundle analysis and database lookup on a single
+computer, or separate computational tasks to more powerful compute clusters to
+improve performance. 
+In this paper we discuss how to develop applications that follow multitier
+architectures. 
 
 In Kvik we use R packages as the fundamental building block for data exploration
 applications. They provide an interface to data and analyses, and especially in
@@ -258,6 +260,13 @@ Describe how we've designed the interface with R: Build an R-package and call
 functions from it, we provide four different output formats to the user
  (json, csv, pdf, png),  as well as four different http endpoints (call, get and
 rpc).
+
+The R interface in Kvik follows many of the design patterns in OpenCPU. Both
+systems interface with R packages in a stateless pattern using an HTTP
+interface. Both systems provide the same interface to execute analyses and
+retrieve results. While OpenCPU is implemented on top of R and Apache, Kvik is
+implemented from the ground up in go. 
+
 
 % LAB: jeg tenker på dette som en måte å implementere støtte for ulike refDBs.
 % Dvs den tilbyr abstraksjoner/ data strukturer/ wrappere/ metoder for:
