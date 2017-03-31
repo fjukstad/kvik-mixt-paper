@@ -316,8 +316,16 @@ D3 (c and d, \protect\url{d3js.org})}
 \end{figure*}
 
 \subsubsection*{Design and Implementation}
-The MIxT application is designed as a multitier web application that consists of
-a compute backend and a webserver frontend. From our initial analyses we built
+The MIxT application is designed as a modern application consisting of multiple
+services that together provide an interactive web application. By composing an 
+application of a set of services we can substitute parts of the application without 
+re-writing the entire application. This type of architectural style is called a
+microservices architecture and is popular in 'web-scale' systems. For example if
+we want to use OpenCPU to interface with data analysis we can do so by simply
+exchanging the Kvik R service with OpenCPU. Both services communicate over HTTP
+and their interface is the same. 
+
+From our initial analyses we built
 an R package with functions to provide data and analysis to the different
 analysis tasks. Using this design it is possible to either explore the data
 through the web site or a local R session. 
