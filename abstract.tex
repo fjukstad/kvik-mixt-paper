@@ -5,39 +5,34 @@
             interactive data exploration tools to enable new insights in the
             fast growing datasets. 
             These tools combine advanced
-            statistical analyses, known biology from up-to-date databases, and visualizations.
-            The problem solved by each tool differs, but typically their underlying
-            components stay the same.  
-            % Skal vi si "can" eller "should"?
-            % Kan kanskje også legge inn noen ord om hvorfor dette er bedre, slik at det er helt klart for leseren.
-            Application developers can therefore
-            compose applications of reusable services rather than implementing a
-            single monolithic application.
+            statistical analyses, known biology from up-to-date databases, and
+            visualizations. The problem solved by each tool differs, but
+            typically their underlying components stay the same.  
+            % Skal vi si "can" eller "should"?  Kan kanskje også legge inn noen
+            % ord om hvorfor dette er bedre, slik at det er helt klart for
+            % leseren.
+            Application developers can therefore compose applications of
+            reusable services rather than implementing a single monolithic
+            application. 
             
         \parttitle{Results} 
             We have designed an approach for developing data exploration
             applications in systems biology that builds on the microservice
-            architecture which 
-            % Gjentar det som står ovenfor, kan heller si hva slags services her (R, ...)
-            structures an application as a collection of
-            services rather than a large monolithic entity. 
-            % Litt svakt med kun en applikasjon. Kan vi ikke ta med de eldre også?
-            We have demonstrated its viability
-            through a web application for exploring and comparing
-            transcriptional profiles from blood and tumor samples. 
-            % "We were able" og "language-agnostic" er ett svakt/kjedelig resultat. Hva er fordelen som applikasjon utvikler? Hva er fordelen for sluttbrukerene? Er det fordeler for sysadmins?
-            Using this approach we are able to build language-agnostic data
-            exploration applications that interface with advanced statistical
-            software and up-to-date information from biological databases.  
+            architecture. We use this approach to build applications that
+            integrate advanced statistical software and up-to-date information
+            from biological databases.
+            We demonstrate its viability through a web application for exploring
+            and comparing transcriptional profiles from blood and tumor samples.
+            In addition we have used it to build two other web-applications and
+            several command-line tools.  With a microservices approach we can
+            re-use and share key components between application reducing
+            development, deployment and maintenance time. 
 
         \parttitle{Conclusions}  
-            % Gjentar det som står i Results
-            Our approach and reference implementation Kvik, enables easy
-            development of data exploration tools that interface with
-            statistical analyzes and online databases. 
-            Kvik is open-sourced at \url{github.com/fjukstad/kvik} and the web
-            application for exploring transcriptional profiles, MIxT, is 
-            availible at \url{github.com/fjukstad/mixt}. 
+            Our approach and reference implementation Kvik is open-sourced at
+            \url{github.com/fjukstad/kvik} and the web application for exploring
+            transcriptional profiles, MIxT, is availible at
+            \url{github.com/fjukstad/mixt}. 
 
     \end{abstract}
     
