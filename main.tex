@@ -304,8 +304,21 @@ interesting to talk about provenance/caching.
 Describe the MIxT application. Also talk about how our R interface scales and
 what makes it better than opencpu/renji.
 
+% Jeg tror det er tre spørsmål som kan besvares her:
+% 1. Hvor mye enklere/bedre er det å utvikle apps med Kvik microservices?
+% 2. Overhead/ improvement for enkelt-microservices. Dvs overhead for de som tilbyr noe mer en alternativet (container tilbyr enklere deployment men har en overhead på...), og improvement for de som optiamliserer noe (Kvik vs OpenCPU, eventuelt begge deler (caching for MsigDB reduserer query tid men har en storage overhead)
+% 3. Performance analyse av MIxT. Hvor er det overheadene er for en query? Overhead for mange samtidige queries?
+%
+% Metodologi:
+% 1. Kvik-MIxT vs 1000-R-linjer-MIxT? Og kanskje anektdoter som at container kunne flyttes til AWS. Eller noe helt annet.
+% 2. En av de enklere web apps som er laget før. Eventuelt en benchmark app.
+% 3. MIxT operasjoner.
+%
 
 \subsection*{Use Case}
+
+% Foreslår å flytte dette til "Motivating Example", eventuelt til slutt i Methods som MiXT implementert ved bruk av microservices. Kanskje er sistnevnte bedre?
+
 We show the viability and need for Kvik by describing the MIxT application for
 exploring and comparing transcriptional profiles from blood and tumor samples.
 We describe its functionality, implementation 
