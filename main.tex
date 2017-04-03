@@ -7,18 +7,25 @@
 % - add pdf to git.
 
 \section*{Background}
+% 1M skyldes lønn til mennesker eller kun compute? (tid = penger hvis det er mennesker)
 In the past decade the generation of biological datasets has been unprecedented,
 and the famous "\$1000k genome, \$1M analysis"\cite{} has become more apparent.
-To decrease both time and cost of analysing biological data, there is now a
+% disse reduserer tid/kost siden...
+To reduce both time and cost of analysing biological data, there is now a
 growing number of analysis framework in various programming languages.\cite{}
+
+% de 5 neste § henger ikke helt sammen. Trenger en setning her som setter de sammen. Noe sånt som at de ser på ulike sider av problemet...
 
 In R, there are popular package repositories such as CRAN
 \url{cran.r-project.org} or Bioconductor \url{bioconductor.org} where developers
-can share software packages and keep them up-to-date. In these repositories
+can share software packages and keep them up-to-date. 
+% Høres litt ut som de har løst problemet som dette paperet er om. Hva er problemet med disse?
+In these repositories
 researchers can find software for exploring high-throughput genomic data in one
 environment. This includes both pre-processing, e.g. cleaning, removing
 liers, and analysing it with known statistical methods. 
 
+% Bytte om setningene: Problem; løsning.
 Through initiatives such as ApacheR and OpenCPU there has been a move towards
 embedding scientific computation in data visualization application. This removes
 the decoupling of statistical frameworks and interaction with the analysis
@@ -30,7 +37,9 @@ scientific publications from reference databases such as PubMed\cite{}.
 Performing manual lookup into these databases is often tedious and error-prone,
 making it necessary to automate the task. 
 % Hvorfor bryr vi oss om både stats + DBs? 
+% Skal vi si noe om at det blir vanligere å bruke REST APIs fremfor å laste ned alt og lese ting lokalt
 
+% Her ser det ut som teksten er work-in-progress, siden de neste 4 § sier omtrent det samme
 In systems biology there have been a growth of tools for visualizing biological
 datasets from high-throughput experiments.
 
@@ -51,18 +60,22 @@ the findings.
 We have 
 \subsubsection*{Requirements} 
 \begin{enumerate}
+    % Ikke motivert language-independent approach ovenfor
     \item A language-independent approach for integrating, or embedding,
         statistical software, such as R, directly in interactive data
         exploration applications.
+    % Ikke motivert behovet for up-to-date
     \item Up-to-date interfaces to online databases providing meta-data for
-        understanding results from statistical analyses. 
+        understanding results from statistical analyses.
+    % Ikke sagt noe om maintance & deployment
     \item Ease of software development, maintenance and deployment. 
 \end{enumerate} 
 
 \subsubsection*{Contributions} 
 Our contributions are: 
 \begin{enumerate}
-\item An approach for developing data exploration applications in systems
+% men ikke visualization?
+\item An approach for developing data exploration applications for systems
 biology that combine statistical analyses with online databases.  
 \item A demonstration of its viability through N different applications. 
 \item Performance evaluation of its central data analysis component. 
