@@ -83,11 +83,14 @@ biology that combine statistical analyses with online databases.
 
 
 \subsection*{Related Work} 
+% Hva er korrekt: "in" system biology eller "for" system biology?
 In this section we aim to cover the existing approaches for building interactive
 data exploration applications in systems biology. 
 
 % TODO: Add related work where somebody has built a system for exploring some
 % data where 
+
+% Det er en utfordring å ha related work tidlig i dette paperet. Slik det er nå, er det ikke sikkert leseren skjønner hvorfor diss systemene diskuteres, hva som er sammenhengen mellom de, og hva det har å gjrøe med Kvik.
 
 \subsubsection*{OpenCPU} 
 OpenCPU is a system for embedded scientific computing and reproducible
@@ -100,20 +103,22 @@ works in a single-user setting within an R session, or a multi-user setting
 facilitating multiple parallel requests. 
 OpenCPU provides a Javascript library for interfacing with R, as well as Docker
 containers for easy installation. OpenCPU has been used to build multiple
-applications.\footnote{\url{opencpu.org/apps.html}} In Kvik we provide a package
+applications.\footnote{\url{opencpu.org/apps.html}}.
+% Design patterns er ikke nevnt enda
+In Kvik we provide a package
 to interface with OpenCPU servers from the Go programming language since it
 follows the design pattern we have chosen to interface with data and analyses. 
 
 
 \subsubsection*{Renjin} 
+% Skjønner ikke poenget med Renjin. Dvs hva fordelen med å kjøre R kode på en JVM er.
 Renjin is a JVM-based interpreter for the R programming language.\cite{renjin}
 It targets developers who want to integrate the R interpreter in web
 applications. Since it is built on top of the JVM it allows developers to write
 data exploration applications that interact directly with R code. Although
 Renjin supports a large number of CRAN packages it cannot access any R package
 (e.g. from BioConductor) without modification. This makes the programming effort
-to use Renjin as an interface with R higher since it means re-implementing R
-packages to use. 
+to use Renjin as an interface with R higher. 
 
 \subsubsection*{Shiny} 
 Shiny is a web application framework for R.\cite{shiny} It allows developers to
@@ -122,8 +127,10 @@ or Javascript. It provides a widget library to provide more advanced Javascript
 visualizations such as Leaflet for maps or threejs for WebGL-accellerated
 graphics. Developers can choose to host their own web server with the user-built
 Shiny Apps, or host them on public servers. Shiny forces users to implement data
-exploration applications in R, limiting the functionality to the available
+exploration applications in R, limiting the functionality to the 
 widgets and libraries in Shiny. 
+
+% Synes SparkR burde nevnes
 
 \subsubsection*{Biogo} 
 Biogo is a bioinformatics library in Go. It provides functionality to analyse
@@ -145,20 +152,40 @@ interactive graph visualizations.
 
 \section*{Methods} 
 \subsection*{Data analysis} 
-In this section we describe our typical approach for doing analysing gene
-expression data in systems biology, and how it shaped the intergration of
-statistics in developing our data exploration applications. Our group is
-of a mix of statisticians, epidemiologists, and biologists, making one of our
+% Synes det blir litt galt å kalle dette our approach. Dvs det er jo det. Men er ikke så overbevisende at andre skal gjøre dette. En bedre struktur er kanskje å først bruke det som står her som en motivating example for microservice apporach, og deretter i neste avsnitt beskrive "the microservice apporach" som noe andre bør bruke fordi det letter arbeidet med å lage ting som i "the motivating example"
+
+In this section we motivate our microservice approach by describing how we developed an advanced web application for ...det MIxT gjør. We believe many system biology data exploration applications are developed similarly and that they can therefore also benefit from the microservice approach.
+%
+for analysing gene expression data in systems biology, and how it shaped the intergration of
+statistics in developing our data exploration applications. 
+% Ville omskrevet dette: Problemet som skal løses krever tværfaglig gruppe; statistikere utvikler nye metoder for ...; epidemiologer bidrar med ...; computer scientists må være med fordi...; Alle har sine framework, verktøy, og språk de liker. I MIxT brukte statistikerene R fordi....; CS ville bruke go siden...; I praktisik ikke mulig å bli enig/ lære opp alle i å bruke samme språk, derfor ...
+Our interdisciplinary research group includes statisticians, epidemiologists, computer scientists, and biologists, making one of our
+% Uklart hva som menes med "tools already in use"
 aims to develop tools that work well together with the tools already in use. 
 
+% Ville ikke sagt "we typically". Men heller beskrevet konkret hva som ble gjort for MIxT. Generealisering kan gjøres i neste avsnitt der microservice apporach blir beskrevet.
+% Også ville jeg likt å se tall her. Hvor stort er datasettet? Hvor lang tid tar det? Er dette i critial path for data exploration eller bare pre-processing? 
 We typically start off with a messy dataset that needs to go through
-several stages of clean-up and preprocessing before we can analyze it. After the
+several stages of clean-up and preprocessing before we can analyze it.
+% Hvordan gjøres dette? Er dette egentlig protptyping, og dermed en slags requirements spec for de endelige visualiseringene? Kan dette gjenbrukes eller er det mest bruk-og-kast? Hvem gjør dette? 
+After the
 preprocessing we typically develop some simple visualizations that help discover 
-simple patterns in the data. After this quick dirty data exploration we start to
+simple patterns in the data. 
+% Apply or develop for MIxT?
+After this quick dirty data exploration we start to
 apply more advanced statistical methods to look for more intricate patterns in
-the data. After this analysis we often end up with genes or lists of genes of
-interest that we can use to guide database lookup. 
+the data.
+% Kommer litt overaskende siden det aldri ble sagt hva formålet med dette var :)
+% Database lookup for hva?
+After this analysis we often end up with genes or lists of genes of
+interest that we can use to guide database lookup.
+% Hva med non-quirky visualiseringer integrert med database lookup?
+% Hva med visualiseringer for andre brukere? Og data?
+% Hva med neste verktøy, dvs MIxT for eksempel for methylation + gene expression?
 
+% Savner en diskusjon om performance, resource usage, og andre krav til MiXT
+
+% Tror det er enklere å henge med hvis dette blir flettet inn i teksten over
 In terms of data analysis code, the preprocessing steps typically consist of
 one or more R scripts that we knit \cite{knitr} into PDF reports that we can
 revisit later. From these scripts we end up with analysis-ready datasets that
@@ -166,6 +193,20 @@ can be shared within the group. The remaining downstream analysis often starts
 out in scripts, that are built into R packages with analysis code that can be
 shared between researchers. 
 
+\subsection{Kvik micoservices}
+% Noe av dette er kanskje allerede i "Building applications"
+
+Based on the development of MiXT and other data exploration tools, we have generalized our experience into the following design principle guidelines and microservices provided by the Kvik framework:
+
+Principle 1: language-agnostic (samme har de funnet ut i blant annet Facebook for Thrift)
+Principle 2:
+
+Microservice 1: Databases...
+Microservice 2: Statistical analyses...
+
+% Også er det viktig å ikke glemme "system aspects" performance, management, deployment, etc for disse. Det kn enten forklares her eller senere.
+
+% Det er ikke forklart hvordan ting henger sammen i Kvik, så dette er vanskelig å forstå
 With this process in mind, we designed the interface to the R programming
 language in Kvik. We want to make it possible to call any function from an R
 package and return its results either as plain text, such as comma-separated
@@ -173,11 +214,12 @@ tables, or binaries such as images. Enforcing that R code is built into R
 packages ensures that the analysis code can be used by power users through an
 ordinary R session or in the data exploration application itself. 
 
-
 \subsection*{Databases} 
+
 Similar to how our analysis process shaped the R interface, it also defined how
 we want to build interfaces to online databases. 
 
+% Kan også beskrive hva slags interfaces de eskponerer, hva som er performance characteristics, programmerings utforderinger, og tilatt bruk
 In its initial state we wanted an interface to interactively query databases
 such as KEGG or MSigDB for up-to-date information about genes, gene sets or
 biological pathways. This interface should be available within the data
@@ -185,15 +227,22 @@ exploration applications to provide valuable metadata, such as gene summaries,
 for the researchers exploring results.  
 
 % TODO: Describe the interfaces/API. 
+% + abstraksjoner som tar seg av caching og provenance management
+
+% Jeg ser for meg at det er nyttig å kunne si for alle database oppslag noe sånt som: read cached value = False, cache result = "session". Dvs alltid les nyeste verdi, men cache resultatene for denne session. Kanskje er det også andre database-generisk operasjoner som er nyttige abstraksjoner (hent alle entries i en liste). Også er det sikkert mulig å pakke disse inn i en interface som kan brukes til å implementere database spesifike (KEGG, MsigDB) komponenter.
+
 
 \subsection*{Building applications} 
-With Kvik there are multiple avenues developers can take to build data
+
+% Snu om setningene: microservices som lar implemntere i multiple ways
+With Kvik there are multiple ways developers can build data
 exploration applications. Either bundle analysis and database lookup on a single
 computer, or separate computational tasks to more powerful compute clusters to
 improve performance. 
 In this paper we discuss how to develop applications that follow a
 microservices architecture where data analysis and storage is simply a service. 
 
+% Dette er kanskje en av flere microservices?
 In Kvik we use R packages as the fundamental building block for data exploration
 applications. They provide an interface to data and analyses, and especially in
 the field of systems biology, the R programming language provide the largest
@@ -212,6 +261,7 @@ functions from it, we provide four different output formats to the user
 (json, csv, pdf, png),  as well as four different http endpoints (call, get and
 rpc).}
 
+% Hva er fordelene med å gjøre det i go?
 The R interface in Kvik follows many of the design patterns in OpenCPU. Both
 systems interface with R packages using a hybrid state pattern over HTTP. Both
 systems provide the same interface to execute analyses and retrieve results.
