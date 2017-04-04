@@ -1,38 +1,36 @@
-% TODO:
-% - Draw up a sketch of what is MIxT and what is Kvik
-% - What interfaces does Kvik provide?
-% - Spark, look at their papers and the app / abstractions.
-% - What are the ops done most frequent? Get data from KEGG/Msigdb etc?
-% - Scrap hard line breaks for LA (soft lines instead)
-% - add pdf to git.
-
 \section*{Background}
 % 1M skyldes lønn til mennesker eller kun compute? (tid = penger hvis det er
 % mennesker)
+
+% BF: Har du en referanse vi kan bruke her? Dette er en ganske vanlig quote, men
+% husker ikke hvor jeg har sett den, Dette er veldig generelle greier, men vi
+% skulle hatt et par gode paper å sitere. 
 In the past decade the generation of biological datasets has been unprecedented,
 and the famous "\$1000k genome, \$1M analysis"\cite{} has become more apparent.
-% disse reduserer tid/kost siden...
-To reduce both time and cost of analysing biological data, there is now a
-growing number of analysis framework in various programming languages.\cite{}
+% mer om biologi og data 
 
-% de 5 neste § henger ikke helt sammen. Trenger en setning her som setter de
-% sammen. Noe sånt som at de ser på ulike sider av problemet...
+% Trenger litt tekst som sier at vi skal snakke om stats, presentasjon, dbs,
+% microservices og kobling av alle. 
 
-In R, there are popular package repositories such as CRAN
-\url{cran.r-project.org} or Bioconductor \url{bioconductor.org} where developers
-can share software packages and keep them up-to-date. 
-% Høres litt ut som de har løst problemet som dette paperet er om. Hva er
-% problemet med disse?
-In these repositories
-researchers can find software for exploring high-throughput genomic data in one
-environment. This includes both pre-processing, e.g. cleaning, removing
-liers, and analysing it with known statistical methods. 
+To analyze the growing biological data sets, there is now a number of analysis
+tools in various programming languages.\cite{} In R, there are popular package
+repositories such as CRAN \url{cran.r-project.org} or Bioconductor
+\url{bioconductor.org} where developers can share software packages and keep
+them up-to-date.  These repositories contain software packages for exploring
+high-throughput genomic data in one environment. This includes both
+pre-processing, e.g. cleaning, removing outliers, and analysing it with known
+statistical methods. In other languages such as Python or Go developers can
+choose bioinformatics libraries such as BioPython\cite{} and biogo\cite{}
+respectively.  However all of these software packages require users to have a
+high level of coding skills. 
 
-% Bytte om setningene: Problem; løsning.
-Through initiatives such as ApacheR and OpenCPU there has been a move towards
-embedding scientific computation in data visualization application. This removes
-the decoupling of statistical frameworks and interaction with the analysis
-results. 
+To visualize and share results from statistical analyses, the results are often
+exported to a data format such as comma-separated values (CSV) and
+then visualized using an external tool. This decouples data presentation and
+analysis.  Through initiatives such as ApacheR and OpenCPU there has been a move
+towards embedding scientific computation in data visualization application. This
+removes the decoupling of statistical frameworks and interaction with the
+analysis results. 
 
 Interpreting the analysis results require integration of known biology, either
 from biological databases such as MSigDB\cite{} or KEGG\cite{}, or through
@@ -44,8 +42,17 @@ making it necessary to automate the task.
 
 % Her ser det ut som teksten er work-in-progress, siden de neste 4 § sier
 % omtrent det samme
-In systems biology there have been a growth of tools for visualizing biological
-datasets from high-throughput experiments.
+
+% Hva er micro-services? 
+Microservice architectures structures applications into small reusable, loosely
+coupled parts. These communicate via lightweight programming language-agnostic
+protocols such as HTTP, making it possible to write single applications in
+different programming languages. This makes it possible to use the most suitable
+programming language for each specific part. E.g. to use R and Bioconductor to
+analyse biological data, or C++ and OpenCV for high-performance computer vision
+tasks, or HTML, CSS, and JavaScript to build portable user-interfaces. 
+
+% WIP WIP WIP
 
 In systems biology there is a need for visualization tools that can make use of
 the lastest statistical packages and interact with these. It is not enough to
@@ -57,14 +64,11 @@ While there are visualization frameworks for researchers with a background in
 programming, there is a need to build data exploration applications for
 non-coders with graphical user interfaces.
 
-Especially large datasets in biology require sophisticated methods for
-visualizing and interpreting the results, as well as communicating and sharing
-the findings.   
+
 
 We have 
 \subsubsection*{Requirements} 
 \begin{enumerate}
-    % Ikke motivert language-independent approach ovenfor
     \item A language-independent approach for integrating, or embedding,
         statistical software, such as R, directly in interactive data
         exploration applications.
