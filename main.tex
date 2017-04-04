@@ -7,19 +7,22 @@
 % - add pdf to git.
 
 \section*{Background}
-% 1M skyldes lønn til mennesker eller kun compute? (tid = penger hvis det er mennesker)
+% 1M skyldes lønn til mennesker eller kun compute? (tid = penger hvis det er
+% mennesker)
 In the past decade the generation of biological datasets has been unprecedented,
 and the famous "\$1000k genome, \$1M analysis"\cite{} has become more apparent.
 % disse reduserer tid/kost siden...
 To reduce both time and cost of analysing biological data, there is now a
 growing number of analysis framework in various programming languages.\cite{}
 
-% de 5 neste § henger ikke helt sammen. Trenger en setning her som setter de sammen. Noe sånt som at de ser på ulike sider av problemet...
+% de 5 neste § henger ikke helt sammen. Trenger en setning her som setter de
+% sammen. Noe sånt som at de ser på ulike sider av problemet...
 
 In R, there are popular package repositories such as CRAN
 \url{cran.r-project.org} or Bioconductor \url{bioconductor.org} where developers
 can share software packages and keep them up-to-date. 
-% Høres litt ut som de har løst problemet som dette paperet er om. Hva er problemet med disse?
+% Høres litt ut som de har løst problemet som dette paperet er om. Hva er
+% problemet med disse?
 In these repositories
 researchers can find software for exploring high-throughput genomic data in one
 environment. This includes both pre-processing, e.g. cleaning, removing
@@ -36,10 +39,11 @@ from biological databases such as MSigDB\cite{} or KEGG\cite{}, or through
 scientific publications from reference databases such as PubMed\cite{}.
 Performing manual lookup into these databases is often tedious and error-prone,
 making it necessary to automate the task. 
-% Hvorfor bryr vi oss om både stats + DBs? 
-% Skal vi si noe om at det blir vanligere å bruke REST APIs fremfor å laste ned alt og lese ting lokalt
+% Hvorfor bryr vi oss om både stats + DBs?  Skal vi si noe om at det blir
+% vanligere å bruke REST APIs fremfor å laste ned alt og lese ting lokalt
 
-% Her ser det ut som teksten er work-in-progress, siden de neste 4 § sier omtrent det samme
+% Her ser det ut som teksten er work-in-progress, siden de neste 4 § sier
+% omtrent det samme
 In systems biology there have been a growth of tools for visualizing biological
 datasets from high-throughput experiments.
 
@@ -90,7 +94,9 @@ data exploration applications in systems biology.
 % TODO: Add related work where somebody has built a system for exploring some
 % data where 
 
-% Det er en utfordring å ha related work tidlig i dette paperet. Slik det er nå, er det ikke sikkert leseren skjønner hvorfor diss systemene diskuteres, hva som er sammenhengen mellom de, og hva det har å gjrøe med Kvik.
+% Det er en utfordring å ha related work tidlig i dette paperet. Slik det er nå,
+% er det ikke sikkert leseren skjønner hvorfor diss systemene diskuteres, hva
+% som er sammenhengen mellom de, og hva det har å gjrøe med Kvik.
 
 \subsubsection*{OpenCPU} 
 OpenCPU is a system for embedded scientific computing and reproducible
@@ -111,7 +117,8 @@ follows the design pattern we have chosen to interface with data and analyses.
 
 
 \subsubsection*{Renjin} 
-% Skjønner ikke poenget med Renjin. Dvs hva fordelen med å kjøre R kode på en JVM er.
+% Skjønner ikke poenget med Renjin. Dvs hva fordelen med å kjøre R kode på en
+% JVM er.
 Renjin is a JVM-based interpreter for the R programming language.\cite{renjin}
 It targets developers who want to integrate the R interpreter in web
 applications. Since it is built on top of the JVM it allows developers to write
@@ -154,22 +161,41 @@ cyREST.
 
 \section*{Methods} 
 \subsection*{Data analysis} 
-% Synes det blir litt galt å kalle dette our approach. Dvs det er jo det. Men er ikke så overbevisende at andre skal gjøre dette. En bedre struktur er kanskje å først bruke det som står her som en motivating example for microservice apporach, og deretter i neste avsnitt beskrive "the microservice apporach" som noe andre bør bruke fordi det letter arbeidet med å lage ting som i "the motivating example"
+% Synes det blir litt galt å kalle dette our approach. Dvs det er jo det. Men er
+% ikke så overbevisende at andre skal gjøre dette. En bedre struktur er kanskje
+% å først bruke det som står her som en motivating example for microservice
+% apporach, og deretter i neste avsnitt beskrive "the microservice apporach" som
+% noe andre bør bruke fordi det letter arbeidet med å lage ting som i "the
+% motivating example"
 
-In this section we motivate our microservice approach by describing how we developed an advanced web application for ...det MIxT gjør. We believe many system biology data exploration applications are developed similarly and that they can therefore also benefit from the microservice approach.
+In this section we motivate our microservice approach by describing how we
+developed an advanced web application for ...det MIxT gjør. We believe many
+system biology data exploration applications are developed similarly and that
+they can therefore also benefit from the microservice approach.
 %
-for analysing gene expression data in systems biology, and how it shaped the intergration of
-statistics in developing our data exploration applications. 
-% Ville omskrevet dette: Problemet som skal løses krever tværfaglig gruppe; statistikere utvikler nye metoder for ...; epidemiologer bidrar med ...; computer scientists må være med fordi...; Alle har sine framework, verktøy, og språk de liker. I MIxT brukte statistikerene R fordi....; CS ville bruke go siden...; I praktisik ikke mulig å bli enig/ lære opp alle i å bruke samme språk, derfor ...
-Our interdisciplinary research group includes statisticians, epidemiologists, computer scientists, and biologists, making one of our
+for analysing gene expression data in systems biology, and how it shaped the
+intergration of statistics in developing our data exploration applications. 
+% Ville omskrevet dette: Problemet som skal løses krever tværfaglig gruppe;
+% statistikere utvikler nye metoder for ...; epidemiologer bidrar med ...;
+% computer scientists må være med fordi...; Alle har sine framework, verktøy, og
+% språk de liker. I MIxT brukte statistikerene R fordi....; CS ville bruke go
+% siden...; I praktisik ikke mulig å bli enig/ lære opp alle i å bruke samme
+% språk, derfor ...
+Our interdisciplinary research group includes statisticians, epidemiologists,
+computer scientists, and biologists, making one of our
 % Uklart hva som menes med "tools already in use"
 aims to develop tools that work well together with the tools already in use. 
 
-% Ville ikke sagt "we typically". Men heller beskrevet konkret hva som ble gjort for MIxT. Generealisering kan gjøres i neste avsnitt der microservice apporach blir beskrevet.
-% Også ville jeg likt å se tall her. Hvor stort er datasettet? Hvor lang tid tar det? Er dette i critial path for data exploration eller bare pre-processing? 
+% Ville ikke sagt "we typically". Men heller beskrevet konkret hva som ble gjort
+% for MIxT. Generealisering kan gjøres i neste avsnitt der microservice apporach
+% blir beskrevet.  Også ville jeg likt å se tall her. Hvor stort er datasettet?
+% Hvor lang tid tar det? Er dette i critial path for data exploration eller bare
+% pre-processing? 
 We typically start off with a messy dataset that needs to go through
 several stages of clean-up and preprocessing before we can analyze it.
-% Hvordan gjøres dette? Er dette egentlig protptyping, og dermed en slags requirements spec for de endelige visualiseringene? Kan dette gjenbrukes eller er det mest bruk-og-kast? Hvem gjør dette? 
+% Hvordan gjøres dette? Er dette egentlig protptyping, og dermed en slags
+% requirements spec for de endelige visualiseringene? Kan dette gjenbrukes eller
+% er det mest bruk-og-kast? Hvem gjør dette? 
 After the
 preprocessing we typically develop some simple visualizations that help discover 
 simple patterns in the data. 
@@ -183,7 +209,8 @@ After this analysis we often end up with genes or lists of genes of
 interest that we can use to guide database lookup.
 % Hva med non-quirky visualiseringer integrert med database lookup?
 % Hva med visualiseringer for andre brukere? Og data?
-% Hva med neste verktøy, dvs MIxT for eksempel for methylation + gene expression?
+% Hva med neste verktøy, dvs MIxT for eksempel for methylation + gene
+% expression?
 
 % Savner en diskusjon om performance, resource usage, og andre krav til MiXT
 
@@ -198,7 +225,9 @@ shared between researchers.
 \subsection{Kvik micoservices}
 % Noe av dette er kanskje allerede i "Building applications"
 
-Based on the development of MiXT and other data exploration tools, we have generalized our experience into the following design principle guidelines and microservices provided by the Kvik framework:
+Based on the development of MiXT and other data exploration tools, we have
+generalized our experience into the following design principle guidelines and
+microservices provided by the Kvik framework:
 
 Principle 1: language-agnostic (samme har de funnet ut i blant annet Facebook for Thrift)
 Principle 2:
@@ -206,7 +235,8 @@ Principle 2:
 Microservice 1: Databases...
 Microservice 2: Statistical analyses...
 
-% Også er det viktig å ikke glemme "system aspects" performance, management, deployment, etc for disse. Det kn enten forklares her eller senere.
+% Også er det viktig å ikke glemme "system aspects" performance, management,
+% deployment, etc for disse. Det kn enten forklares her eller senere.
 
 % Det er ikke forklart hvordan ting henger sammen i Kvik, så dette er vanskelig å forstå
 With this process in mind, we designed the interface to the R programming
@@ -221,7 +251,8 @@ ordinary R session or in the data exploration application itself.
 Similar to how our analysis process shaped the R interface, it also defined how
 we want to build interfaces to online databases. 
 
-% Kan også beskrive hva slags interfaces de eskponerer, hva som er performance characteristics, programmerings utforderinger, og tilatt bruk
+% Kan også beskrive hva slags interfaces de eskponerer, hva som er performance
+% characteristics, programmerings utforderinger, og tilatt bruk
 In its initial state we wanted an interface to interactively query databases
 such as KEGG or MSigDB for up-to-date information about genes, gene sets or
 biological pathways. This interface should be available within the data
@@ -231,7 +262,13 @@ for the researchers exploring results.
 % TODO: Describe the interfaces/API. 
 % + abstraksjoner som tar seg av caching og provenance management
 
-% Jeg ser for meg at det er nyttig å kunne si for alle database oppslag noe sånt som: read cached value = False, cache result = "session". Dvs alltid les nyeste verdi, men cache resultatene for denne session. Kanskje er det også andre database-generisk operasjoner som er nyttige abstraksjoner (hent alle entries i en liste). Også er det sikkert mulig å pakke disse inn i en interface som kan brukes til å implementere database spesifike (KEGG, MsigDB) komponenter.
+% Jeg ser for meg at det er nyttig å kunne si for alle database oppslag noe sånt
+% som: read cached value = False, cache result = "session". Dvs alltid les
+% nyeste verdi, men cache resultatene for denne session. Kanskje er det også
+% andre database-generisk operasjoner som er nyttige abstraksjoner (hent alle
+% entries i en liste). Også er det sikkert mulig å pakke disse inn i en
+% interface som kan brukes til å implementere database spesifike (KEGG, MsigDB)
+% komponenter.
 
 
 \subsection*{Building applications} 
@@ -258,8 +295,8 @@ programming language that is most suitable, or has the best support, for
 presenting that specific data type. 
 
 \subsection*{Statistical analyses}
-\emph{Describe how we've designed the interface with R: Build an R-package and call
-functions from it, we provide four different output formats to the user
+\emph{Describe how we've designed the interface with R: Build an R-package and
+call functions from it, we provide four different output formats to the user
 (json, csv, pdf, png),  as well as four different http endpoints (call, get and
 rpc).}
 
@@ -308,18 +345,25 @@ what makes it better than opencpu/renji.
 
 % Jeg tror det er tre spørsmål som kan besvares her:
 % 1. Hvor mye enklere/bedre er det å utvikle apps med Kvik microservices?
-% 2. Overhead/ improvement for enkelt-microservices. Dvs overhead for de som tilbyr noe mer en alternativet (container tilbyr enklere deployment men har en overhead på...), og improvement for de som optiamliserer noe (Kvik vs OpenCPU, eventuelt begge deler (caching for MsigDB reduserer query tid men har en storage overhead)
+% 2. Overhead/ improvement for enkelt-microservices. Dvs overhead for de som
+% tilbyr noe mer en alternativet (container tilbyr enklere deployment men har en
+% overhead på...), og improvement for de som optiamliserer noe (Kvik vs OpenCPU,
+% eventuelt begge deler (caching for MsigDB reduserer query tid men har en
+% storage overhead)
 % 3. Performance analyse av MIxT. Hvor er det overheadene er for en query? Overhead for mange samtidige queries?
 %
 % Metodologi:
-% 1. Kvik-MIxT vs 1000-R-linjer-MIxT? Og kanskje anektdoter som at container kunne flyttes til AWS. Eller noe helt annet.
+% 1. Kvik-MIxT vs 1000-R-linjer-MIxT? Og kanskje anektdoter som at container
+% kunne flyttes til AWS. Eller noe helt annet.
 % 2. En av de enklere web apps som er laget før. Eventuelt en benchmark app.
 % 3. MIxT operasjoner.
 %
 
 \subsection*{Use Case}
 
-% Foreslår å flytte dette til "Motivating Example", eventuelt til slutt i Methods som MiXT implementert ved bruk av microservices. Kanskje er sistnevnte bedre?
+% Foreslår å flytte dette til "Motivating Example", eventuelt til slutt i
+% Methods som MiXT implementert ved bruk av microservices. Kanskje er sistnevnte
+% bedre?
 
 We show the viability and need for Kvik by describing the MIxT application for
 exploring and comparing transcriptional profiles from blood and tumor samples.
@@ -387,21 +431,21 @@ association]{\includegraphics[width=2.8in]{figures/clinical-comp.png}%
 \label{fig_second_case}}
 \caption{Screenshots of the user interface in four of the six analysis tasks.
 Note that we combine visualization frameworks for both JavaScript and R to
-generate the visualizations. Specifically,
-sigmajs (a, \protect\url{sigmajs.org}), ggplot2(b, \protect\url{ggplot2.org}), and 
-D3 (c and d, \protect\url{d3js.org})} 
+generate the visualizations. Specifically, sigmajs (a,
+\protect\url{sigmajs.org}), ggplot2(b, \protect\url{ggplot2.org}), and D3 (c and
+d, \protect\url{d3js.org})} 
 \label{fig_sim}
 \end{figure*}
 
 \subsubsection*{Design and Implementation}
 The MIxT application is designed as a modern application consisting of multiple
-services that together provide an interactive web application. By composing an 
-application of a set of services we can substitute parts of the application without 
-re-writing the entire application. This type of architectural style is called a
-microservices architecture and is popular in 'web-scale' systems. For example if
-we want to use OpenCPU to interface with data analysis we can do so by simply
-exchanging the Kvik R service with OpenCPU. Both services communicate over HTTP
-and their interface is the same. 
+services that together provide an interactive web application. By composing an
+application of a set of services we can substitute parts of the application
+without re-writing the entire application. This type of architectural style is
+called a microservices architecture and is popular in 'web-scale' systems. For
+example if we want to use OpenCPU to interface with data analysis we can do so
+by simply exchanging the Kvik R service with OpenCPU. Both services communicate
+over HTTP and their interface is the same. 
 
 From our initial analyses we built
 an R package with functions to provide data and analysis to the different
