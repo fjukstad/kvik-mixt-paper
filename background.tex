@@ -1,0 +1,207 @@
+% 1M skyldes lønn til mennesker eller kun compute? (tid = penger hvis det er
+% mennesker)
+
+% BF: Har du en referanse vi kan bruke her? Dette er en ganske vanlig quote, men
+% husker ikke hvor jeg har sett den, Dette er veldig generelle greier, men vi
+% skulle hatt et par gode paper å sitere. 
+% LAB: Rob Finn (EBI) bruker denne: https://genomebiology.biomedcentral.com/articles/10.1186/gb-2011-12-8-125
+% LAB: Også har vi disse: https://www.veritasgenetics.com/mygenome
+In the past decade the generation of biological datasets has been unprecedented,
+and the famous "\$1000k genome, \$1M analysis"\cite{} has become more apparent.
+% mer om biologi og data 
+
+% Trenger litt tekst som sier at vi skal snakke om stats, presentasjon, dbs,
+% microservices og kobling av alle. 
+
+% R og stats 
+% LAB: To analyze eller To explore
+To analyze the growing biological data sets, there is now a number of analysis
+tools in various programming languages.\cite{} In R, there are popular package
+repositories such as CRAN \url{cran.r-project.org} or Bioconductor
+\url{bioconductor.org} where developers can share software packages and keep
+them up-to-date.  These repositories contain software packages for exploring
+high-throughput genomic data in one environment. This includes both
+pre-processing, e.g. cleaning, removing outliers, and analysing it with known
+statistical methods. In other languages such as Python or Go developers can
+choose bioinformatics libraries such as BioPython\cite{} and biogo\cite{}
+respectively.  To use these packages to their full potential researchers require
+a high level of coding skill, and 
+% LAB: Omskrive: To fully utilize these packages requires ...coding skills LAB:
+% ...og selv da er det ikke alt som enkelt kan løses, som sklaering i R, etc
+% LAB: Og hva er problemet og løsningen for dette (vis tools?) 
+However all of these software packages require users to have a
+high level of coding skills. 
+
+% Vis 
+% LAB: Henger ikke sammen med forrige
+% LAB: Bedre å starter med denne? Vis tools er løsningen, hvis de finnes for
+% problemet. Hvis ikke må sette i gang og kode.
+A key part of analysing biological data is to visualize it. Researchers often
+start data analysis by using simple visualization techniques to get a quick
+overview of the data. Continuing in the data analysis pipeline researchers can
+use more advanced visual techniques to explore the data either using
+software packages or complete data visualization applications. Traditionally
+data visualization applications have been built as desktop applications that
+require installation and setup by the user, but now the move is towards software
+that run in the web browser without any user setup. 
+
+% WIP WIP WIP
+% In systems biology there is a need for visualization tools that can make use
+% of the lastest statistical packages and interact with these. It is not enough
+% to visualize the results of an analysis pipeline, but interact with the
+% different steps from the final visualization. Examples of this interaction can
+% be modifying clustering parameters that are used in the analysis.
+
+% Data fra R til vis
+To visualize and share results from statistical analyses, the results are often
+exported to a data format such as comma-separated values (CSV) and
+then visualized using an external tool. This decouples data presentation and
+analysis.  
+% LAB: Hva er bra/dårlig med decoupling
+Through initiatives such as ApacheR and OpenCPU there has been a move
+towards embedding scientific computation in data visualization application. This
+removes the decoupling of statistical frameworks and interaction with the
+analysis results. 
+
+% Koble data sammen med db. 
+% LAB: Hva er sammenhengen med programming packages & viz tools?
+Interpreting the analysis results require integration of known biology, either
+from biological databases such as MSigDB\cite{} or KEGG\cite{}, or through
+scientific publications from reference databases such as PubMed\cite{}.
+Performing manual lookup into these databases is often tedious and error-prone,
+making it necessary to automate the task. Now as more databases provide REST
+APIs it is possible to provide software packages for automatic retrival of
+database information. In addition, since databases are continuously being
+updated, using a REST API to retrieve database information will ensure that the
+data is always kept up to date. 
+
+% Hvorfor bryr vi oss om både stats + DBs?  Skal vi si noe om at det blir
+% vanligere å bruke REST APIs fremfor å laste ned alt og lese ting lokalt
+
+% Lage apps som gjør alt dette. 
+
+% Hva er micro-services? 
+% LAB: Hadde forventet en beskrivelse av ett problem (motivert i paragrafene
+% overnfor), som microservices løser
+Microservice architectures structures applications into small reusable, loosely
+coupled parts. These communicate via lightweight programming language-agnostic
+protocols such as HTTP, making it possible to write single applications in
+multiple different programming languages. This makes it possible to use the most
+suitable programming language for each specific part. E.g. to use R and
+Bioconductor to analyse biological data, or C++ and OpenCV for high-performance
+computer vision tasks, or HTML, CSS, and JavaScript to build portable
+user-interfaces. To build a microservice application, developers bundle each
+service in a container that are deployed. Containers are built from
+configuration files which describe the operating system, software packages and
+versions of these. This makes reproducing an application trivial. The most
+popular implementation of a software container is Docker\footnote{\url{}}, but
+others such as Rkt\footnote{\url{}} exist. 
+
+
+% LAB: Related bio work? Annen microservice related work? Hvorfor ikke bare bruke de?
+
+
+\subsubsection*{Requirements} 
+From our experience building data exploration applications we have identified
+
+... the
+following requirements 
+
+\begin{enumerate}
+    \item A language-independent approach for integrating, or embedding,
+        statistical software, such as R, directly in interactive data
+        exploration applications.
+    % Ikke motivert behovet for up-to-date
+    \item A 
+        
+        Up-to-date interfaces to online databases providing meta-data for
+        understanding results from statistical analyses.
+    % Ikke sagt noe om maintance & deployment
+    \item Ease of software development, maintenance and deployment. 
+\end{enumerate} 
+
+\subsubsection*{Contributions} 
+Our contributions are: 
+\begin{enumerate}
+% men ikke visualization?
+\item An approach for developing data exploration applications for systems
+biology that combine statistical analyses with online databases.  
+\item A demonstration of its viability through N different applications. 
+\item Performance evaluation of its central data analysis component. 
+\end{enumerate} 
+
+
+\subsection*{Related Work} 
+% Hva er korrekt: "in" system biology eller "for" system biology?
+In this section we aim to cover the existing approaches for building interactive
+data exploration applications in systems biology. 
+
+% TODO: Add related work where somebody has built a system for exploring some
+% data where 
+
+% Det er en utfordring å ha related work tidlig i dette paperet. Slik det er nå,
+% er det ikke sikkert leseren skjønner hvorfor diss systemene diskuteres, hva
+% som er sammenhengen mellom de, og hva det har å gjrøe med Kvik.
+
+\subsubsection*{OpenCPU} 
+OpenCPU is a system for embedded scientific computing and reproducible
+research.\cite{opencpu} It provides an HTTP API to the R programming language to
+provide an interface with statistical methods. It enables users to make function
+calls to any R package and retrieve the results in a wide variety of formats
+such as json or pdf. 
+Users can chose to host their own R server or use public servers, and OpenCPU
+works in a single-user setting within an R session, or a multi-user setting
+facilitating multiple parallel requests. 
+OpenCPU provides a Javascript library for interfacing with R, as well as Docker
+containers for easy installation. OpenCPU has been used to build multiple
+applications.\footnote{\url{opencpu.org/apps.html}}.
+% Design patterns er ikke nevnt enda
+In Kvik we provide a package
+to interface with OpenCPU servers from the Go programming language since it
+follows the design pattern we have chosen to interface with data and analyses. 
+
+
+\subsubsection*{Renjin} 
+% Skjønner ikke poenget med Renjin. Dvs hva fordelen med å kjøre R kode på en
+% JVM er.
+Renjin is a JVM-based interpreter for the R programming language.\cite{renjin}
+It targets developers who want to integrate the R interpreter in web
+applications. Since it is built on top of the JVM it allows developers to write
+data exploration applications that interact directly with R code. Although
+Renjin supports a large number of CRAN packages it cannot access any R package
+(e.g. from BioConductor) without modification. This makes the programming effort
+to use Renjin as an interface with R higher. 
+
+\subsubsection*{Shiny} 
+Shiny is a web application framework for R.\cite{shiny} It allows developers to
+build web applications in R without having to have any knowledge about HTML, CSS
+or Javascript. It provides a widget library to provide more advanced Javascript
+visualizations such as Leaflet for maps or threejs for WebGL-accellerated
+graphics. Developers can choose to host their own web server with the user-built
+Shiny Apps, or host them on public servers. Shiny forces users to implement data
+exploration applications in R, limiting the functionality to the 
+widgets and libraries in Shiny. 
+
+% Synes SparkR burde nevnes
+
+\subsubsection*{Biogo} 
+Biogo is a bioinformatics library in Go. It provides functionality to analyse
+genomic and metagenomc datasets in the go programming
+language.\cite{Kortschak005033} Using the go programming language the developers
+are able to provide high-performance parallel processing in a clean and simple
+programming language. 
+
+\subsubsection*{Cytoscape} 
+Cytoscape is an open source software platform for visualizing complex
+networks and integrating these with any type of attribute
+data\cite{shannon2003cytoscape}. It allows for analysis and visualization in the
+same platform. Users can add additional features, such as databases connections
+or new layouts, through Apps. To bring the visualization and analysis
+capabilities to the web the creators of Cytoscape have developed
+Cytoscape.js\footnote{\url{js.cytoscapejs.org}}, a Javascript library to create
+interactive graph visualizations. 
+
+cyREST. 
+
+
+
