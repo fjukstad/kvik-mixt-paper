@@ -12,6 +12,7 @@ and the famous "\$1000k genome, \$1M analysis"\cite{} has become more apparent.
 % Trenger litt tekst som sier at vi skal snakke om stats, presentasjon, dbs,
 % microservices og kobling av alle. 
 
+% R og stats 
 To analyze the growing biological data sets, there is now a number of analysis
 tools in various programming languages.\cite{} In R, there are popular package
 repositories such as CRAN \url{cran.r-project.org} or Bioconductor
@@ -24,6 +25,17 @@ choose bioinformatics libraries such as BioPython\cite{} and biogo\cite{}
 respectively.  However all of these software packages require users to have a
 high level of coding skills. 
 
+% Vis 
+A key part of analysing biological data is to visualize it. Researchers often
+start data analysis by using simple visualization techniques to get a quick
+overview of the data. Continuing in the data analysis pipeline researchers can
+use more advanced visual techniques to explore the data either using
+software packages or complete data visualization applications. Traditionally
+data visualization applications have been built as desktop applications that
+require installation and setup by the user, but now the move is towards software
+that run in the web browser without any user setup. 
+
+% Data fra R til vis
 To visualize and share results from statistical analyses, the results are often
 exported to a data format such as comma-separated values (CSV) and
 then visualized using an external tool. This decouples data presentation and
@@ -32,16 +44,22 @@ towards embedding scientific computation in data visualization application. This
 removes the decoupling of statistical frameworks and interaction with the
 analysis results. 
 
+% Koble data sammen med db. 
 Interpreting the analysis results require integration of known biology, either
 from biological databases such as MSigDB\cite{} or KEGG\cite{}, or through
 scientific publications from reference databases such as PubMed\cite{}.
 Performing manual lookup into these databases is often tedious and error-prone,
-making it necessary to automate the task. 
+making it necessary to automate the task. Now as more databases provide REST
+APIs it is possible to provide software packages for automatic retrival of
+database information. 
+
 % Hvorfor bryr vi oss om både stats + DBs?  Skal vi si noe om at det blir
 % vanligere å bruke REST APIs fremfor å laste ned alt og lese ting lokalt
 
 % Her ser det ut som teksten er work-in-progress, siden de neste 4 § sier
 % omtrent det samme
+
+% Lage apps som gjør alt dette. 
 
 % Hva er micro-services? 
 Microservice architectures structures applications into small reusable, loosely
@@ -53,27 +71,24 @@ analyse biological data, or C++ and OpenCV for high-performance computer vision
 tasks, or HTML, CSS, and JavaScript to build portable user-interfaces. 
 
 % WIP WIP WIP
-
 In systems biology there is a need for visualization tools that can make use of
 the lastest statistical packages and interact with these. It is not enough to
 visualize the results of an analysis pipeline, but interact with the different
 steps from the final visualization. Examples of this interaction can be
 modifying clustering parameters that are used in the analysis.
 
-While there are visualization frameworks for researchers with a background in
-programming, there is a need to build data exploration applications for
-non-coders with graphical user interfaces.
-
-
-
-We have 
 \subsubsection*{Requirements} 
+From our experience building data exploration applications we have  ... the
+following requirements 
+
 \begin{enumerate}
     \item A language-independent approach for integrating, or embedding,
         statistical software, such as R, directly in interactive data
         exploration applications.
     % Ikke motivert behovet for up-to-date
-    \item Up-to-date interfaces to online databases providing meta-data for
+    \item A 
+        
+        Up-to-date interfaces to online databases providing meta-data for
         understanding results from statistical analyses.
     % Ikke sagt noe om maintance & deployment
     \item Ease of software development, maintenance and deployment. 
