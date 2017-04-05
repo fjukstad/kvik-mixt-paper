@@ -35,6 +35,13 @@ data visualization applications have been built as desktop applications that
 require installation and setup by the user, but now the move is towards software
 that run in the web browser without any user setup. 
 
+% WIP WIP WIP
+In systems biology there is a need for visualization tools that can make use of
+the lastest statistical packages and interact with these. It is not enough to
+visualize the results of an analysis pipeline, but interact with the different
+steps from the final visualization. Examples of this interaction can be
+modifying clustering parameters that are used in the analysis.
+
 % Data fra R til vis
 To visualize and share results from statistical analyses, the results are often
 exported to a data format such as comma-separated values (CSV) and
@@ -51,13 +58,12 @@ scientific publications from reference databases such as PubMed\cite{}.
 Performing manual lookup into these databases is often tedious and error-prone,
 making it necessary to automate the task. Now as more databases provide REST
 APIs it is possible to provide software packages for automatic retrival of
-database information. 
+database information. In addition, since databases are continuously being
+updated, using a REST API to retrieve database information will ensure that the
+data is always kept up to date. 
 
 % Hvorfor bryr vi oss om både stats + DBs?  Skal vi si noe om at det blir
 % vanligere å bruke REST APIs fremfor å laste ned alt og lese ting lokalt
-
-% Her ser det ut som teksten er work-in-progress, siden de neste 4 § sier
-% omtrent det samme
 
 % Lage apps som gjør alt dette. 
 
@@ -69,13 +75,6 @@ different programming languages. This makes it possible to use the most suitable
 programming language for each specific part. E.g. to use R and Bioconductor to
 analyse biological data, or C++ and OpenCV for high-performance computer vision
 tasks, or HTML, CSS, and JavaScript to build portable user-interfaces. 
-
-% WIP WIP WIP
-In systems biology there is a need for visualization tools that can make use of
-the lastest statistical packages and interact with these. It is not enough to
-visualize the results of an analysis pipeline, but interact with the different
-steps from the final visualization. Examples of this interaction can be
-modifying clustering parameters that are used in the analysis.
 
 \subsubsection*{Requirements} 
 From our experience building data exploration applications we have  ... the
