@@ -25,16 +25,18 @@ high-throughput genomic data in one environment. This includes both
 pre-processing, e.g. cleaning, removing outliers, and analysing it with known
 statistical methods. In other languages such as Python or Go developers can
 choose bioinformatics libraries such as BioPython\cite{} and biogo\cite{}
-respectively.  
-% LAB: Omskrive: To fully utilize these packages requires ...coding skills
-% LAB: ...og selv da er det ikke alt som enkelt kan løses, som sklaering i R, etc
+respectively.  To use these packages to their full potential researchers require
+a high level of coding skill, and 
+% LAB: Omskrive: To fully utilize these packages requires ...coding skills LAB:
+% ...og selv da er det ikke alt som enkelt kan løses, som sklaering i R, etc
 % LAB: Og hva er problemet og løsningen for dette (vis tools?) 
 However all of these software packages require users to have a
 high level of coding skills. 
 
 % Vis 
 % LAB: Henger ikke sammen med forrige
-% LAB: Bedre å starter med denne? Vis tools er løsningen, hvis de finnes for problemet. Hvis ikke må sette i gang og kode.
+% LAB: Bedre å starter med denne? Vis tools er løsningen, hvis de finnes for
+% problemet. Hvis ikke må sette i gang og kode.
 A key part of analysing biological data is to visualize it. Researchers often
 start data analysis by using simple visualization techniques to get a quick
 overview of the data. Continuing in the data analysis pipeline researchers can
@@ -45,11 +47,11 @@ require installation and setup by the user, but now the move is towards software
 that run in the web browser without any user setup. 
 
 % WIP WIP WIP
-In systems biology there is a need for visualization tools that can make use of
-the lastest statistical packages and interact with these. It is not enough to
-visualize the results of an analysis pipeline, but interact with the different
-steps from the final visualization. Examples of this interaction can be
-modifying clustering parameters that are used in the analysis.
+% In systems biology there is a need for visualization tools that can make use
+% of the lastest statistical packages and interact with these. It is not enough
+% to visualize the results of an analysis pipeline, but interact with the
+% different steps from the final visualization. Examples of this interaction can
+% be modifying clustering parameters that are used in the analysis.
 
 % Data fra R til vis
 To visualize and share results from statistical analyses, the results are often
@@ -80,19 +82,30 @@ data is always kept up to date.
 % Lage apps som gjør alt dette. 
 
 % Hva er micro-services? 
-% LAB: Hadde forventet en beskrivelse av ett problem (motivert i paragrafene overnfor), som microservices løser
+% LAB: Hadde forventet en beskrivelse av ett problem (motivert i paragrafene
+% overnfor), som microservices løser
 Microservice architectures structures applications into small reusable, loosely
 coupled parts. These communicate via lightweight programming language-agnostic
 protocols such as HTTP, making it possible to write single applications in
-different programming languages. This makes it possible to use the most suitable
-programming language for each specific part. E.g. to use R and Bioconductor to
-analyse biological data, or C++ and OpenCV for high-performance computer vision
-tasks, or HTML, CSS, and JavaScript to build portable user-interfaces. 
+multiple different programming languages. This makes it possible to use the most
+suitable programming language for each specific part. E.g. to use R and
+Bioconductor to analyse biological data, or C++ and OpenCV for high-performance
+computer vision tasks, or HTML, CSS, and JavaScript to build portable
+user-interfaces. To build a microservice application, developers bundle each
+service in a container that are deployed. Containers are built from
+configuration files which describe the operating system, software packages and
+versions of these. This makes reproducing an application trivial. The most
+popular implementation of a software container is Docker\footnote{\url{}}, but
+others such as Rkt\footnote{\url{}} exist. 
+
+
 % LAB: Related bio work? Annen microservice related work? Hvorfor ikke bare bruke de?
 
 
 \subsubsection*{Requirements} 
-From our experience building data exploration applications we have  ... the
+From our experience building data exploration applications we have identified
+
+... the
 following requirements 
 
 \begin{enumerate}
