@@ -101,23 +101,26 @@ but others such as Rkt\footnote{\url{}} exist.
 
 
 \subsubsection*{Requirements} 
-From our experience building data exploration applications we have identified
+From our experience building data exploration applications we have identified a
+set of reusable services that an application developers can use to build a wide
+range of applications. The key services of a biological data exploration
+application are i) a service for executing for statistical analyses in languages
+such as R, and ii) a query service for retrieving meta-data on genes or other
+biological entities. On top of these services is possible to build any number 
 
-... the
-following requirements 
+To build these services we need a framework that fulfills the following
+requirements: 
 
 \begin{enumerate}
-    \item A language-independent approach for integrating, or embedding,
-        statistical software, such as R, directly in interactive data
+    \item It provides language-independent approach for integrating, or
+        embedding, statistical software, such as R, directly in interactive data
         exploration applications.
-    % Ikke motivert behovet for up-to-date
-    \item A 
-        
-        Up-to-date interfaces to online databases providing meta-data for
-        understanding results from statistical analyses.
-    % Ikke sagt noe om maintance & deployment
-    \item Ease of software development, maintenance and deployment. 
+    \item It profices an interface to online databases to provide meta-data to
+        biological entities. % liker ikke entities-ordet, må ha noe annet 
+    \item A framework with components that are easy to develop, maintain and
+        deploy. 
 \end{enumerate} 
+
 
 \subsubsection*{Contributions} 
 Our contributions are: 
