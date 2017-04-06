@@ -1,15 +1,44 @@
-\subsection*{Data analysis} 
-% Synes det blir litt galt å kalle dette our approach. Dvs det er jo det. Men er
-% ikke så overbevisende at andre skal gjøre dette. En bedre struktur er kanskje
-% å først bruke det som står her som en motivating example for microservice
-% apporach, og deretter i neste avsnitt beskrive "the microservice apporach" som
-% noe andre bør bruke fordi det letter arbeidet med å lage ting som i "the
-% motivating example"
-
 In this section we motivate our microservice approach by describing how we
-developed an advanced web application for ...det MIxT gjør. We believe many
-system biology data exploration applications are developed similarly and that
-they can therefore also benefit from the microservice approach.
+developed a web application for exploring and comparing transcriptional profiles
+from blood and tumor samples, called MIxT Blood-Tumor. We describe the process
+from initial data analysis to the final application, highlighting the importance
+of language-agnostic services to facilitate the use of different tools in
+different parts of the application. This is especially important in
+interdisciplinary teams where researchers use a wide range of tools. We believe
+many system biology data exploration applications are developed similarly and
+that they can therefore also benefit from the microservice approach. 
+
+% Bruke MIxT til å fortelle hvordan de forskjellige delene ble gjort og hvordan
+% man kan bygge en app uten å gjore alt på nytt igjen, eller hvertfall kunne
+% bygge på det man har. 
+% 1) les inn data (bioconductor) 
+% 2) se på de slå sammen, kanskje enkle vis
+% 3) gjøre analyser
+% 4) koble resultat opp mot db
+% 5) gå gjennom resultatene og db interaktivt.
+% 6) del med andre 
+
+\subsection*{Analyzing biological datasets} 
+We analysed a gene expression dataset from the Norwegian Women and Cancer
+(NOWAC) study. The dataset contains ... 
+% (words from Vanessa's paper, more to
+come) 
+
+% BF: Hei LA var dette noe sånn du så for deg? 
+We use R and various packages from Bioconductor and CRAN to analyse gene
+expression datasets. From the initial analyses we built an R package that makes
+it possible to share results between researchers within, and outside our group.
+To build an application on top of the analyses there are two possibilities,
+either develop a script that generates a static output file (e.g. generate a
+html report or CSV files that contain the result data) build an application that
+uses this static data, or use a framework such as Shiny or OpenCPU to create a
+dynamic application that interface directly with the R code. To update an
+application building on top of a static output file requires manual execution of
+the output script, while using Shiny or OpenCPU alleviates this task, 
+
+
+
+
 %
 for analysing gene expression data in systems biology, and how it shaped the
 intergration of statistics in developing our data exploration applications. 
