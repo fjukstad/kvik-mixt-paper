@@ -23,46 +23,41 @@ that they can therefore also benefit from the microservice approach.
 
 % 6) del med andre 
 
-\subsection*{Analyzing biological datasets} 
+\subsection*{MIxT} 
+\subsubsection*{Analyzing biological datasets} 
 We analyzed profiled RNA in blood and matched tumor from 173 patients in the
 Norwegian Women and Cancer (NOWAC) study. Each profile measures the expression
-of 16 782 unique genes. 
+of 16 782 unique genes. We used WGCNA\cite{} to cluster the genes in each tissue
+based on co-expression. From these clusters of genes, called modules, we
+investigated their relationship to known biological processes. 
 
 % BF: Hei LA var dette noe sånn du så for deg? 
 We used R and various packages from Bioconductor and CRAN to pre-process and
-analyze the gene expression dataset. 
-From the initial analyses we built an R package that makes
-it possible to share results between researchers within, and outside our group.
-To build an application on top of the analyses there are two possibilities: i)
-develop a script that generates a static output file (e.g. generate a
-html report or CSV files that contain the result data) and build an application
-that uses this static data; or ii) use a framework such as Shiny or OpenCPU to
-create a dynamic application that interface directly with the R code. To update
-an application that builds on top of a static output file
-requires manual execution of the output script, while using Shiny or OpenCPU
-this task.  
+analyze the gene expression dataset.  From the initial analyses we built an R
+package that makes it possible to share results between researchers within, and
+outside our group. To build an application on top of the analyses there are two
+possibilities: i) develop a script that generates a static output file (e.g.
+generate a HTML report or CSV files that contain the result data) and build an
+application that uses this static data; or ii) use a framework such as Shiny or
+OpenCPU to create a dynamic application that interface directly with the R code.
+To update an application that builds on top of a static output file requires
+manual execution of the output script, while using Shiny or OpenCPU this task. 
+
+From the resulting data it is possible to query reference databases to provide a
+deeper insight into the underlying biology. 
 
 % Ville ikke sagt "we typically". Men heller beskrevet konkret hva som ble gjort
 % for MIxT. Generealisering kan gjøres i neste avsnitt der microservice apporach
 % blir beskrevet.  Også ville jeg likt å se tall her. Hvor stort er datasettet?
 % Hvor lang tid tar det? Er dette i critial path for data exploration eller bare
 % pre-processing? 
-We typically start off with a messy dataset that needs to go through
-several stages of clean-up and preprocessing before we can analyze it.
 % Hvordan gjøres dette? Er dette egentlig protptyping, og dermed en slags
 % requirements spec for de endelige visualiseringene? Kan dette gjenbrukes eller
 % er det mest bruk-og-kast? Hvem gjør dette? 
-After the
-preprocessing we typically develop some simple visualizations that help discover 
-simple patterns in the data. 
-% Apply or develop for MIxT?
-After this quick dirty data exploration we start to
-apply more advanced statistical methods to look for more intricate patterns in
-the data.
-% Kommer litt overaskende siden det aldri ble sagt hva formålet med dette var :)
+
 % Database lookup for hva?
-After this analysis we often end up with genes or lists of genes of
-interest that we can use to guide database lookup.
+% After this analysis we often end up with genes or lists of genes of
+% interest that we can use to guide database lookup.
 % Hva med non-quirky visualiseringer integrert med database lookup?
 % Hva med visualiseringer for andre brukere? Og data?
 % Hva med neste verktøy, dvs MIxT for eksempel for methylation + gene
@@ -71,16 +66,27 @@ interest that we can use to guide database lookup.
 % Savner en diskusjon om performance, resource usage, og andre krav til MiXT
 
 % Tror det er enklere å henge med hvis dette blir flettet inn i teksten over
-In terms of data analysis code, the preprocessing steps typically consist of
-one or more R scripts that we knit \cite{knitr} into PDF reports that we can
-revisit later. From these scripts we end up with analysis-ready datasets that
-can be shared within the group. The remaining downstream analysis often starts
-out in scripts, that are built into R packages with analysis code that can be
-shared between researchers. 
+% In terms of data analysis code, the preprocessing steps typically consist of
+% one or more R scripts that we knit \cite{knitr} into PDF reports that we can
+% revisit later. From these scripts we end up with analysis-ready datasets that
+% can be shared within the group. The remaining downstream analysis often starts
+% out in scripts, that are built into R packages with analysis code that can be
+% shared between researchers. 
 
-\subsection{Query reference databases} 
+\subsubsection*{Query reference databases} 
+A large part of biological data research is to link the results to known biology
+from literature or reference databases. In MIxT we analyzed gene expression
+data using a clustering method that generated gene lists that we could then
+investigate its association to known biological processes. 
 
-\subsection{Build an application} 
+One such database with information on biological processes is the Molecular
+Signnature Database (MSigDB).  
+
+
+From the gene expression data we have analyzed a big part of interpretation of
+the results is to investigate the 
+
+\subsubsection*{Build an application} 
 
 \subsection{Kvik micoservices}
 % Noe av dette er kanskje allerede i "Building applications"
@@ -98,7 +104,8 @@ Microservice 2: Statistical analyses...
 % Også er det viktig å ikke glemme "system aspects" performance, management,
 % deployment, etc for disse. Det kn enten forklares her eller senere.
 
-% Det er ikke forklart hvordan ting henger sammen i Kvik, så dette er vanskelig å forstå
+% Det er ikke forklart hvordan ting henger sammen i Kvik, så dette er vanskelig
+% å forstå
 With this process in mind, we designed the interface to the R programming
 language in Kvik. We want to make it possible to call any function from an R
 package and return its results either as plain text, such as comma-separated
@@ -110,6 +117,8 @@ ordinary R session or in the data exploration application itself.
 
 Similar to how our analysis process shaped the R interface, it also defined how
 we want to build interfaces to online databases. 
+
+% lokalt: fortere, kan cache, kan få bort last fra de sentrale serverne 
 
 % Kan også beskrive hva slags interfaces de eskponerer, hva som er performance
 % characteristics, programmerings utforderinger, og tilatt bruk
