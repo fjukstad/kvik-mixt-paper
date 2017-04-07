@@ -1,10 +1,13 @@
-In this section we motivate our microservice approach by describing how we
+In this section we first motivate our microservice approach by describing how we
 developed a web application for exploring and comparing transcriptional profiles
 from blood and tumor samples, called MIxT Blood-Tumor. We describe the process
 from initial data analysis to the final application, highlighting the importance
 of language-agnostic services to facilitate the use of different tools in
 different parts of the application. This is especially important in
-interdisciplinary teams where researchers use a wide range of tools. We believe
+interdisciplinary teams where researchers use a wide range of tools. After the 
+description of our approach we generalize the ideas to a set of principles and
+services that can be reused and shared between projects. 
+We believe
 many system biology data exploration applications are developed similarly and
 that they can therefore also benefit from the microservice approach. 
 
@@ -14,8 +17,10 @@ that they can therefore also benefit from the microservice approach.
 % 1) les inn data (bioconductor) 
 % 2) se på de slå sammen, kanskje enkle vis
 % 3) gjøre analyser
+
 % 4) koble resultat opp mot db
 % 5) gå gjennom resultatene og db interaktivt.
+
 % 6) del med andre 
 
 \subsection*{Analyzing biological datasets} 
@@ -72,6 +77,10 @@ revisit later. From these scripts we end up with analysis-ready datasets that
 can be shared within the group. The remaining downstream analysis often starts
 out in scripts, that are built into R packages with analysis code that can be
 shared between researchers. 
+
+\subsection{Query reference databases} 
+
+\subsection{Build an application} 
 
 \subsection{Kvik micoservices}
 % Noe av dette er kanskje allerede i "Building applications"
