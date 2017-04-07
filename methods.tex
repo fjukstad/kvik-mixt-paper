@@ -19,39 +19,23 @@ that they can therefore also benefit from the microservice approach.
 % 6) del med andre 
 
 \subsection*{Analyzing biological datasets} 
-We analysed a gene expression dataset from the Norwegian Women and Cancer
-(NOWAC) study. The dataset contains ... 
-% (words from Vanessa's paper, more to
-come) 
+We analyzed profiled RNA in blood and matched tumor from 173 patients in the
+Norwegian Women and Cancer (NOWAC) study. Each profile measures the expression
+of 16 782 unique genes. 
 
 % BF: Hei LA var dette noe sånn du så for deg? 
-We use R and various packages from Bioconductor and CRAN to analyse gene
-expression datasets. From the initial analyses we built an R package that makes
+We used R and various packages from Bioconductor and CRAN to pre-process and
+analyze the gene expression dataset. 
+From the initial analyses we built an R package that makes
 it possible to share results between researchers within, and outside our group.
-To build an application on top of the analyses there are two possibilities,
-either develop a script that generates a static output file (e.g. generate a
-html report or CSV files that contain the result data) build an application that
-uses this static data, or use a framework such as Shiny or OpenCPU to create a
-dynamic application that interface directly with the R code. To update an
-application building on top of a static output file requires manual execution of
-the output script, while using Shiny or OpenCPU alleviates this task, 
-
-
-
-
-%
-for analysing gene expression data in systems biology, and how it shaped the
-intergration of statistics in developing our data exploration applications. 
-% Ville omskrevet dette: Problemet som skal løses krever tværfaglig gruppe;
-% statistikere utvikler nye metoder for ...; epidemiologer bidrar med ...;
-% computer scientists må være med fordi...; Alle har sine framework, verktøy, og
-% språk de liker. I MIxT brukte statistikerene R fordi....; CS ville bruke go
-% siden...; I praktisik ikke mulig å bli enig/ lære opp alle i å bruke samme
-% språk, derfor ...
-Our interdisciplinary research group includes statisticians, epidemiologists,
-computer scientists, and biologists, making one of our
-% Uklart hva som menes med "tools already in use"
-aims to develop tools that work well together with the tools already in use. 
+To build an application on top of the analyses there are two possibilities: i)
+develop a script that generates a static output file (e.g. generate a
+html report or CSV files that contain the result data) and build an application
+that uses this static data; or ii) use a framework such as Shiny or OpenCPU to
+create a dynamic application that interface directly with the R code. To update
+an application that builds on top of a static output file
+requires manual execution of the output script, while using Shiny or OpenCPU
+this task.  
 
 % Ville ikke sagt "we typically". Men heller beskrevet konkret hva som ble gjort
 % for MIxT. Generealisering kan gjøres i neste avsnitt der microservice apporach
