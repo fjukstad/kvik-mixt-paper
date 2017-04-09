@@ -1,20 +1,20 @@
-In this section we first motivate our microservice approach based on our experiences developing web applications for SYSTEMS BIOLOGY? We use as a case study a web application for exploring and comparing transcriptional profiles
-from blood and tumor samples, called MIxT Blood-Tumor. 
-We describe the process
-from initial data analysis to the final application, highlighting the importance
+In this section we first motivate our microservice approach based on our
+experiences developing applications in system biology.
+We use as a case study a web application for exploring and comparing
+transcriptional profiles from blood and tumor samples, called MIxT Blood-Tumor. 
+We describe the process from initial data analysis to the final application,
+highlighting the importance
 % LAB + performance/scalability/deployment (dvs noe som er kvantifiserbart)
 of language-agnostic services to facilitate the use of different tools in
 different parts of the application. This is especially important in
-interdisciplinary teams where researchers use a wide range of tools. 
-We believe
-many system biology data exploration applications are developed similarly and
-that they can therefore also benefit from the microservice approach. 
+interdisciplinary teams where researchers use a wide range of tools and
+programming languages.  
+We believe many systems biology data exploration applications are developed
+similarly and that they can therefore also benefit from the microservice
+approach. 
 Based on our experiences, we therefore generalize the ideas to a set of principles and
-services that can be reused and shared between 
-% LAB: projects -> data exploration applications?
-projects. 
+services that can be reused and shared between applications. 
 % LAB: + Design and impl of micro-services.
-
 
 % Bruke MIxT til å fortelle hvordan de forskjellige delene ble gjort og hvordan
 % man kan bygge en app uten å gjore alt på nytt igjen, eller hvertfall kunne
@@ -31,47 +31,55 @@ projects.
 \subsection*{MIxT} 
 We analyzed profiled RNA in blood and matched tumor from 173 patients in the
 Norwegian Women and Cancer (NOWAC) study. Each profile measures the expression
-of 16 782 unique genes. We used WGCNA\cite{} to cluster the genes in each tissue
+of 16 782 unique genes. We used Weighted Gene Correlation Network Analysis
+(WGCNA)\cite{langfelder2008wgcna} to cluster the genes in each tissue
 based on co-expression. From these clusters of genes, called modules, we
 investigated their relationship to known biological processes. 
 
-To make it possible to browse and explore the results interactively, we built a
-web application that lets users explore modules, the association between modules
-from different tissues, the relationship between modules and clinical variables,
-and explore the relationship between modules and known biological processes.
+To make it possible to browse and explore the results interactively, we built an
+R package for power-users, in addition to a web application. Both allows users
+to explore modules, the association between modules from different tissues, the
+relationship between modules and clinical variables, and explore the
+relationship between modules and known biological processes. 
 
 \subsubsection*{Analyzing biological datasets} 
-% LAB: Begynne med en paragraf med poenget for MIxT? Dvs hva brukeren av MiXT skal bruke den til.
 
 % BF: Hei LA var dette noe sånn du så for deg? 
 % LAB: Generelt; 1. Hva var problemet? Hva ble gjort? Hvordan?
-% LAB: Så for R: 1. Hva slags analyse skal gjøres?; det ble vel utviklet nye statistiske/ bioinformatikk metoder (som er tidligere publisert?); R fordi det er velegnet for å utvikle nye metoder...
+% LAB: Så for R: 1. Hva slags analyse skal gjøres?; det ble vel utviklet nye
+% statistiske/ bioinformatikk metoder (som er tidligere publisert?); R fordi det
+% er velegnet for å utvikle nye metoder...
 % LAB: Deretter: visualisering/ web app... 
 % LAB: Også: integrasjon av visualisering/ web app + R
 % LAB: integrasjon mot databaser
 % LAB: Tilslutt: hvordan den er deployet.
-We used R and various packages from Bioconductor and CRAN to pre-process and
-analyze the gene expression dataset.  
-% LAB: hva menes med share results? Explore? Communicate?
-From the initial analyses we built an R
-package that makes it possible to share results between researchers within, and
-outside our group. 
-% LAB: Ble begge brukt? Ville skrevet denne om slik at det var klart hva som var gjort, og eventuelt hatt med den andre som en diskusjon på noe som ikke ble gjort og hvorfor.
-To build an application on top of the analyses there are two
-possibilities: i) develop a script that generates a static output file (e.g.
-generate a HTML report or CSV files that contain the result data) and build an
-application that uses this static data; or ii) use a framework such as Shiny or
-OpenCPU to create a dynamic application that interface directly with the R code.
-To update an application that builds on top of a static output file requires
-manual execution of the output script, while using Shiny or OpenCPU this task. 
+We used R and packages from Bioconductor and CRAN to pre-process, develop
+methods for. and analyze our gene expression dataset.\footnote{See Supplementary
+information in \cite{mixt} for more information} Using R it is possible to make
+use of the wealth of packages for analyzing biomolecular data and build upon
+them. From the analyzes we built we wanted to build a web application that could
+let users interact with the data. 
 
-% LAB: possible -> necessary; hvordan det er gjort; og hvorfor...
+It is possible to export the results that later can be built into
+a data visualization application, but this decouples presentation and
+analysis. We opted for an approach that makes it possible for us to execute data
+analyses on demand, making it possible to modify analysis parameters at runtime
+in addition to keeping all data up to date. 
+%meh up to date, tror vi må ha noe annet. 
+
+% To build an application on top of the analyses there are two
+% possibilities: i) develop a script that generates a static output file (e.g.
+% generate a HTML report or CSV files that contain the result data) and build an
+% application that uses this static data; or ii) use a framework such as Shiny or
+% OpenCPU to create a dynamic application that interface directly with the R code.
+% To update an application that builds on top of a static output file requires
+% manual execution of the output script, while using Shiny or OpenCPU this task. 
+
 From the resulting data it is possible to query reference databases to provide a
 deeper insight into the underlying biology. 
 
-% Ville ikke sagt "we typically". Men heller beskrevet konkret hva som ble gjort
-% for MIxT. Generealisering kan gjøres i neste avsnitt der microservice apporach
-% blir beskrevet.  Også ville jeg likt å se tall her. Hvor stort er datasettet?
+% Generealisering kan gjøres i neste avsnitt der microservice apporach
+% blir beskrevet. Også ville jeg likt å se tall her. Hvor stort er datasettet?
 % Hvor lang tid tar det? Er dette i critial path for data exploration eller bare
 % pre-processing? 
 % Hvordan gjøres dette? Er dette egentlig protptyping, og dermed en slags
@@ -88,7 +96,6 @@ deeper insight into the underlying biology.
 
 % Savner en diskusjon om performance, resource usage, og andre krav til MiXT
 
-% Tror det er enklere å henge med hvis dette blir flettet inn i teksten over
 % In terms of data analysis code, the preprocessing steps typically consist of
 % one or more R scripts that we knit \cite{knitr} into PDF reports that we can
 % revisit later. From these scripts we end up with analysis-ready datasets that
@@ -109,7 +116,7 @@ Signnature Database (MSigDB).
 From the gene expression data we have analyzed a big part of interpretation of
 the results is to investigate the 
 
-\subsubsection*{Build an application} 
+\subsubsection*{Interactive Visualizations}  
 
 \subsection{Kvik micoservices}
 % Noe av dette er kanskje allerede i "Building applications"
@@ -118,7 +125,8 @@ Based on the development of MiXT and other data exploration tools, we have
 generalized our experience into the following design principle guidelines and
 microservices provided by the Kvik framework:
 
-Principle 1: language-agnostic (samme har de funnet ut i blant annet Facebook for Thrift)
+Principle 1: language-agnostic (samme har de funnet ut i blant annet Facebook
+for Thrift)
 Principle 2:
 
 Microservice 1: Databases...
