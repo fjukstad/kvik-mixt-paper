@@ -97,38 +97,50 @@ versions of these. This makes reproducing an application a trivial task. The
 most popular implementation of a software container is Docker\footnote{\url{}},
 but others such as Rkt\footnote{\url{}} exist.  
 
+% Har sett et par (bla alex lex sin siste og en VR-artikkel fra i fjor) at det 
+% er vanlig med et avsnitt på slutten av bg/intro som beskriver hva artikkelen
+% handler om. 
+In this paper we describe a novel approach for building data exploration
+applications in systems biology. We show that by building applications as a set
+of services it is possible to reuse and share its components between
+applications. In addition, by packaging the services using container technology
+we promote reproducible research. We have used our approach to build a number of
+applications, both command-line and web-based. In this paper we show the
+viability of our approach by using a web-application, MIxT, for exploring and
+comparing transcriptional profiles from blood and tumor samples. 
+
 % LAB: Related bio work? Annen microservice related work? Hvorfor ikke bare bruke de?
 
-
-\subsubsection*{Requirements} 
+\section*{Requirements} 
 From our experience building data exploration applications we have identified a
-set of reusable services that an application developers can use to build a wide
+set of reusable services that application developers can use to build a wide
 range of applications. The key services of a biological data exploration
 application are i) a service for executing for statistical analyses in languages
 such as R, and ii) a query service for retrieving meta-data on genes or other
-biological entities. On top of these services is possible to build any number 
+biological entities. On top of these services is possible to build any number
+applications and these can be reused by different applications. 
 
 To build these services we need a framework that fulfills the following
 requirements: 
 
 \begin{enumerate}
-    \item It provides language-independent approach for integrating, or
+    \item It provides a language-independent approach for integrating, or
         embedding, statistical software, such as R, directly in interactive data
         exploration applications.
-    \item It profices an interface to online databases to provide meta-data to
+    \item It provides an interface to online databases to provide meta-data to
         biological entities. % liker ikke entities-ordet, må ha noe annet 
-    \item A framework with components that are easy to develop, maintain and
-        deploy. 
+    \item Its components should be easy to develop, maintain, deploy and share
+        between projects. 
 \end{enumerate} 
 
 
-\subsubsection*{Contributions} 
-Our contributions are: 
-\begin{enumerate}
-% men ikke visualization?
-\item An approach for developing data exploration applications for systems
-biology that combine statistical analyses with online databases.  
-\item A demonstration of its viability through N different applications. 
-\item Performance evaluation of its central data analysis component. 
-\end{enumerate} 
+% \subsubsection*{Contributions} 
+% Our contributions are: 
+% \begin{enumerate}
+% % men ikke visualization?
+% \item An approach for developing data exploration applications for systems
+% biology that combine statistical analyses with online databases.  
+% \item A demonstration of its viability through N different applications. 
+% \item Performance evaluation of its central data analysis component. 
+% \end{enumerate} 
 
