@@ -1,6 +1,6 @@
 % Hva er korrekt: "in" system biology eller "for" system biology?
-In this section we aim to cover the existing approaches for building interactive
-data exploration applications in systems biology. 
+In this section we aim to cover some of the existing systems for building
+interactive data exploration applications in systems biology. 
 
 % TODO: Add related work where somebody has built a system for exploring some
 % data where 
@@ -17,14 +17,16 @@ calls to any R package and retrieve the results in a wide variety of formats
 such as json or pdf. 
 Users can chose to host their own R server or use public servers, and OpenCPU
 works in a single-user setting within an R session, or a multi-user setting
-facilitating multiple parallel requests. 
+facilitating multiple parallel requests. This makes OpenCPU a very good option
+for building a service that can execute and run statistical analyses. 
 OpenCPU provides a Javascript library for interfacing with R, as well as Docker
 containers for easy installation. OpenCPU has been used to build multiple
 applications.\footnote{\url{opencpu.org/apps.html}}.
 % Design patterns er ikke nevnt enda
 In Kvik we provide a package
 to interface with OpenCPU servers from the Go programming language since it
-follows the design pattern we have chosen to interface with data and analyses. 
+provides the same interface to execute and run statistical analyses as we do in
+our own system. 
 
 
 \subsubsection*{Renjin} 
@@ -33,10 +35,11 @@ follows the design pattern we have chosen to interface with data and analyses.
 Renjin is a JVM-based interpreter for the R programming language.\cite{renjin}
 It targets developers who want to integrate the R interpreter in web
 applications. Since it is built on top of the JVM it allows developers to write
-data exploration applications that interact directly with R code. Although
-Renjin supports a large number of CRAN packages it cannot access any R package
-(e.g. from BioConductor) without modification. This makes the programming effort
-to use Renjin as an interface with R higher. 
+data exploration applications that interact directly with R code, both runnin on
+top of the JVM. Although Renjin supports a large number of CRAN packages it
+cannot access any R package (i.e.  any package from BioConductor or CRAN)
+without modification. This makes the programming effort to use Renjin as an
+interface to R higher. 
 
 \subsubsection*{Shiny} 
 Shiny is a web application framework for R.\cite{shiny} It allows developers to
@@ -70,4 +73,15 @@ interactive graph visualizations.
 cyREST. 
 
 
-
+\subsubsection*{Caleydo and Phovea} 
+Caleydo is a framework for building applications for visualizing and exploring
+biomolecular data\cite{cleydo}. Until 2014 it was a standalone tool that needed
+to be downloaded, but the Caleydo team are now making the tools web-based. There
+have been several applications built using Caleydo: StratomeX for exploring
+stratified heterogeneous datasets for disease subtype analysis\cite{stratomex};
+Pathfinder for exploring paths in large multivariate graphs\cite{pathfinder};
+UpSet to visualize and analyse sets, their intersections and
+aggregates\cite{upset}; Entourage and enRoute to explore and visualize
+biological pathways \cite{entourage}\cite{enroute}; LineUp to explore rankings
+of items based on a set of attributes\cite{lineup}; and Domino for exploring
+subsets across multiple tabular datasets\cite{domino}. 
