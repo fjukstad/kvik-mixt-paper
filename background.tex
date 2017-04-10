@@ -104,12 +104,14 @@ In this paper we describe a novel approach for building data exploration
 applications in systems biology. We show that by building applications as a set
 of services it is possible to reuse and share its components between
 applications. In addition, by packaging the services using container technology
-we promote reproducible research. We have used our approach to build a number of
-applications, both command-line and web-based. In this paper we show the
-viability of our approach by using a web-application, MIxT, for exploring and
-comparing transcriptional profiles from blood and tumor samples. 
+we promote reproducible research and simplify application deployment. We have
+used our approach to build a number of applications, both command-line and
+web-based. In this paper we describe how we used our approach to develop MIxT,
+a web application for exploring and comparing transcriptional profiles from
+blood and tumor samples. 
 
-% LAB: Related bio work? Annen microservice related work? Hvorfor ikke bare bruke de?
+% LAB: Related bio work? Annen microservice related work? Hvorfor ikke bare
+% bruke de?
 
 \section*{Requirements} 
 From our experience building data exploration applications we have identified a
@@ -122,6 +124,8 @@ applications and these can be reused by different applications.
 
 To build these services we need a framework that fulfills the following
 requirements: 
+
+Compute + Database 
 
 \begin{enumerate}
     \item It provides a language-independent approach for integrating, or
