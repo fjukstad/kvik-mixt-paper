@@ -9,6 +9,7 @@ of language-agnostic services to facilitate the use of different tools in
 different parts of the application. This is especially important in
 interdisciplinary teams where researchers use a wide range of tools and
 programming languages.  
+
 We believe many systems biology data exploration applications are developed
 similarly and that they can therefore also benefit from the microservice
 approach. 
@@ -43,7 +44,6 @@ relationship between modules and clinical variables, and explore the
 relationship between modules and known biological processes. 
 
 \subsubsection*{Analyzing biological datasets} 
-
 % BF: Hei LA var dette noe sånn du så for deg? 
 % LAB: Generelt; 1. Hva var problemet? Hva ble gjort? Hvordan?
 % LAB: Så for R: 1. Hva slags analyse skal gjøres?; det ble vel utviklet nye
@@ -64,7 +64,9 @@ It is possible to export the results that later can be built into
 a data visualization application, but this decouples presentation and
 analysis. We opted for an approach that makes it possible for us to execute data
 analyses on demand, making it possible to modify analysis parameters at runtime
-in addition to keeping all data up to date. 
+in addition to keeping all data up to date. By writing an R package we can then
+later use a system such as OpenCPU, or our own R service, we can then build
+applications that interact directly with the analysis code. 
 %meh up to date, tror vi må ha noe annet. 
 
 % To build an application on top of the analyses there are two
@@ -89,10 +91,6 @@ deeper insight into the underlying biology.
 % Database lookup for hva?
 % After this analysis we often end up with genes or lists of genes of
 % interest that we can use to guide database lookup.
-% Hva med non-quirky visualiseringer integrert med database lookup?
-% Hva med visualiseringer for andre brukere? Og data?
-% Hva med neste verktøy, dvs MIxT for eksempel for methylation + gene
-% expression?
 
 % Savner en diskusjon om performance, resource usage, og andre krav til MiXT
 
@@ -103,31 +101,79 @@ deeper insight into the underlying biology.
 % out in scripts, that are built into R packages with analysis code that can be
 % shared between researchers. 
 
+% Hva var det egentlig vi ville gjøre med DB lookup? Hvordan kan det gjøres?
+% Hvordan bør det gjøres? Motivasjon...  
 \subsubsection*{Query reference databases} 
 A large part of biological data research is to link the results to known biology
 from literature or reference databases. In MIxT we analyzed gene expression
 data using a clustering method that generated gene lists that we could then
-investigate its association to known biological processes. 
+investigate its association to known biological processes. In addition we wanted
+to build a system where users could look up any known gene or process and
+integrated the results from our analyses with meta-data from online databases.
 
-One such database with information on biological processes is the Molecular
-Signnature Database (MSigDB).  
+Fetching meta-data on genes and processes from online databases  ... 
+
+We chose to build a database service that interfaces with different online
+databases to retrieve meta-data on genes and processes. We built our own service
+so that we could provide caching functionality reducing query time and
+offload some of the traffic to the various databases. 
 
 
-From the gene expression data we have analyzed a big part of interpretation of
-the results is to investigate the 
+% Hva med non-quirky visualiseringer integrert med database lookup?
+% Hva med visualiseringer for andre brukere? Og data?
+% Hva med neste verktøy, dvs MIxT for eksempel for methylation + gene
+% expression?
 
+% Hva ville vi egentlig med interaktive visualiseringer? Hvordan burde det gjøres? 
+% movivasjon! 
 \subsubsection*{Interactive Visualizations}  
+% How did we go a head with the MIxT app? What did we consider etc? Words phrases
+% etc. 
+A key part of data analysis and exploration is to visualize the data. In systems
+biology the datasets are often large both in terms of sample size but also
+dimensionality. This calls for data visualization software that makes it
+possible to visualize large high-dimensional datasets, but also
+integrate with statistical methods for reducing dimensionality and making it
+possible to visualize the data using standard visualization techniques. 
 
-\subsection{Kvik micoservices}
+There are a wealth of visualization libraries and application available. In our
+project we ... 
+
+In the MIxT project we developed a set of specialized visualizations that
+shows ... 
+
+
+\subsection*{Kvik}
 % Noe av dette er kanskje allerede i "Building applications"
+% BF: One key point: We can reuse building blocks such as the engine for
+% executing statistical analyses or the REST api to get stuff from databases.
+% What we can't re-use is the application logic and application specific
+% visualizations. Sure we can reuse heatmaps or barcharts etc, but they will
+% most likely be application specific. 
 
-Based on the development of MiXT and other data exploration tools, we have
+
+Based on the development of MIxT and other data exploration tools, we have
 generalized our experience into the following design principle guidelines and
 microservices provided by the Kvik framework:
 
-Principle 1: language-agnostic (samme har de funnet ut i blant annet Facebook
-for Thrift)
-Principle 2:
+\textbf{Principle 1}: Build applications as collections of language-agnostic
+microservices. This makes it possible to re-use key components and build
+specialized data exploration applications in the most suitable programming
+language. 
+
+\textbf{Principle 2}: Deploy each service using container technology such as
+Docker. This has a number of benefits. It simplifies deployment itself, it makes
+it trivial to share services between projects and research groups, and it
+ensures reproducible services.
+
+\textbf{Principle 3}: Package statistical methods and data as software packages
+that can be used by power-users and the data exploration tools themselves. An
+example is to build an application using R packages and OpenCPU or Kvik. This
+makes it possible to 
+
+\textbf{Principle 3}: Provide 
+
+
 
 Microservice 1: Databases...
 Microservice 2: Statistical analyses...
@@ -144,57 +190,11 @@ tables, or binaries such as images. Enforcing that R code is built into R
 packages ensures that the analysis code can be used by power users through an
 ordinary R session or in the data exploration application itself. 
 
-\subsection*{Databases} 
 
-Similar to how our analysis process shaped the R interface, it also defined how
-we want to build interfaces to online databases. 
+% LAB: her er stedet for alle Go bibliotek og andre lavnivå detlajer
+\subsection*{Implementation}
 
-% lokalt: fortere, kan cache, kan få bort last fra de sentrale serverne 
-
-% Kan også beskrive hva slags interfaces de eskponerer, hva som er performance
-% characteristics, programmerings utforderinger, og tilatt bruk
-In its initial state we wanted an interface to interactively query databases
-such as KEGG or MSigDB for up-to-date information about genes, gene sets or
-biological pathways. This interface should be available within the data
-exploration applications to provide valuable metadata, such as gene summaries,
-for the researchers exploring results.  
-
-% TODO: Describe the interfaces/API. 
-% + abstraksjoner som tar seg av caching og provenance management
-
-% Jeg ser for meg at det er nyttig å kunne si for alle database oppslag noe sånt
-% som: read cached value = False, cache result = "session". Dvs alltid les
-% nyeste verdi, men cache resultatene for denne session. Kanskje er det også
-% andre database-generisk operasjoner som er nyttige abstraksjoner (hent alle
-% entries i en liste). Også er det sikkert mulig å pakke disse inn i en
-% interface som kan brukes til å implementere database spesifike (KEGG, MsigDB)
-% komponenter.
-
-
-\subsection*{Building applications} 
-
-% Snu om setningene: microservices som lar implemntere i multiple ways
-With Kvik there are multiple ways developers can build data
-exploration applications. Either bundle analysis and database lookup on a single
-computer, or separate computational tasks to more powerful compute clusters to
-improve performance. 
-In this paper we discuss how to develop applications that follow a
-microservices architecture where data analysis and storage is simply a service. 
-
-% Dette er kanskje en av flere microservices?
-In Kvik we use R packages as the fundamental building block for data exploration
-applications. They provide an interface to data and analyses, and especially in
-the field of systems biology, the R programming language provide the largest
-collection of data analysis packages. % litt vagt kanskje? 
-We discovered that the most sensible way to build applications on top of our
-existing code base was to build a system that could interface with our analysis
-code directly. In Kvik we built an HTTP interface on top of R that allows users
-to call functions and get results using any programming language with an HTTP
-library. This allows developers to build data exploration applications in the
-programming language that is most suitable, or has the best support, for
-presenting that specific data type. 
-
-\subsection*{Statistical analyses}
+\subsubsection*{Statistical analyses}
 \emph{Describe how we've designed the interface with R: Build an R-package and
 call functions from it, we provide four different output formats to the user
 (json, csv, pdf, png),  as well as four different http endpoints (call, get and
@@ -222,12 +222,61 @@ package in Kvik provides this functionality. Although this is possible, we
 believe that following a modular approach separating analysis and
 application user-interface makes a cleaner and easier to maintain application. 
 
-\subsection*{Databases}
+\subsubsection*{Databases} 
+Similar to how our analysis process shaped the R interface, it also defined how
+we want to build interfaces to online databases. 
+
 Describe the interface to the databases and what we use it for. Could be
 interesting to talk about provenance/caching.
 
-% LAB: her er stedet for alle Go bibliotek og andre lavnivå detlajer
-\subsection*{Implementation}
+
+% lokalt: fortere, kan cache, kan få bort last fra de sentrale serverne 
+
+% Kan også beskrive hva slags interfaces de eskponerer, hva som er performance
+% characteristics, programmerings utforderinger, og tilatt bruk
+In its initial state we wanted an interface to interactively query databases
+such as KEGG or MSigDB for up-to-date information about genes, gene sets or
+biological pathways. This interface should be available within the data
+exploration applications to provide valuable metadata, such as gene summaries,
+for the researchers exploring results.  
+
+% TODO: Describe the interfaces/API. 
+% + abstraksjoner som tar seg av caching og provenance management
+
+% Jeg ser for meg at det er nyttig å kunne si for alle database oppslag noe sånt
+% som: read cached value = False, cache result = "session". Dvs alltid les
+% nyeste verdi, men cache resultatene for denne session. Kanskje er det også
+% andre database-generisk operasjoner som er nyttige abstraksjoner (hent alle
+% entries i en liste). Også er det sikkert mulig å pakke disse inn i en
+% interface som kan brukes til å implementere database spesifike (KEGG, MsigDB)
+% komponenter.
+
+
+\subsubsection*{Building applications} 
+
+% Snu om setningene: microservices som lar implemntere i multiple ways
+With Kvik there are multiple ways developers can build data
+exploration applications. Either bundle analysis and database lookup on a single
+computer, or separate computational tasks to more powerful compute clusters to
+improve performance. 
+In this paper we discuss how to develop applications that follow a
+microservices architecture where data analysis and storage is simply a service. 
+
+% Dette er kanskje en av flere microservices?
+In Kvik we use R packages as the fundamental building block for data exploration
+applications. They provide an interface to data and analyses, and especially in
+the field of systems biology, the R programming language provide the largest
+collection of data analysis packages. % litt vagt kanskje? 
+We discovered that the most sensible way to build applications on top of our
+existing code base was to build a system that could interface with our analysis
+code directly. In Kvik we built an HTTP interface on top of R that allows users
+to call functions and get results using any programming language with an HTTP
+library. This allows developers to build data exploration applications in the
+programming language that is most suitable, or has the best support, for
+presenting that specific data type. 
+
+
+
 
 % LAB: Litt usikker på om dette hører til i Results eller Methods
 \subsection*{Applications}
