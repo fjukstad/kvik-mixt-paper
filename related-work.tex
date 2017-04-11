@@ -9,7 +9,7 @@ interactive data exploration applications in systems biology.
 % er det ikke sikkert leseren skjønner hvorfor diss systemene diskuteres, hva
 % som er sammenhengen mellom de, og hva det har å gjrøe med Kvik.
 
-\subsubsection*{OpenCPU} 
+\subsection*{Integrate Statistical Analyses} 
 OpenCPU is a system for embedded scientific computing and reproducible
 research.\cite{opencpu} It provides an HTTP API to the R programming language to
 provide an interface with statistical methods. It enables users to make function
@@ -28,8 +28,6 @@ to interface with OpenCPU servers from the Go programming language since it
 provides the same interface to execute and run statistical analyses as we do in
 our own system. 
 
-
-\subsubsection*{Renjin} 
 % Skjønner ikke poenget med Renjin. Dvs hva fordelen med å kjøre R kode på en
 % JVM er.
 Renjin is a JVM-based interpreter for the R programming language.\cite{renjin}
@@ -41,7 +39,6 @@ cannot access any R package (i.e.  any package from BioConductor or CRAN)
 without modification. This makes the programming effort to use Renjin as an
 interface to R higher. 
 
-\subsubsection*{Shiny} 
 Shiny is a web application framework for R.\cite{shiny} It allows developers to
 build web applications in R without having to have any knowledge about HTML, CSS
 or Javascript. It provides a widget library to provide more advanced Javascript
@@ -60,7 +57,7 @@ language.\cite{Kortschak005033} Using the go programming language the developers
 are able to provide high-performance parallel processing in a clean and simple
 programming language. 
 
-\subsubsection*{Cytoscape} 
+\subsection*{Visualization frameworks} 
 Cytoscape is an open source software platform for visualizing complex
 networks and integrating these with any type of attribute
 data\cite{shannon2003cytoscape}. It allows for analysis and visualization in the
@@ -73,8 +70,6 @@ Cytoscape.js\footnote{\url{js.cytoscapejs.org}}, a Javascript library to create
 interactive graph visualizations. 
 
 
-
-\subsubsection*{Caleydo and Phovea} 
 Caleydo is a framework for building applications for visualizing and exploring
 biomolecular data\cite{cleydo}. Until 2014 it was a standalone tool that needed
 to be downloaded, but the Caleydo team are now making the tools web-based. There
@@ -86,3 +81,15 @@ aggregates\cite{upset}; Entourage and enRoute to explore and visualize
 biological pathways \cite{entourage}\cite{enroute}; LineUp to explore rankings
 of items based on a set of attributes\cite{lineup}; and Domino for exploring
 subsets across multiple tabular datasets\cite{domino}. 
+
+BioJS is an open-source JavaScript framework for biological data
+visualization.\cite{gomez2013biojs} It provides a community-driven online
+repository with a wide range components for visualizing biological data
+contributed by the bioinformatics community. BioJS builds on
+node.js\footnote{\url{nodejs.org}} providing both server-side and client-side
+libraries. 
+
+
+\subsection*{Biological Databases} 
+Maybe some words here on how to get data out of the different biological
+databases? 
