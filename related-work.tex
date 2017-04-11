@@ -17,8 +17,8 @@ calls to any R package and retrieve the results in a wide variety of formats
 such as json or pdf. 
 Users can chose to host their own R server or use public servers, and OpenCPU
 works in a single-user setting within an R session, or a multi-user setting
-facilitating multiple parallel requests. This makes OpenCPU a very good option
-for building a service that can execute and run statistical analyses. 
+facilitating multiple parallel requests. This makes OpenCPU suitable
+for building a service that can run statistical analyses. 
 OpenCPU provides a Javascript library for interfacing with R, as well as Docker
 containers for easy installation. OpenCPU has been used to build multiple
 applications.\footnote{\url{opencpu.org/apps.html}}.
@@ -39,7 +39,8 @@ cannot access any R package (i.e.  any package from BioConductor or CRAN)
 without modification. This makes the programming effort to use Renjin as an
 interface to R higher. 
 
-Shiny is a web application framework for R.\cite{shiny} It allows developers to
+Shiny is a web application framework for R\footnote{\url{shiny.rstudio.com}}
+It allows developers to
 build web applications in R without having to have any knowledge about HTML, CSS
 or Javascript. It provides a widget library to provide more advanced Javascript
 visualizations such as Leaflet for maps or threejs for WebGL-accellerated
