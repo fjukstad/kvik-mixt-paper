@@ -1,6 +1,3 @@
-Describe the MIxT application. Also talk about how our R interface scales and
-what makes it better than opencpu/renji.
-
 % Jeg tror det er tre spørsmål som kan besvares her:
 % 1. Hvor mye enklere/bedre er det å utvikle apps med Kvik microservices?
 % 2. Overhead/ improvement for enkelt-microservices. Dvs overhead for de som
@@ -16,30 +13,16 @@ what makes it better than opencpu/renji.
 % 2. En av de enklere web apps som er laget før. Eventuelt en benchmark app.
 % 3. MIxT operasjoner.
 %
-
-\subsection*{Use Case}
-% Foreslår å flytte dette til "Motivating Example", eventuelt til slutt i
-% Methods som MiXT implementert ved bruk av microservices. Kanskje er sistnevnte
-% bedre?
-
 We show the viability and need for Kvik by describing the MIxT application for
 exploring and comparing transcriptional profiles from blood and tumor samples.
 We describe its functionality, implementation 
 % (uten fokus på Kvik)
 and performance requirements.
 %OG ANDRE VIKTIGE TING (SECURITY, ETC). 
-Then we describe how MIxT
-is designed to separate concerns and allow for a layered implementation. We use
-this to motivate the need and opportunities to abstract away common
-functionality of these type of applications.
 
 % Det kan godt være at vi bør flytte denne et sted, men her beskriver vi hvordan 
 % MIxT-appen fungerer. 
-\subsection*{Matched Interaction Across Tissues (MIxT)}
-We have built a system to identify genes and pathways in the primary tumor that
-are tightly linked to genes and pathways in the patient systemic
-response\cite{dumeaux2017}. MIxT blood-tumor is an open-source web application
-for exploring the molecular processes expressed in each tissue. 
+\subsection*{WIP: Matched Interaction Across Tissues (MIxT)}
 
 For the web application we defined six analysis tasks: 
 
@@ -70,11 +53,24 @@ for specific genes or genelists of intrest and show what modules they are
 associated with. 
 
 % Vi kan godt kutte én av figurene under, f.eks c eller d som er veldig lik. 
-% \begin{figure*}[!t]
-% \centering
-% \subfloat[A1: Network visualization of gene
-% co-expression]{\includegraphics[width=2.7in]{figures/network.png}%
-% \label{fig_first_case}}
+\begin{figure}[h!]
+\centering
+\caption{MIxT module overview page. The screenshot show the user interface for
+exploring a single module. It consists of three panels. The top left panel
+contains the gene expression heatmap. The top right panel contains a table of
+the genes found in the module. The bottom panel contains the results of gene
+overlap analyses from the module genes and known gene sets from MSigDB.}
+%\caption{Screenshots of the user interface in four of the six analysis tasks.
+%Note that we combine visualization frameworks for both JavaScript and R to
+%generate the visualizations. Specifically, sigmajs (a,
+%\protect\url{sigmajs.org}), ggplot2(b, \protect\url{ggplot2.org}), and D3 (c and
+%d, \protect\url{d3js.org})}
+%\includegraphics[width=2.7in]{figures/network.png} 
+\includegraphics[width=3in]{figures/module.png}
+% \includegraphics[width=2.5in]{figures/tissue-comp.png}
+\label{fig_first_case}
+\end{figure} 
+
 % \hfil
 % \subfloat[A2: Module visualization.]{\includegraphics[width=2.5in]{figures/module.png}%
 % \label{fig_second_case}}
@@ -95,18 +91,7 @@ associated with.
 % \end{figure*}
 
 
-\begin{figure}[h!]
-\centering
-\includegraphics{figures/kvik-mixt.png}
-\caption{An overview of the relationship between the MIxT application and Kvik.
-MIxT contains a web application (online at \url{mixt-blood-tumor.bci.mcgill.ca})
-and the R Package that provides analyses and data to the web application. Kvik
-provides the services for running the statistical analyses from the R package,
-and the database lookups found in the web application.} 
-\label{kvik-mixt}
-\end{figure} 
-
-\subsubsection*{Design and Implementation}
+\subsubsection*{WIP: MIxT design and Implementation}
 The MIxT application is designed as a modern application consisting of multiple
 services that together provide an interactive web application. By composing an
 application of a set of services we can substitute parts of the application
@@ -145,5 +130,9 @@ computed modules, we built an interctive heatmap visualization that visualizes
 the association between different metrics and each module. 
 
 
+\subsection*{WIP: Future work} 
+Write it.
 
-
+Security.
+Documentation.
+Scale. 

@@ -1,20 +1,18 @@
 In this section we first motivate our microservice approach based on our
-experiences developing applications in system biology.
-We use as a case study a web application for exploring and comparing
-transcriptional profiles from blood and tumor samples, called MIxT Blood-Tumor. 
+experiences developing the MIxT web application.
 We describe the process from initial data analysis to the final application,
 highlighting the importance
 % LAB + performance/scalability/deployment (dvs noe som er kvantifiserbart)
 of language-agnostic services to facilitate the use of different tools in
-different parts of the application. This is especially important in
-interdisciplinary teams where researchers use a wide range of tools and
-programming languages.  
-
-We believe many systems biology data exploration applications are developed
-similarly and that they can therefore also benefit from the microservice
-approach. 
-Based on our experiences, we therefore generalize the ideas to a set of principles and
-services that can be reused and shared between applications. 
+different parts of the application. 
+%This is especially important in
+%interdisciplinary teams where researchers use a wide range of tools and
+%programming languages.  
+%We believe many systems biology data exploration applications are developed
+%similarly and that they can therefore also benefit from the microservice
+%approach. 
+Based on our experiences, we then generalize the ideas to a set
+of principles and services that can be reused and shared between applications. 
 % LAB: + Design and impl of micro-services.
 
 % Bruke MIxT til å fortelle hvordan de forskjellige delene ble gjort og hvordan
@@ -35,15 +33,28 @@ Norwegian Women and Cancer (NOWAC) study. Each profile measures the expression
 of 16 782 unique genes. We used Weighted Gene Correlation Network Analysis
 (WGCNA)\cite{langfelder2008wgcna} to cluster the genes in each tissue
 based on co-expression. From these clusters of genes, called modules, we
-investigated their relationship to known biological processes. 
+investigated their relationship to known biological processes.
+\emph{More on the methods maybe??}
 
-To make it possible to browse and explore the results interactively, we built an
-R package for power-users, in addition to a web application. Both allows users
-to explore modules, the association between modules from different tissues, the
-relationship between modules and clinical variables, and explore the
-relationship between modules and known biological processes. 
+From the analyses we built an R package\cite{mixt-r-package} that
+implements the different statistical methods developed in the MIxT project. 
+The R package contains functionality for running statistical analyses and
+generating specialized static visualizations. Based on the results and analyses
+we wanted to build an application for quickly exploring the results. Since we
+have a large code base already developed in R we needed a system that can
+directly interface with the R package. 
+In addition, the interface to R should be accessible through standard protocols,
+such as HTTP, not enforcing any programming language or platform. 
 
-\subsubsection*{Analyzing biological datasets} 
+A large part of biological data research is to link the results to known biology
+from literature or reference databases. In the MIxT project we needed an
+application that could interface with a set of different databases, keeping the
+information up-to-date. As with the R interface the interface to the databases
+should be accessible from any programming language. 
+
+Docker .... 
+
+
 % BF: Hei LA var dette noe sånn du så for deg? 
 % LAB: Generelt; 1. Hva var problemet? Hva ble gjort? Hvordan?
 % LAB: Så for R: 1. Hva slags analyse skal gjøres?; det ble vel utviklet nye
@@ -53,33 +64,6 @@ relationship between modules and known biological processes.
 % LAB: Også: integrasjon av visualisering/ web app + R
 % LAB: integrasjon mot databaser
 % LAB: Tilslutt: hvordan den er deployet.
-We used R and packages from Bioconductor and CRAN to pre-process, develop
-methods for. and analyze our gene expression dataset.\footnote{See Supplementary
-information in \cite{mixt} for more information} Using R it is possible to make
-use of the wealth of packages for analyzing biomolecular data and build upon
-them. From the analyzes we built we wanted to build a web application that could
-let users interact with the data. 
-
-It is possible to export the results that later can be built into
-a data visualization application, but this decouples presentation and
-analysis. We opted for an approach that makes it possible for us to execute data
-analyses on demand, making it possible to modify analysis parameters at runtime
-in addition to keeping all data up to date. By writing an R package we can then
-later use a system such as OpenCPU, or our own R service, we can then build
-applications that interact directly with the analysis code. 
-%meh up to date, tror vi må ha noe annet. 
-
-% To build an application on top of the analyses there are two
-% possibilities: i) develop a script that generates a static output file (e.g.
-% generate a HTML report or CSV files that contain the result data) and build an
-% application that uses this static data; or ii) use a framework such as Shiny or
-% OpenCPU to create a dynamic application that interface directly with the R code.
-% To update an application that builds on top of a static output file requires
-% manual execution of the output script, while using Shiny or OpenCPU this task. 
-
-From the resulting data it is possible to query reference databases to provide a
-deeper insight into the underlying biology. 
-
 % Generealisering kan gjøres i neste avsnitt der microservice apporach
 % blir beskrevet. Også ville jeg likt å se tall her. Hvor stort er datasettet?
 % Hvor lang tid tar det? Er dette i critial path for data exploration eller bare
@@ -87,60 +71,18 @@ deeper insight into the underlying biology.
 % Hvordan gjøres dette? Er dette egentlig protptyping, og dermed en slags
 % requirements spec for de endelige visualiseringene? Kan dette gjenbrukes eller
 % er det mest bruk-og-kast? Hvem gjør dette? 
-
 % Database lookup for hva?
 % After this analysis we often end up with genes or lists of genes of
 % interest that we can use to guide database lookup.
-
 % Savner en diskusjon om performance, resource usage, og andre krav til MiXT
-
-% In terms of data analysis code, the preprocessing steps typically consist of
-% one or more R scripts that we knit \cite{knitr} into PDF reports that we can
-% revisit later. From these scripts we end up with analysis-ready datasets that
-% can be shared within the group. The remaining downstream analysis often starts
-% out in scripts, that are built into R packages with analysis code that can be
-% shared between researchers. 
-
-% Hva var det egentlig vi ville gjøre med DB lookup? Hvordan kan det gjøres?
-% Hvordan bør det gjøres? Motivasjon...  
-\subsubsection*{Query reference databases} 
-A large part of biological data research is to link the results to known biology
-from literature or reference databases. In MIxT we analyzed gene expression
-data using a clustering method that generated gene lists that we could then
-investigate its association to known biological processes. In addition we wanted
-to build a system where users could look up any known gene or process and
-integrated the results from our analyses with meta-data from online databases.
-
-Fetching meta-data on genes and processes from online databases  ... 
-
-We chose to build a database service that interfaces with different online
-databases to retrieve meta-data on genes and processes. We built our own service
-so that we could provide caching functionality reducing query time and
-offload some of the traffic to the various databases. 
-
-
 % Hva med non-quirky visualiseringer integrert med database lookup?
 % Hva med visualiseringer for andre brukere? Og data?
 % Hva med neste verktøy, dvs MIxT for eksempel for methylation + gene
 % expression?
-
 % Hva ville vi egentlig med interaktive visualiseringer? Hvordan burde det gjøres? 
 % movivasjon! 
-\subsubsection*{Interactive Visualizations}  
 % How did we go a head with the MIxT app? What did we consider etc? Words phrases
 % etc. 
-A key part of data analysis and exploration is to visualize the data. In systems
-biology the datasets are often large both in terms of sample size but also
-dimensionality. This calls for data visualization software that makes it
-possible to visualize large high-dimensional datasets, but also
-integrate with statistical methods for reducing dimensionality and making it
-possible to visualize the data using standard visualization techniques. 
-
-There are a wealth of visualization libraries and application available. In our
-project we ... 
-
-In the MIxT project we developed a set of specialized visualizations that
-shows ... 
 
 
 \subsection*{Kvik}
@@ -151,9 +93,9 @@ shows ...
 % visualizations. Sure we can reuse heatmaps or barcharts etc, but they will
 % most likely be application specific. 
 
-Based on the development of MIxT and other data exploration tools, we have
-generalized our experience into the following design principle guidelines and
-microservices provided by the Kvik framework:
+Based on the development of MIxT, we have generalized our experience into the
+following design principle guidelines and microservices provided by the Kvik
+framework:
 
 \textbf{Principle 1}: Build applications as collections of language-agnostic
 microservices. This makes it possible to re-use key components and build
@@ -172,47 +114,16 @@ makes it possible to either explore the data and methods through the data
 exploration application or an R session. 
 
 From these principles we developed a set of software packages that provide
-functionality to build ... microservices that provides key components to build a
+functionality to build microservices that provides key components to build a
 data exploration application in systems biology. 
-
-Microservice 1: Databases ...
-Microservice 2: Statistical analyses ...
-Micro
 
 % Også er det viktig å ikke glemme "system aspects" performance, management,
 % deployment, etc for disse. Det kn enten forklares her eller senere.
 % Det er ikke forklart hvordan ting henger sammen i Kvik, så dette er vanskelig
 % å forstå
-
-With this process in mind, we designed the interface to the R programming
-language in Kvik. We want to make it possible to call any function from an R
-package and return its results either as plain text, such as comma-separated
-tables, or binaries such as images. Enforcing that R code is built into R
-packages ensures that the analysis code can be used by power users through an
-ordinary R session or in the data exploration application itself. 
-
-
 % LAB: her er stedet for alle Go bibliotek og andre lavnivå detlajer
-\subsection*{Implementation}
-In ths section we describe the implementation details in Kvik and the
-microservices required to build the MIxT web application. 
 
-Kvik is implemented as a collection of Go packages with the
-functionality required to build services that can integrate statistical
-software in a data exploration and provide an interface to up-to-date biological
-databases. To integrate R we provide two packages \emph{gopencpu} and
-\emph{r}, that interface with OpenCPU and Kvik R servers respectively. To
-interface with biological databases we provide the packages \emph{eutils},
-\emph{gsea}, \emph{genenames}, and \emph{kegg} that interface with
-The Entrez Programming Utilities
-(E-utilities)\footnote{\url{eutils.ncbi.nlm.nih.gov}},
-MSigDB\footnote{\url{software.broadinstitute.org/gsea/msigdb}}, Hugo Gene
-Nomenclature Committe\footnote{\url{genenames.org}}, and Kyoto Encyclopedia
-of Genes and Genomes (KEGG)\footnote{\url{kegg.jp}} respectively. 
-In addition to these packages we provide Docker images that implement the
-two required microservices. 
-
-\subsubsection*{Compute}
+\subsubsection*{WIP: Compute Service}
 % Describe how we've designed the interface with R: Build an R-package and call
 % functions from it, we provide four different output formats to the user (json,
 % csv, pdf, png),  as well as four different http endpoints (call, get and rpc).
@@ -228,7 +139,6 @@ operation to retrieve results. The Get operation is used to get results in
 different output formats, e.g. JSON, CSV, PDF, or PNG. The RPC is just a
 combination of a Call and a subsequent Get. 
 
-
 The compute service in Kvik follows many of the design patterns in
 OpenCPU. Both systems interface with R packages using a hybrid state pattern
 over HTTP. Both systems provide the same interface to execute analyses and
@@ -243,7 +153,23 @@ This allows for parallel execution of analyses. We provide a simple FIFO queue
 for queuing of requests. The R server also provides the opportunity for users to
 cache analysis results to speed up subsequent calls. 
 
-\subsubsection*{Database} 
+
+With this process in mind, we designed the interface to the R programming
+language in Kvik. We want to make it possible to call any function from an R
+package and return its results either as plain text, such as comma-separated
+tables, or binaries such as images. Enforcing that R code is built into R
+packages ensures that the analysis code can be used by power users through an
+ordinary R session or in the data exploration application itself. 
+
+
+
+\subsubsection*{WIP: Database} 
+We chose to build a database service that interfaces with different online
+databases to retrieve meta-data on genes and processes. We built our own service
+so that we could provide caching functionality reducing query time and
+offload some of the traffic to the various databases. 
+
+
 Similar to how our analysis process shaped the R interface, it also defined how
 we want to build interfaces to online databases. 
 
@@ -273,7 +199,7 @@ for the researchers exploring results.
 % komponenter.
 
 
-\subsubsection*{Building applications} 
+\subsubsection*{WIP: Building applications} 
 % Snu om setningene: microservices som lar implemntere i multiple ways
 With Kvik there are multiple ways developers can build data
 exploration applications. Either bundle analysis and database lookup on a single
@@ -281,6 +207,9 @@ computer, or separate computational tasks to more powerful compute clusters to
 improve performance. 
 In this paper we discuss how to develop applications that follow a
 microservices architecture where data analysis and storage is simply a service. 
+
+We do not wish to enforce any style of programming or set of tools to build
+user-facing apps. 
 
 % Dette er kanskje en av flere microservices?
 In Kvik we use R packages as the fundamental building block for data exploration
@@ -295,19 +224,50 @@ library. This allows developers to build data exploration applications in the
 programming language that is most suitable, or has the best support, for
 presenting that specific data type. 
 
+\subsection*{WIP: Implementation}
+In ths section we describe the implementation details in Kvik and the
+microservices required to build the MIxT web application. 
+
+Kvik is implemented as a collection of Go packages with the
+functionality required to build services that can integrate statistical
+software in a data exploration and provide an interface to up-to-date biological
+databases. To integrate R we provide two packages \emph{gopencpu} and
+\emph{r}, that interface with OpenCPU and Kvik R servers respectively. To
+interface with biological databases we provide the packages \emph{eutils},
+\emph{gsea}, \emph{genenames}, and \emph{kegg} that interface with
+The Entrez Programming Utilities
+(E-utilities)\footnote{\url{eutils.ncbi.nlm.nih.gov}},
+MSigDB\footnote{\url{software.broadinstitute.org/gsea/msigdb}}, Hugo Gene
+Nomenclature Committe\footnote{\url{genenames.org}}, and Kyoto Encyclopedia
+of Genes and Genomes (KEGG)\footnote{\url{kegg.jp}} respectively. 
+In addition to these packages we provide Docker images that implement the
+two required microservices. 
 
 % LAB: Litt usikker på om dette hører til i Results eller Methods
-\subsection*{Applications}
-Stress.
-Pathways.
-MIxT .
-Command line-man. 
+% \subsection*{Applications}
+% Stress.
+% Pathways.
+% MIxT .
+% Command line-man. 
+% 
+% % LAB: kort beskrivelse av hva alle apps gjør
+% 
+% % LAB: Figur som viser hva som er felles og ulikt for alle appene. Her bør noe
+% % være likt ellers har vi bare 3-4 applikasjoner :)
+% 
+% % LAB: mer detaljert beskrivelse av hvordan hver app er implementert med Kvik
+% 
+% 
 
-% LAB: kort beskrivelse av hva alle apps gjør
 
-% LAB: Figur som viser hva som er felles og ulikt for alle appene. Her bør noe
-% være likt ellers har vi bare 3-4 applikasjoner :)
-
-% LAB: mer detaljert beskrivelse av hvordan hver app er implementert med Kvik
-
+\begin{figure}[h!]
+\centering
+\includegraphics{figures/kvik-mixt.png}
+\caption{An overview of the relationship between the MIxT application and Kvik.
+MIxT contains a web application (online at \url{mixt-blood-tumor.bci.mcgill.ca})
+and the R Package that provides analyses and data to the web application. Kvik
+provides the services for running the statistical analyses from the R package,
+and the database lookups found in the web application.} 
+\label{kvik-mixt}
+\end{figure} 
 
