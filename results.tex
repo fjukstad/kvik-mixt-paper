@@ -20,6 +20,19 @@ We describe its functionality, implementation
 and performance requirements.
 %OG ANDRE VIKTIGE TING (SECURITY, ETC). 
 
+
+\begin{figure}[h!]
+\centering
+\includegraphics{figures/kvik-mixt.png}
+\caption{An overview of the relationship between the MIxT application and Kvik.
+MIxT contains a web application (online at \url{mixt-blood-tumor.bci.mcgill.ca})
+and the R Package that provides analyses and data to the web application. Kvik
+provides the services for running the statistical analyses from the R package,
+and the database lookups found in the web application.} 
+\label{kvik-mixt}
+\end{figure} 
+
+
 % Det kan godt være at vi bør flytte denne et sted, men her beskriver vi hvordan 
 % MIxT-appen fungerer. 
 \subsection*{WIP: Matched Interaction Across Tissues (MIxT)}
@@ -53,7 +66,7 @@ for specific genes or genelists of intrest and show what modules they are
 associated with. 
 
 % Vi kan godt kutte én av figurene under, f.eks c eller d som er veldig lik. 
-\begin{figure}[h!]
+\begin{figure*}[h!]
 \centering
 \caption{MIxT module overview page. The screenshot show the user interface for
 exploring a single module. It consists of three panels. The top left panel
@@ -66,10 +79,10 @@ overlap analyses from the module genes and known gene sets from MSigDB.}
 %\protect\url{sigmajs.org}), ggplot2(b, \protect\url{ggplot2.org}), and D3 (c and
 %d, \protect\url{d3js.org})}
 %\includegraphics[width=2.7in]{figures/network.png} 
-\includegraphics[width=3in]{figures/module.png}
+\includegraphics[width=0.8\textwidth]{figures/module.png}
 % \includegraphics[width=2.5in]{figures/tissue-comp.png}
 \label{fig_first_case}
-\end{figure} 
+\end{figure*} 
 
 % \hfil
 % \subfloat[A2: Module visualization.]{\includegraphics[width=2.5in]{figures/module.png}%
@@ -130,9 +143,3 @@ computed modules, we built an interctive heatmap visualization that visualizes
 the association between different metrics and each module. 
 
 
-\subsection*{WIP: Future work} 
-Write it.
-
-Security.
-Documentation.
-Scale. 

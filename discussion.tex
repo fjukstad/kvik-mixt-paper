@@ -1,0 +1,35 @@
+The compute service in Kvik follows many of the design patterns in
+OpenCPU. Both systems interface with R packages using a hybrid state pattern
+over HTTP. Both systems provide the same interface to execute analyses and
+retrieve results.  While OpenCPU is implemented on top of R and Apache, Kvik is
+implemented from the ground up in Go. Because of the similarities in the
+interface to R in Kvik we provide packages for interfacing with our own R server
+or OpenCPU R servers through the
+\emph{gopencpu} package.\footnote{\url{github.com/fjukstad/kvik/tree/master/gopencpu}} 
+
+
+\subsection*{WIP: Future work} 
+While we have buit 
+
+We have built a database service that provides a sufficient interface for the
+MIxT web application. While we have developed the software packages for
+interfacing with more databases, these haven't been included in the database
+service yet. 
+
+One large concern that we haven't addressed in this paper is security. In
+particular one security concern that we plan to address in Kvik is the
+restrictions on 
+
+Docker compose 
+
+This
+includes both access restrictions to parts of an application, e.g. access to a
+database, and security concerns regarding remote code execution within the
+compute service. 
+
+to the 
+biological databases that are 
+
+Security.
+Documentation.
+Scale. 

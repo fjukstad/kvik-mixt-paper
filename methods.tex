@@ -44,7 +44,8 @@ we wanted to build an application for quickly exploring the results. Since we
 have a large code base already developed in R we needed a system that can
 directly interface with the R package. 
 In addition, the interface to R should be accessible through standard protocols,
-such as HTTP, not enforcing any programming language or platform. 
+such as HTTP, not enforcing any programming language or platform on the
+application developer. 
 
 A large part of biological data research is to link the results to known biology
 from literature or reference databases. In the MIxT project we needed an
@@ -52,7 +53,11 @@ application that could interface with a set of different databases, keeping the
 information up-to-date. As with the R interface the interface to the databases
 should be accessible from any programming language. 
 
-Docker .... 
+A key feature that motivated the design of MIxT was that we want to
+have the flexibility to run the application on any platform. Bundling each
+component in a software container such as Docker allows us to deploy the
+application on a wide range of hardware, from local installations to deployments
+to cloud providers such as Amazon Web Services\footnote{\url{aws.amazon.com}}.
 
 
 % BF: Hei LA var dette noe sånn du så for deg? 
@@ -85,17 +90,16 @@ Docker ....
 % etc. 
 
 
-\subsection*{Kvik}
 % Noe av dette er kanskje allerede i "Building applications"
 % BF: One key point: We can reuse building blocks such as the engine for
 % executing statistical analyses or the REST api to get stuff from databases.
 % What we can't re-use is the application logic and application specific
 % visualizations. Sure we can reuse heatmaps or barcharts etc, but they will
 % most likely be application specific. 
-
-Based on the development of MIxT, we have generalized our experience into the
-following design principle guidelines and microservices provided by the Kvik
-framework:
+\subsection*{Kvik}
+Based on the development of MIxT, we generalized its functionality and
+underlying systems into a set of design principle guidelines for application
+developers: 
 
 \textbf{Principle 1}: Build applications as collections of language-agnostic
 microservices. This makes it possible to re-use key components and build
@@ -113,9 +117,12 @@ example is to build an application using R packages and OpenCPU or Kvik. This
 makes it possible to either explore the data and methods through the data
 exploration application or an R session. 
 
-From these principles we developed a set of software packages that provide
-functionality to build microservices that provides key components to build a
-data exploration application in systems biology. 
+From these three main principles we built a set of software packages that
+provide functionality for microservices that can be used to build a data
+exploration application in systems biology. We built a compute service for
+executing statistical analyses and a database service that provides data from
+biological databases. Using these it is possible to develop specialized data
+exploration application in any modern programming language.  
 
 % Også er det viktig å ikke glemme "system aspects" performance, management,
 % deployment, etc for disse. Det kn enten forklares her eller senere.
@@ -123,73 +130,54 @@ data exploration application in systems biology.
 % å forstå
 % LAB: her er stedet for alle Go bibliotek og andre lavnivå detlajer
 
-\subsubsection*{WIP: Compute Service}
+\subsubsection*{Compute Service}
 % Describe how we've designed the interface with R: Build an R-package and call
 % functions from it, we provide four different output formats to the user (json,
 % csv, pdf, png),  as well as four different http endpoints (call, get and rpc).
 
 % Hva er fordelene med å gjøre det i go?
-The R microservice and R interface in Kvik is built using a hybrid state
-pattern\cite{opencpu}. We provide three main operations for interfacing with R:
-Call, Get and RPC. The Call operation is used to execute and run a function from
-an R package. 
-It takes as input an R package name, a function name and optional
-arguments. It returns a unique identifier that later can be used by the Get
-operation to retrieve results. The Get operation is used to get results in
+The compute service in Kvik is built using a hybrid state
+pattern\cite{opencpu}.
+We provide three main operations for interfacing with R:
+Call, Get, and RPC. The Call operation is used to execute and run a function
+from an R package. It takes as input an R package name, a function name, and
+optional arguments. It returns a unique identifier that later can be used by the
+Get operation to retrieve results. The Get operation is used to get results in
 different output formats, e.g. JSON, CSV, PDF, or PNG. The RPC is just a
 combination of a Call and a subsequent Get. 
 
-The compute service in Kvik follows many of the design patterns in
-OpenCPU. Both systems interface with R packages using a hybrid state pattern
-over HTTP. Both systems provide the same interface to execute analyses and
-retrieve results.  While OpenCPU is implemented on top of R and Apache, Kvik is
-implemented from the ground up in Go. Because of the similarities in the
-interface to R in Kvik we provide packages for interfacing with our own R server
-or OpenCPU R servers through the \emph{gopencpu} package. 
-
-The R service in Kvik builds on the standard \emph{http} library in Go. On start
-it launches a user-defined number of R sessions that execute analyses on demand.
-This allows for parallel execution of analyses. We provide a simple FIFO queue
-for queuing of requests. The R server also provides the opportunity for users to
-cache analysis results to speed up subsequent calls. 
-
-
-With this process in mind, we designed the interface to the R programming
-language in Kvik. We want to make it possible to call any function from an R
-package and return its results either as plain text, such as comma-separated
-tables, or binaries such as images. Enforcing that R code is built into R
-packages ensures that the analysis code can be used by power users through an
-ordinary R session or in the data exploration application itself. 
+% With this process in mind, we designed the interface to the R programming
+% language in Kvik. We want to make it possible to call any function from an R
+% package and return its results either as plain text, such as comma-separated
+% tables, or binaries such as images. Enforcing that R code is built into R
+% packages ensures that the analysis code can be used by power users through an
+% ordinary R session or in the data exploration application itself. 
 
 
 
-\subsubsection*{WIP: Database} 
-We chose to build a database service that interfaces with different online
-databases to retrieve meta-data on genes and processes. We built our own service
-so that we could provide caching functionality reducing query time and
-offload some of the traffic to the various databases. 
+\subsubsection*{Database Service} 
+The database service provides an interface to biological databases for
+retrieving meta-data on genes and processes. In Kvik we have built packages for
+interfacing with The Entrez Programming Utilities
+(E-utilities)\footnote{\url{eutils.ncbi.nlm.nih.gov}},
+MSigDB\footnote{\url{software.broadinstitute.org/gsea/msigdb}}, Hugo Gene
+Nomenclature Committe (HGNC)\footnote{\url{genenames.org}}, and Kyoto Encyclopedia
+of Genes and Genomes (KEGG)\footnote{\url{kegg.jp}}
 
-
-Similar to how our analysis process shaped the R interface, it also defined how
-we want to build interfaces to online databases. 
-
-Describe the interface to the databases and what we use it for. Could be
-interesting to talk about provenance/caching.
+The database service uses a caching mechanism to reduce the load on the online
+databases. It will also speed up subsequent queries for a cached object, since
+the query can be served out of cache and not having to be fetched from a remote
+database. We allow application developers to specify the cache eviction policy,
+but on default the database service does not evict anything from its cache
+before the service is restarted. This can be modified by the application
+developer. 
 
 
 % lokalt: fortere, kan cache, kan få bort last fra de sentrale serverne 
-
 % Kan også beskrive hva slags interfaces de eskponerer, hva som er performance
 % characteristics, programmerings utforderinger, og tilatt bruk
-In its initial state we wanted an interface to interactively query databases
-such as KEGG or MSigDB for up-to-date information about genes, gene sets or
-biological pathways. This interface should be available within the data
-exploration applications to provide valuable metadata, such as gene summaries,
-for the researchers exploring results.  
-
 % TODO: Describe the interfaces/API. 
 % + abstraksjoner som tar seg av caching og provenance management
-
 % Jeg ser for meg at det er nyttig å kunne si for alle database oppslag noe sånt
 % som: read cached value = False, cache result = "session". Dvs alltid les
 % nyeste verdi, men cache resultatene for denne session. Kanskje er det også
@@ -199,49 +187,54 @@ for the researchers exploring results.
 % komponenter.
 
 
-\subsubsection*{WIP: Building applications} 
-% Snu om setningene: microservices som lar implemntere i multiple ways
-With Kvik there are multiple ways developers can build data
-exploration applications. Either bundle analysis and database lookup on a single
-computer, or separate computational tasks to more powerful compute clusters to
-improve performance. 
-In this paper we discuss how to develop applications that follow a
-microservices architecture where data analysis and storage is simply a service. 
-
-We do not wish to enforce any style of programming or set of tools to build
-user-facing apps. 
-
-% Dette er kanskje en av flere microservices?
+\subsubsection*{Building applications} 
 In Kvik we use R packages as the fundamental building block for data exploration
 applications. They provide an interface to data and analyses, and especially in
 the field of systems biology, the R programming language provide the largest
 collection of data analysis packages. % litt vagt kanskje? 
-We discovered that the most sensible way to build applications on top of our
-existing code base was to build a system that could interface with our analysis
-code directly. In Kvik we built an HTTP interface on top of R that allows users
-to call functions and get results using any programming language with an HTTP
-library. This allows developers to build data exploration applications in the
-programming language that is most suitable, or has the best support, for
-presenting that specific data type. 
 
-\subsection*{WIP: Implementation}
+An application starts as one or more R packages with the datasets, analysis
+code, and optional other utilities for generating static plots in R.  Developers
+can then run the compute service which makes the functions from the R package
+accessible through an HTTP endpoint. With the data analysis and resulting
+datasets available, developers can focus on 
+
+It is important to note that since the end application interfaces directly with
+R, developers can leverage this to produce dynamic visualizations. For example,
+if an application uses a clustering method to color nodes in a graph, end-users
+can tweak parameters 
+
+In Kvik we do not specify what programming language or set of tools to use to
+build an application. We do not believe that there is any one language or
+framework suitable for every application. We believe that by orchestrating an
+application as a set of services communicating over standard protocols 
+
+
+\subsection*{Implementation}
 In ths section we describe the implementation details in Kvik and the
 microservices required to build the MIxT web application. 
 
 Kvik is implemented as a collection of Go packages with the
 functionality required to build services that can integrate statistical
 software in a data exploration and provide an interface to up-to-date biological
-databases. To integrate R we provide two packages \emph{gopencpu} and
+databases. We chose the Go programming language because of its performance, ease
+of development, and simple deployment. 
+To integrate R we provide two packages \emph{gopencpu} and
 \emph{r}, that interface with OpenCPU and Kvik R servers respectively. To
 interface with biological databases we provide the packages \emph{eutils},
-\emph{gsea}, \emph{genenames}, and \emph{kegg} that interface with
-The Entrez Programming Utilities
-(E-utilities)\footnote{\url{eutils.ncbi.nlm.nih.gov}},
-MSigDB\footnote{\url{software.broadinstitute.org/gsea/msigdb}}, Hugo Gene
-Nomenclature Committe\footnote{\url{genenames.org}}, and Kyoto Encyclopedia
-of Genes and Genomes (KEGG)\footnote{\url{kegg.jp}} respectively. 
+\emph{gsea}, \emph{genenames}, and \emph{kegg} that interface with E-utils,
+MsigDB, HGNC and KEGG respectively.
 In addition to these packages we provide Docker images that implement the
 two required microservices. 
+
+Both the compute and the databases service in Kvik builds on the standard
+\emph{http} library in Go. On start the compute service 
+launches a user-defined number of R sessions that execute analyses on demand.
+This allows for parallel execution of analyses. We provide a simple FIFO queue
+for queuing of requests. The compute service also provides the opportunity for users to
+cache analysis results to speed up subsequent calls. The database service use
+the \emph{gocache}\footnote{\url{github.com/fjukstad/gocache}} package to cache
+any query to an online database.
 
 % LAB: Litt usikker på om dette hører til i Results eller Methods
 % \subsection*{Applications}
@@ -258,16 +251,4 @@ two required microservices.
 % % LAB: mer detaljert beskrivelse av hvordan hver app er implementert med Kvik
 % 
 % 
-
-
-\begin{figure}[h!]
-\centering
-\includegraphics{figures/kvik-mixt.png}
-\caption{An overview of the relationship between the MIxT application and Kvik.
-MIxT contains a web application (online at \url{mixt-blood-tumor.bci.mcgill.ca})
-and the R Package that provides analyses and data to the web application. Kvik
-provides the services for running the statistical analyses from the R package,
-and the database lookups found in the web application.} 
-\label{kvik-mixt}
-\end{figure} 
 
