@@ -50,7 +50,7 @@ operating system, software packages and versions of these. This makes
 reproducing an application a trivial task. The most popular implementation of a
 software container is Docker\footnote{\url{docker.com}}, but others such as
 Rkt\footnote{\url{coreos.com/rkt}} exist.  
-
+% LAB: Kan nevne CWL og BioDocker her (i en revidert versjon av paperet)
 
 % Traditionally data exploration applications have been built as desktop
 % applications that require installation and setup by the user, but now the move
@@ -119,7 +119,8 @@ range of applications. The key services of a biological data exploration
 application are i) a compute service for executing statistical analyses in
 languages such as R, and ii) a database query service for retrieving information
 from biological databases.
-On top of these services is possible to build any number applications and these
+% LAB: hva kan bli gjenbrukt (these)? 
+On top of these services is possible to build any number of applications and these
 can be reused by different applications. 
 
 To build these services we need a framework that fulfills the following
@@ -129,10 +130,13 @@ requirements:
     \item It provides a language-independent approach for integrating, or
         embedding, statistical software, such as R, directly in interactive data
         exploration applications.
+    % LAB: Blir litt som med Edvard at vi kaller disse DB masse forskjellige ting :)
+    % LAB: Reference databases er det jeg tror er best.r
     \item It provides an interface to online databases to provide meta-data to
         biological entities. % liker ikke entities-ordet, må ha noe annet 
     \item Its components should be easy to develop, maintain, deploy and share
         between projects. 
+    % LAB: Jeg savner noe om performance og scalability, som er viktig for ting som brukes av andre
 \end{enumerate} 
 
 

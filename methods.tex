@@ -36,6 +36,7 @@ based on co-expression. From these clusters of genes, called modules, we
 investigated their relationship to known biological processes. We also enable
 stratified analyses of the databaset based on breast cancer subtypes. 
 \emph{More on the methods maybe??}
+% LAB: tror det er nok. Er ett eget paper om disse metodone :)
 
 From the analyses we built an R package\cite{mixt-r-package} that
 implements the different statistical methods developed in the MIxT project. 
@@ -50,6 +51,7 @@ application developer.
 
 A large part of biological data research is to link the results to known biology
 from literature or reference databases. In the MIxT project we needed an
+% LAB: hvilke DBs?
 application that could interface with a set of different databases, keeping the
 information up-to-date. As with the R interface the interface to the databases
 should be accessible from any programming language. 
@@ -60,6 +62,9 @@ component in a software container such as Docker allows us to deploy the
 application on a wide range of hardware, from local installations to deployments
 to cloud providers such as Amazon Web Services\footnote{\url{aws.amazon.com}}.
 
+% LAB: Performance krav?
+
+% LAB: Provenacne / reproducibility krav?
 
 % BF: Hei LA var dette noe sånn du så for deg? 
 % LAB: Generelt; 1. Hva var problemet? Hva ble gjort? Hvordan?
@@ -99,6 +104,7 @@ to cloud providers such as Amazon Web Services\footnote{\url{aws.amazon.com}}.
 % most likely be application specific. 
 \subsection*{Kvik}
 Based on the development of MIxT, we generalized its functionality and
+% LAB: application developers blir for bredt, så biological data exploration ...
 underlying systems into a set of design principle guidelines for application
 developers: 
 
@@ -121,9 +127,12 @@ exploration application or an R session.
 From these three main principles we built a set of software packages that
 provide functionality for microservices that can be used to build a data
 exploration application in systems biology. We built a compute service for
+% database service ...that provides: er utydelig. Og har ikke med provenance/ caching ideene
 executing statistical analyses and a database service that provides data from
 biological databases. Using these it is possible to develop specialized data
 exploration application in any modern programming language.  
+% LAB: We describe these in detail below...
+
 
 % Også er det viktig å ikke glemme "system aspects" performance, management,
 % deployment, etc for disse. Det kn enten forklares her eller senere.
@@ -131,11 +140,42 @@ exploration application in any modern programming language.
 % å forstå
 % LAB: her er stedet for alle Go bibliotek og andre lavnivå detlajer
 
+\subsubsection*{Building applications} 
+
+% LAB: Fig 1. og en forklaring om hvordan ting henger sammen, passer (og trenges) her
+
+In Kvik we use R packages as the fundamental building block for data exploration
+applications. They provide an interface to data and analyses, and especially in
+the field of systems biology, the R programming language provide the largest
+collection of data analysis packages. % litt vagt kanskje? 
+% LAB: Ja må motivere valget bedre og si hva alternativene er og hvorfor de ikke er brukt.
+
+% LAB: starts som i executes eller utvikles?
+An application starts as one or more R packages with the datasets, analysis
+code, and optional other utilities for generating static plots in R.  Developers
+can then run the compute service which makes the functions from the R package
+accessible through an HTTP endpoint. With the data analysis and resulting
+datasets available, developers can focus on MANGLER NOE HER
+
+It is important to note that since the end application interfaces directly with
+R, developers can leverage this to produce dynamic visualizations. For example,
+if an application uses a clustering method to color nodes in a graph, end-users
+can tweak parameters MANGLER NOE HER
+
+% LAB: mangler beskrivelse av reference databases
+
+In Kvik we do not specify what programming language or set of tools to use to
+build an application. We do not believe that there is any one language or
+framework suitable for every application. We believe that by orchestrating an
+application as a set of services communicating over standard protocols 
+
 \subsubsection*{Compute Service}
 % Describe how we've designed the interface with R: Build an R-package and call
 % functions from it, we provide four different output formats to the user (json,
 % csv, pdf, png),  as well as four different http endpoints (call, get and rpc).
 
+% LAB: Ikke motivert hvorfor det er en interface til R
+% LAB: Ikke forklart hvordan en appliakasjons programmerer skal tenke på denne servicen. Dvs hva den brukes til og hva den tilbyr. Første paragraf hopper rett inn i interfacen.
 % Hva er fordelene med å gjøre det i go?
 The compute service in Kvik is built using a hybrid state
 pattern\cite{opencpu}.
@@ -147,6 +187,10 @@ Get operation to retrieve results. The Get operation is used to get results in
 different output formats, e.g. JSON, CSV, PDF, or PNG. The RPC is just a
 combination of a Call and a subsequent Get. 
 
+% LAB: Ikke nødvendigvis klart for leseren hva som er fordelene med en slik microservice. Eller hvorfor det blir enklere å utivkle apps vha denne.
+
+% LAB: performance, scalability, & provenance?
+
 % With this process in mind, we designed the interface to the R programming
 % language in Kvik. We want to make it possible to call any function from an R
 % package and return its results either as plain text, such as comma-separated
@@ -154,17 +198,19 @@ combination of a Call and a subsequent Get.
 % packages ensures that the analysis code can be used by power users through an
 % ordinary R session or in the data exploration application itself. 
 
-
-
 \subsubsection*{Database Service} 
 The database service provides an interface to biological databases for
-retrieving meta-data on genes and processes. In Kvik we have built packages for
+retrieving meta-data on genes and processes. 
+% LAB: provencance, performance, scalability
+% LAB: Dette kan tas på slutten
+In Kvik we have built packages for
 interfacing with The Entrez Programming Utilities
 (E-utilities)\footnote{\url{eutils.ncbi.nlm.nih.gov}},
 MSigDB\footnote{\url{software.broadinstitute.org/gsea/msigdb}}, Hugo Gene
 Nomenclature Committe (HGNC)\footnote{\url{genenames.org}}, and Kyoto Encyclopedia
 of Genes and Genomes (KEGG)\footnote{\url{kegg.jp}}
 
+% LAB: Dette er veldig overfladisk beskrevet. Hvordan bruker application programmerern den? Hvor lagres ting? Hva slags datastrukturer brukes? Hvor stor er cachen? Er den delt? Eviction policy? Antatt size på working set? Er den komprimert? etc
 The database service uses a caching mechanism to reduce the load on the online
 databases. It will also speed up subsequent queries for a cached object, since
 the query can be served out of cache and not having to be fetched from a remote
@@ -173,6 +219,7 @@ but on default the database service does not evict anything from its cache
 before the service is restarted. This can be modified by the application
 developer. 
 
+% LAB: fordel av å bruke den; hvorfor det gjør livet enklere...
 
 % lokalt: fortere, kan cache, kan få bort last fra de sentrale serverne 
 % Kan også beskrive hva slags interfaces de eskponerer, hva som er performance
@@ -187,28 +234,7 @@ developer.
 % interface som kan brukes til å implementere database spesifike (KEGG, MsigDB)
 % komponenter.
 
-
-\subsubsection*{Building applications} 
-In Kvik we use R packages as the fundamental building block for data exploration
-applications. They provide an interface to data and analyses, and especially in
-the field of systems biology, the R programming language provide the largest
-collection of data analysis packages. % litt vagt kanskje? 
-
-An application starts as one or more R packages with the datasets, analysis
-code, and optional other utilities for generating static plots in R.  Developers
-can then run the compute service which makes the functions from the R package
-accessible through an HTTP endpoint. With the data analysis and resulting
-datasets available, developers can focus on 
-
-It is important to note that since the end application interfaces directly with
-R, developers can leverage this to produce dynamic visualizations. For example,
-if an application uses a clustering method to color nodes in a graph, end-users
-can tweak parameters 
-
-In Kvik we do not specify what programming language or set of tools to use to
-build an application. We do not believe that there is any one language or
-framework suitable for every application. We believe that by orchestrating an
-application as a set of services communicating over standard protocols 
+% LAB: savner en beskrivelse (del kapittel) av deployment og andre ting som har med management av disse services og apps
 
 
 \subsection*{Implementation}
