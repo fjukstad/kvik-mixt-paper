@@ -1,17 +1,9 @@
-% Hva er korrekt: "in" system biology eller "for" system biology?
 In this section we aim to cover some of the existing systems for building
 interactive data exploration applications in systems biology. 
 
-% TODO: Add related work where somebody has built a system for exploring some
-% data where 
-
-% Det er en utfordring å ha related work tidlig i dette paperet. Slik det er nå,
-% er det ikke sikkert leseren skjønner hvorfor diss systemene diskuteres, hva
-% som er sammenhengen mellom de, og hva det har å gjrøe med Kvik.
-
 \subsection*{Integrate Statistical Analyses} 
 OpenCPU is a system for embedded scientific computing and reproducible
-research.\cite{opencpu} It provides an HTTP API to the R programming language to
+research.\cite{opencpu} It offers an HTTP API to the R programming language to
 provide an interface with statistical methods. It enables users to make function
 calls to any R package and retrieve the results in a wide variety of formats
 such as json or pdf. 
@@ -20,16 +12,9 @@ works in a single-user setting within an R session, or a multi-user setting
 facilitating multiple parallel requests. This makes OpenCPU suitable
 for building a service that can run statistical analyses. 
 OpenCPU provides a Javascript library for interfacing with R, as well as Docker
-containers for easy installation. OpenCPU has been used to build multiple
+containers for easy installation and OpenCPU has been used to build multiple
 applications.\footnote{\url{opencpu.org/apps.html}}.
-% Design patterns er ikke nevnt enda
-In Kvik we provide a package
-to interface with OpenCPU servers from the Go programming language since it
-provides the same interface to execute and run statistical analyses as we do in
-our compute service. 
 
-% Skjønner ikke poenget med Renjin. Dvs hva fordelen med å kjøre R kode på en
-% JVM er.
 Renjin is a JVM-based interpreter for the R programming language.\cite{renjin}
 It targets developers who want to integrate the R interpreter in web
 applications. Since it is built on top of the JVM it allows developers to write
@@ -42,8 +27,8 @@ interface to R higher.
 Shiny is a web application framework for R\footnote{\url{shiny.rstudio.com}}
 It allows developers to
 build web applications in R without having to have any knowledge about HTML, CSS
-or Javascript. It provides a widget library to provide more advanced Javascript
-visualizations such as Leafle\footnote{\url{leafletjs.com}} for maps or
+or Javascript. Its widget library to provides more advanced Javascript
+visualizations such as Leaflet\footnote{\url{leafletjs.com}} for maps or
 three.js\footnote{\url{threejs.org}} for WebGL-accellerated
 graphics. Developers can choose to host their own web server with the user-built
 Shiny Apps, or host them on public servers. Shiny forces users to implement data
@@ -55,8 +40,8 @@ widgets and libraries in Shiny.
 \subsubsection*{Biogo} 
 \emph{this one is a bit out of place.}
 
-Biogo is a bioinformatics library in Go. It provides functionality to analyse
-genomic and metagenomc datasets in the go programming
+Biogo is a bioinformatics library written in Go. It provides functionality to
+analyze genomic and metagenomic datasets in the go programming
 language.\cite{Kortschak005033} Using the go programming language the developers
 are able to provide high-performance parallel processing in a clean and simple
 programming language. 
