@@ -17,23 +17,6 @@ We show the viability of the microservices approach in Kvik by describing the
 MIxT web application for exploring and comparing
 transcriptional profiles from blood and tumor samples. 
 
-Figure \ref{kvik-mixt} shows the relationship between MIxT and Kvik. MIxT
-consists of a web application and an R package, while Kvik provides the services
-for doing database lookup of genes and processes, as well as executing
-statistical analyses. 
-
-
-\begin{figure}[h!]
-\centering
-\includegraphics{figures/kvik-mixt.png}
-\caption{An overview of the relationship between the MIxT application and Kvik.
-MIxT contains a web application (online at \url{mixt-blood-tumor.bci.mcgill.ca})
-and the R Package that provides analyses and data to the web application. Kvik
-provides the services for running the statistical analyses from the R package,
-and the database lookups found in the web application.} 
-\label{kvik-mixt}
-\end{figure} 
-
 % \subsection*{Design} 
 We define six data exploration tasks that the web application should help users
 perform: 
@@ -41,9 +24,9 @@ perform:
 \textbf{Explore co-expression gene sets in tumor and blood tissue}. We want to
 simplify the process of exploring the computed co-expression gene sets, or
 modules, through the web-application. The application should 
-visualize gene expression together with clinicopathological variables associated
-with each module. In addition we want to enable users to study the underlying
-biological functions of the modules by including gene set analyses between the
+visualize gene expression patterns together with clinicopathological variables
+for each module. In addition we want to enable users to study the underlying
+biological functions of each module by including gene set analyses between the
 module genes and known gene sets. 
 
 \textbf{Explore co-expression relationships between genes}. Users should be able
@@ -56,26 +39,27 @@ able to explore the relationship between modules from different tissues. We
 provide two different metrics to compare modules, and the web application should
 enable users to interactively browse these relationships. In addition to
 providing visualizations the compare modules from each tissue, users should also
-be able to explore the relationships, but for different breast cancer subtypes. 
+be able to explore the relationships, but for different breast cancer patient
+groups. 
 
 \textbf{Explore relationships between clinical variables and modules.} In
 addition to comparing the association between modules from both tissues, users
 also have the possibility of exploring the association with a module and a
 specific clinical variable. This should also be possible for the different
-breast cancer subtypes. 
+breast cancer patient group. 
 
 \textbf{Explore association between user-submitted gene lists and computed
 modules.} We want to enable users to explore their own gene lists to explore
 them in context of
 the co-expression gene sets. The web application must handle uploads of gene
-lists and compute association on demand. 
+lists and compute association between the genelist and the MIxT modules on
+demand. 
 
 \textbf{Search for genes or gene lists of intrest}. To facilitate faster lookup
-of genes and processes, the web application should provide a search
+of genes and biological processes, the web application should provide a search
 functionality that lets users locate genes or gene lists and show association to
 the co-expression gene sets. 
 
-% Vi kan godt kutte én av figurene under, f.eks c eller d som er veldig lik. 
 \begin{figure*}[h!]
 \centering
 \caption{MIxT module overview page. The screenshot show the user interface for
@@ -83,36 +67,9 @@ exploring a single module. It consists of three panels. The top left panel
 contains the gene expression heatmap. The top right panel contains a table of
 the genes found in the module. The bottom panel contains the results of gene
 overlap analyses from the module genes and known gene sets from MSigDB.}
-%\caption{Screenshots of the user interface in four of the six analysis tasks.
-%Note that we combine visualization frameworks for both JavaScript and R to
-%generate the visualizations. Specifically, sigmajs (a,
-%\protect\url{sigmajs.org}), ggplot2(b, \protect\url{ggplot2.org}), and D3 (c and
-%d, \protect\url{d3js.org})}
-%\includegraphics[width=2.7in]{figures/network.png} 
 \includegraphics[width=0.8\textwidth]{figures/module.png}
-% \includegraphics[width=2.5in]{figures/tissue-comp.png}
 \label{fig_first_case}
 \end{figure*} 
-
-% \hfil
-% \subfloat[A2: Module visualization.]{\includegraphics[width=2.5in]{figures/module.png}%
-% \label{fig_second_case}}
-% \hfil
-% \centering
-% \subfloat[A3: Visualization of ranksum.]{\includegraphics[width=2.5in]{figures/tissue-comp.png}%
-% \label{fig_first_case}}
-% \hfil
-% \subfloat[A4: Visualization of significant clinical variable
-% association]{\includegraphics[width=2.8in]{figures/clinical-comp.png}%
-% \label{fig_second_case}}
-% \caption{Screenshots of the user interface in four of the six analysis tasks.
-% Note that we combine visualization frameworks for both JavaScript and R to
-% generate the visualizations. Specifically, sigmajs (a,
-% \protect\url{sigmajs.org}), ggplot2(b, \protect\url{ggplot2.org}), and D3 (c and
-% d, \protect\url{d3js.org})} 
-% \label{fig_sim}
-% \end{figure*}
-
 
 From these six analysis tasks we designed and implemented MIxT as a web
 application that integrates statistical analyses and information from biological
