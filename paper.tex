@@ -1,49 +1,39 @@
-%% BioMed_Central_Tex_Template_v1.06
-%%                                      %
-%  bmc_article.tex            ver: 1.06 %
-%                                       %
+\documentclass[sigconf]{acmart}
 
-%%IMPORTANT: do not delete the first line of this template
-\documentclass[twocolumn]{bmcart}% uncomment this for twocolumn layout 
-
-\def\includegraphic{}
-\def\includegraphics{}
-
-%%% Load packages
 \usepackage[utf8]{inputenc} %unicode support
 \usepackage{hyperref}
 \usepackage{graphicx}
 % \usepackage{subfig}
 
-%%% Put your definitions there:
-\startlocaldefs
-\endlocaldefs
+% DOI
+\acmDOI{10.475/123_4}
+
+% ISBN
+\acmISBN{123-4567-24-567/08/06}
+
+%Conference
+% \acmConference[WOODSTOCK'97]{ACM Woodstock conference}{July 1997}{El
+%   Paso, Texas USA} 
+% \acmYear{1997}
+% \copyrightyear{2016}
+% \acmPrice{15.00}
+
 
 %%% Begin ...
 \begin{document}
-\begin{frontmatter}
-\begin{fmbox}
-\dochead{Software}
-
 \title{Building applications for interactive data exploration in systems biology}
 
 \input{authors} 
+\maketitle
 
-\begin{artnotes}
-\end{artnotes}
-%\end{fmbox}% comment this for two column layout
+
 \input{abstract} 
-\end{fmbox}% uncomment this for twcolumn layout
-\end{frontmatter}
-
 \input{main} 
 
-\begin{backmatter}
 \section*{List of abbreviations used}
 \section*{Competing interests}
 The authors declare that they have no competing interests.
 % if your bibliography is in bibtex format, use those commands:
 \bibliographystyle{bmc-mathphys} % Style BST file
 \bibliography{references} % Bibliography file (usua
-\end{backmatter}
 \end{document}
