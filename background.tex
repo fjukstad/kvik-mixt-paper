@@ -1,26 +1,41 @@
+% LAB: Tittel: Background -> Introduction
+
 In recent years the biological community has generated and collected an
 unprecedented ammount of data.
 While the cost of data collection has drastically decreased, data analysis
 continue to be a larger fraction of the total experiment
-cost.\cite{sboner2011real} This calls for novel methods in data analysis and
+cost.\cite{sboner2011real}
+% LAB: An important part of this cost is the time spent by human experts interpreting the data...
+This calls for novel methods in data analysis and
 exploration. 
 
 % Trenger litt tekst som sier at vi skal snakke om stats, presentasjon, dbs,
 % microservices og kobling av alle. 
-Several tools are now available i various programming languages for data
+Several tools are now available in various programming languages for biological data
 analysis. These include novel statistical/bioinformatics methodologies and
 graphical analysis tools.
 In the R statistical programming language developers share software through
 repositories such as CRAN\footnote{\url{cran.r-project.org}} or
 Bioconductor\footnote{\url{bioconductor.org}}.  In other languages, libraries
 for biological bomputation are often availalbe like BioPython\cite{biopython}
-and biogo\cite{biogo} written in Python or Go, respectively. 
+and biogo\cite{biogo} for Python or Go, respectively. 
+% LAB: Synes at Galaxy også bør tas med
 
 Although these framework are of tremendous help for scientists with some
-computing know-how, even computationally savvy researchers can get tangled up
-when wrestling with software and big data. 
+computing know-how, even computationally savvy researchers 
+% LAB: dette blir vel "muntlig". Jeg synes at dette er stedet å løfte opp utfordringene med å utvikle ordentlig software, dvs:
+% 1. Noe som virker
+% 2. Som har god nok performance
+% 3. Hvor det er mulig etterpå å forstå hva analysen gjorde
+% 4. Som skalerer til større datasett
+% 5. Som er mulig å vedlikeholde etterpå
+% 6. Som har deler som kan gjennbrukes av andre
+% Ofte er det bare 1. som blir gjort. Men feks for oss i Elixir som skal tilby tjenester som faktisk virker, så er det de andre punktene som er viktig.
+can get tangled up when wrestling with software and big data. 
+% LAB: Starte med denne? Og menes det nye apps, eller at Kvik trenges? For sistnevntge så bør det være "novel approach/system"
 Novel applications are needed to better integrate statistical
 packages, biological databases, and interactive visualizations.
+% LAB: Henger ikke helt sammen med forrige setning, og det virker som at det er en gjentagelse av diskusjonen i forrige paragraf. Kanskje best å bare ta bort denne setningen.
 Different programming languages solve different tasks. 
 For example, new biological data analysis techniques are quickly realeased in R
 and its package repositories, high performance computer vision tasks are
@@ -36,16 +51,22 @@ applications in multiple different programming languages. This way the
 most suitable programming language is used for each specific part. To build a
 microservice application, developers bundle each service in a container.
 Containers are built from configuration files which describe the operating
-system, software packages and versions of these. This makes reproducing an
+system, software packages and versions of these. 
+% LAB: Unøyaktig. Og det interessante er ikke å reprodusere en applikasjon men en analyse med alle dens parametere, database versjoner, libraries etc
+This makes reproducing an
 application a trivial task. The most popular implementation of a software
 container is Docker\footnote{\url{docker.com}}, but others such as
 Rkt\footnote{\url{coreos.com/rkt}} exist. Initiatives such as
 BioContainers\footnote{\url{biocontainers.pro}} now provide containers
 pre-installed with different bioinformatics tools. 
-% LAB: Kan nevne CWL 
+% LAB: Bør nevne CWL. Mange vil tenke på den som løsningen for det Kvik gjør.
+
+% LAB: Jeg ville hatt requirments innholdet her.
 
 In this paper, we describe a novel approach for building data exploration
 applications in systems biology. We show that by building applications as a set
+% LAB: "it is possible". Jeg synes ikke vi skal si det slik med mindre det er gjort noe som ikke var mulig før; og da er antageligvis Science rette stedet å sende :)
+% LAB: bedre: å si at vi har identifisert services som er: (i) useful for bio data exploration, (ii) reusable, (iii) low overhead/optimized, osv
 of services it is possible to reuse and share its components between
 applications. In addition, by packaging the services using container technology
 we promote reproducible research and simplify application deployment. We have
@@ -59,23 +80,33 @@ analysis together with biological databases and interactive visualizations.
 % bruke de?
 
 \section*{Requirements} 
+
+% LAB: Jeg ville byttet om paragrafen og listen. Dvs først hva vi har identifisert som requirements etter å ha implementert endel slike apps, og deretter hvordan disse requirements kan implementeres som services som tilbyr abstraksjoner, interfaces, og data strukturer som løser disse requirements.
+
 First, we identified a set of reusable services that application developers can
 use to build a wide range of applications. The key services of a biological data
 exploration application are i) a compute service for executing statistical
 analyses in languages such as R, and ii) a database query service for retrieving
 information from biological databases.
+% LAB: litt rart at visualization/ GUI ikke er med. Men tanken er kanskje at dette er services som brukes av slike applikasjoner. Isåfall bør det sies.
 
 To build these services we need a framework that fulfills the following
 requirements: 
 
 \begin{enumerate}
     \item It provides a language-independent approach for integrating, or
-        embedding, statistical software, such as R, directly in interactive data
+        embedding, statistical software, such as R, directly in 
+        % LAB: her er det ikke klart hva som er en slik app? Kanskje bedre å si at det er noe JavaScript. Og at dette er ett eget requirement.
+        interactive data
         exploration applications.
+    % LAB: denne er misvisende. Jeg tenker enten at dette ikke trenges siden DB allerede tilbyr en interface som kan brukes, eller at det er noe veldig avansert som har laget en unified-interface-to-everything
+    % LAB: jeg ville heller sagt at requirment er en interface/wrapper som tilbyr low latency access & provenance
     \item It has an interface to online reference databases to provide meta-data to
         biological entities. % liker ikke entities-ordet, må ha noe annet 
+    % LAB: blir kanskje for mye i en bullett? Develop + optimize + maintain i en (har med skriving av kode å gjøre); deploy i en annen; share/ reuse between projects (med share tenker jeg feks en cache delt mellom to applikasjoner).
     \item Its components should be easy to develop, maintain, deploy and share
         between projects. 
+    % LAB: Blir feil å si "It scales". Ihvertfall tre type performance utfordringer: (i) response time for interaktive operasjoner, (ii) mulighet til å bruke større dataset, (iii) mange samtidige brukere.
     \item It scales to meet the performance requirements of interactive data
         exploration applications. 
 \end{enumerate} 
