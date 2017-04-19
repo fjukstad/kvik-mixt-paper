@@ -18,6 +18,12 @@ MIxT web application for exploring and comparing
 transcriptional profiles from blood and tumor samples. 
 
 % \subsection*{Design} 
+
+% LAB: Foreslår at dette er ett eget kapittel, eller ihvertfall del-kapittel
+
+% LAB: Disse beksrivelsene er greie for denne konferansen, selv om de antageligvis ville vært for detaljert til ett vanlig CS paper. 
+% LAB: Men jeg savner tall slik det er er i MIxT beskrivelsen. Disse vil gi en ide om hvor komplisert og regneintensiv operasjonene er, hvor mye data som sendes, etc. Merk! jeg ser det er noen tall lenger ned om nodes, edges, mm.
+
 We define six data exploration tasks that the web application should help users
 perform: 
 
@@ -60,6 +66,8 @@ of genes and biological processes, the web application should provide a search
 functionality that lets users locate genes or gene lists and show association to
 the co-expression gene sets. 
 
+% LAB: her mangler det en beskrivelse av hvordan disse er implementert. Dvs hvordan de bruker Kvik services. Er det mye gjennbruk av kode, etc. Det er denne informasjonen som ihvertfall CS folk er mest interessert i. Dette er også viktig for å kunne forstå performance resultatene som kommer senere.
+
 \begin{figure*}[h!]
 \centering
 \caption{MIxT module overview page. The screenshot show the user interface for
@@ -74,6 +82,7 @@ overlap analyses from the module genes and known gene sets from MSigDB.}
 From these six analysis tasks we designed and implemented MIxT as a web
 application that integrates statistical analyses and information from biological
 databases together with interactive visualizations.
+% LAB: her er det 3 services, mens det bare var 2 tidligere. 
 The MIxT web application
 consists of three services: i) the web application itself containing the
 user-interface and visualizations; ii) the compute service performing the MIxT
@@ -81,6 +90,7 @@ analyses delivering data to the web application; and iii) the database service
 providing up-to-date information from biological databases. Each of these
 services run within Docker containers making the process of deploying the
 application simple. 
+% LAB: dette er motivert/ beskrevet før og kan fjernes her
 By composing the
 application of a set of services we can substitute parts of the application
 without re-writing the entire application.
@@ -88,8 +98,9 @@ For example if we want to use OpenCPU to interface with data analysis we can do
 so by simply exchanging the Kvik compute service with OpenCPU. Both services
 communicate over HTTP and their interfaces are the same. 
 
+% LAB: Denne...
 We structured the MIxT application with a separate view for each analysis task.
-
+% LAB: ...og denne kan flyttes helt til begynnelsen av dette kapitelet
 To explore the co-expression gene sets we built a view that combines both static
 visualizations from R together with interactive tables with gene overlap
 analyses. Figure \ref{fig_first_case} shows the web page presented to users when
@@ -97,6 +108,7 @@ they access the co-expression gene set 'darkturquoise' from blood. Using the
 Kvik compute service we can generate plots on demand and provide users with
 high-resolution PDFs or PNG files. 
 
+% LAB: Jeg greier ikke å mappe denne informasjonen til operasjonene som er beksrevet ovenfor. Kanskje en figur vil hjelpe?
 To explore the co-expression relationship between genes we use an interactive
 graph visualization build with Sigmajs\footnote{\url{sigmajs.org}}. We have
 built visualization for both tissues, with graph sizes of 2705 nodes and 90 348
@@ -107,6 +119,7 @@ computational load on the client. To generate this layout we use the GGally
 package\footnote{\url{cran.r-project.org/web/packages/GGally}}. By generating
 the network layout using the compute service we relieve the clients.
 
+% LAB: Kan også flyttes høyere opp. Hyggelig å begynne å lese noe som er lett å skjønne :)
 To visualize relationships between modules from different tissues, or their
 relationship to clinical variables we built a heatmap visualization using the 
 d3\footnote{\url{d3js.org}} library. Figure \ref{fig_second_case} shows an
