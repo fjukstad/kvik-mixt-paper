@@ -36,6 +36,7 @@ subgroups.
 An application integrating many types of information was therefore needed to
 explore this large amount of data and results.
 % LAB: Og det ble implementert først som ett R-script og deretter i Javascript?
+% LAB: Kan også gi noen tall her for hvor mange operasjoner det er, hva de gjør etc, (jeg tror det kommer på slutten)
 The system needed to directly interface with the R package should be accessible
 through standard protocols, such as HTTP, not enforcing any programming language
 or platform on the application developer. 
@@ -66,6 +67,13 @@ to cloud providers such as Amazon Web Services\footnote{\url{aws.amazon.com}}.
 \subsection*{Kvik}
 Our experience in developing MIxT can be generalized into the following design
 principles and microservices encapsulated in the Kvik framework. 
+
+% LAB: Første principle er kanskje å dele opp app i 3 deler: viz + stat + db
+% LAB: Andre principle er kanskje som i ADAM, well-defined interfaces (eller er dette Principle 1?)
+% LAB: Deretter Principle 3, som vel er om strukturering innenfor hver del
+% LAB: Også P. 2 som er om enda ett nivå med strukturering
+
+% LAB: Jeg foreslår å dele dette opp igjen. Først en liste med principles: hva, hvorfor, og fordeler med å gjøre det slik. Deretter en liste med hvordan disse er implementert: hva, hvordan, hvorfor, fordeler med å gjøre det slik. I sistnevnte kan feks valget av R beskrives.
 
 \textbf{Principle 1}: Build applications as collections of language-agnostic
 microservices. 
@@ -126,6 +134,7 @@ biological databases and to run statistical analyses from the mixtR R package.
 
 % LAB: container er ikke vist her
 % LAB: data er ikke vist her
+% LAB: er heller ikke klart hva som kjøres hvor, og hvilke deler som snakker med hverandre
 \begin{figure}[h!]
 \centering
 \includegraphics{figures/kvik-mixt.png}
@@ -153,6 +162,10 @@ services that communicate over standard protocols, application developers can
 choose the most suitable language, or framework, to build specialized
 visualizations and user interfaces. 
 
+\subsubsection*{Applications}
+
+% LAB: Kort om hva en appliacation gjør og ikke gjør. Og hvor den kjøres.
+
 \subsubsection*{Compute Service}
 % LAB: Ikke motivert hvorfor det er en interface til R
 % LAB: Ikke forklart hvordan en appliakasjons programmerer skal tenke på denne servicen. Dvs hva den brukes til og hva den tilbyr. Første paragraf hopper rett inn i interfacen.
@@ -162,6 +175,7 @@ The compute service in Kvik is built using a hybrid state pattern\cite{opencpu}.
 We provide three main operations for interfacing with R:
 Call, Get, and RPC. The Call operation is used to execute and run a function
 from an R package. 
+% LAB: Hvorfor kun en slik minimalistisk interface? Og ikke høyere nivå operasjoner, eller noe for å skjule R? (mener ikke at det er en god ide å gjøre det slik, men det bør sies hvorfor disse 3 er ett fornuftig valg)
 % LAB: hvordan blir dette kjørt? i en tråd? ny process?
 It takes as input an R package name, a function name, and
 optional arguments. It returns a unique identifier that later can be used by the
