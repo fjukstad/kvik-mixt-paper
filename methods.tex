@@ -51,11 +51,27 @@ As with the R interface the interface to the databases
 should be accessible from any programming language. 
 % LAB: Hvorfor er dette viktig for MIxt?
 
-% LAB: Det som ikke kommer frem og som kanskje er en viktig motivasjon for "approach" er prosessen med å implementere denne. Beksrivelsen ovenfor er den ideele: først laget vi en R pakke, også la vil til noen visualuseringer, og da var vi ferdig.
+% LAB: Det som ikke kommer frem og som kanskje er en viktig motivasjon for
+% "approach" er prosessen med å implementere denne. Beksrivelsen ovenfor er den
+% ideele: først laget vi en R pakke, også la vil til noen visualuseringer, og da
+% var vi ferdig.
 
 % LAB: hva med data management? hvor er data lagret? er disse versjonert?
 
-% LAB: Det som er beskrevet ovenfor, med untakk av "language independence", er hva som kreves av funksjonalitet. Neste paragraf, og language independece, er mer om design valg valgt av gode "CS" grunner. Dette bør komme klarere frem. Dvs det bør stå her at i tillegg til det som er beskrevet ovenfor, så er det krav i tilegg til det rent funksjonelle. Dvs: (i) language independence (flyttes ned), (ii) performance (beskriv at det er interkativ analyse, hvor lenge brukeren bør vente, og hvor mange brukere dete er), (iii) ressurs krav (hva skal dette kjøres på), (iv) reproduserbarhet/provenance (hvilke garantier gis det for brukeren mht analyser, er det en stragei for nye versjoner, hvordan håndteres endringer i feks MSigDB), (v) deployment (det som står allerede), (vi) reusability (er det noen planer om å lage lignende ting), (v) skalerbarhet (kommer det mer data?), etc. Uten disse vil jeg hevde at R-MIxT løste alle kravene som er beskrevet ovenfor og at Kvik-MIxT var bortkastet å implementere (og det vet vi jo ikke er tilfellet).
+% LAB: Det som er beskrevet ovenfor, med untakk av "language independence", er
+% hva som kreves av funksjonalitet. Neste paragraf, og language independece, er
+% mer om design valg valgt av gode "CS" grunner. Dette bør komme klarere frem.
+% Dvs det bør stå her at i tillegg til det som er beskrevet ovenfor, så er det
+% krav i tilegg til det rent funksjonelle. Dvs: (i) language independence
+% (flyttes ned), (ii) performance (beskriv at det er interkativ analyse, hvor
+% lenge brukeren bør vente, og hvor mange brukere dete er), (iii) ressurs krav
+% (hva skal dette kjøres på), (iv) reproduserbarhet/provenance (hvilke garantier
+% gis det for brukeren mht analyser, er det en stragei for nye versjoner,
+% hvordan håndteres endringer i feks MSigDB), (v) deployment (det som står
+% allerede), (vi) reusability (er det noen planer om å lage lignende ting), (v)
+% skalerbarhet (kommer det mer data?), etc. Uten disse vil jeg hevde at R-MIxT
+% løste alle kravene som er beskrevet ovenfor og at Kvik-MIxT var bortkastet å
+% implementere (og det vet vi jo ikke er tilfellet).
 
 
 A key feature that motivated the design of MIxT was that we want to

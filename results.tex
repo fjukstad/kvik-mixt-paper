@@ -21,8 +21,11 @@ transcriptional profiles from blood and tumor samples.
 
 % LAB: Foreslår at dette er ett eget kapittel, eller ihvertfall del-kapittel
 
-% LAB: Disse beksrivelsene er greie for denne konferansen, selv om de antageligvis ville vært for detaljert til ett vanlig CS paper. 
-% LAB: Men jeg savner tall slik det er er i MIxT beskrivelsen. Disse vil gi en ide om hvor komplisert og regneintensiv operasjonene er, hvor mye data som sendes, etc. Merk! jeg ser det er noen tall lenger ned om nodes, edges, mm.
+% LAB: Disse beksrivelsene er greie for denne konferansen, selv om de
+% antageligvis ville vært for detaljert til ett vanlig CS paper. 
+% LAB: Men jeg savner tall slik det er er i MIxT beskrivelsen. Disse vil gi en
+% ide om hvor komplisert og regneintensiv operasjonene er, hvor mye data som
+% sendes, etc. Merk! jeg ser det er noen tall lenger ned om nodes, edges, mm.
 
 We define six data exploration tasks that the web application should help users
 perform: 
@@ -66,7 +69,10 @@ of genes and biological processes, the web application should provide a search
 functionality that lets users locate genes or gene lists and show association to
 the co-expression gene sets. 
 
-% LAB: her mangler det en beskrivelse av hvordan disse er implementert. Dvs hvordan de bruker Kvik services. Er det mye gjennbruk av kode, etc. Det er denne informasjonen som ihvertfall CS folk er mest interessert i. Dette er også viktig for å kunne forstå performance resultatene som kommer senere.
+% LAB: her mangler det en beskrivelse av hvordan disse er implementert. Dvs
+% hvordan de bruker Kvik services. Er det mye gjennbruk av kode, etc. Det er
+% denne informasjonen som ihvertfall CS folk er mest interessert i. Dette er
+% også viktig for å kunne forstå performance resultatene som kommer senere.
 
 \begin{figure*}[h!]
 \centering
@@ -108,7 +114,8 @@ they access the co-expression gene set 'darkturquoise' from blood. Using the
 Kvik compute service we can generate plots on demand and provide users with
 high-resolution PDFs or PNG files. 
 
-% LAB: Jeg greier ikke å mappe denne informasjonen til operasjonene som er beksrevet ovenfor. Kanskje en figur vil hjelpe?
+% LAB: Jeg greier ikke å mappe denne informasjonen til operasjonene som er
+% beksrevet ovenfor. Kanskje en figur vil hjelpe?
 To explore the co-expression relationship between genes we use an interactive
 graph visualization build with Sigmajs\footnote{\url{sigmajs.org}}. We have
 built visualization for both tissues, with graph sizes of 2705 nodes and 90 348
@@ -119,7 +126,8 @@ computational load on the client. To generate this layout we use the GGally
 package\footnote{\url{cran.r-project.org/web/packages/GGally}}. By generating
 the network layout using the compute service we relieve the clients.
 
-% LAB: Kan også flyttes høyere opp. Hyggelig å begynne å lese noe som er lett å skjønne :)
+% LAB: Kan også flyttes høyere opp. Hyggelig å begynne å lese noe som er lett å
+% skjønne :)
 To visualize relationships between modules from different tissues, or their
 relationship to clinical variables we built a heatmap visualization using the 
 d3\footnote{\url{d3js.org}} library. Figure \ref{fig_second_case} shows an

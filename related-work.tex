@@ -86,4 +86,17 @@ databases?
 \subsection*{WIP: Microservices, Docker etc.} 
 ... 
 
+\subsection*{Kvik and Kvik Pathwys}
+We have previously built a system for interactively exploring gene expression
+data in context of  biological pathways.\cite{fjukstad2015kvik} Kvik Pathways is
+a web application that integrates gene expression data from the Norwegian Women
+and Cancer (NOWAC) cohort together with pathway images from the Kyoto
+Encyclopedia of Genes and Genomes (KEGG). We used the experience building Kvik
+Pathways to completely re-design and re-implement
+the R interface in Kvik. From having an R server that can run a set of functions
+from an R script, it now has a clean interface to call any function from any R
+package, not just retrieving data as a text string but in a wide range of
+formats. We also re-built the database interface, now moving it into its own
+service. This makes it possible to leverage its caching capabilities to improve
+latency. 
 
