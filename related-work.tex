@@ -20,30 +20,40 @@ applications.\footnote{\url{opencpu.org/apps.html}}.
 % LAB: også er det viktig å avslutte med hvorfor vi ikke like godt brukte OpenCPU eller de andre tingene som beskrives her.
 
 Renjin is a JVM-based interpreter for the R programming language.\cite{renjin}
-It targets developers who want to integrate the R interpreter in web
-applications. Since it is built on top of the JVM it allows developers to write
-data exploration applications that interact directly with R code, both runnin on
+It enables integrating the R interpreter in web
+applications. Since it is built on top of the JVM it allows developers to 
+% I Java og Scala? 
+write
+data exploration applications that interact directly with R code, both running on
 top of the JVM. Although Renjin supports a large number of CRAN packages it
 cannot access any R package (i.e.  any package from BioConductor or CRAN)
+% LAB: Forklar hvorfor ting må skrives om (for å gjøre det helt klart)
 without modification. This makes the programming effort to use Renjin as an
 interface to R higher. 
+% LAB: Vil dette gi bedre/dårligere performance?
 
+% LAB: Kanskje ta denne først, siden den er den mest populære (tror jeg)
 Shiny is a web application framework for R\footnote{\url{shiny.rstudio.com}}
 It allows developers to
 build web applications in R without having to have any knowledge about HTML, CSS
-or Javascript. Its widget library to provides more advanced Javascript
+or Javascript. 
+% LAB: Skrive hvordan og i hva?
+Its widget library to provides more advanced Javascript
 visualizations such as Leaflet\footnote{\url{leafletjs.com}} for maps or
 three.js\footnote{\url{threejs.org}} for WebGL-accellerated
 graphics. Developers can choose to host their own web server with the user-built
 Shiny Apps, or host them on public servers. Shiny forces users to implement data
 exploration applications in R, limiting the functionality to the 
 widgets and libraries in Shiny. 
+% LAB: Høres ut som du da slipper overhead med put/get, som antageligvis er veldig liten, og at det er vanskeligere å optimlisere enkelt deler
 
-% Synes SparkR burde nevnes
+% LAB: Synes SparkR burde nevnes, her eller ett annet sted
 
+% LAB: Denne, SparkR, og ADAM kan kanskje være ett eget delkapittel om parallel execution
 \subsubsection*{Biogo} 
 \emph{this one is a bit out of place.}
 
+% LAB: Hva slags functionality? (du kan analysere data i de aller fleste språk)
 Biogo is a bioinformatics library written in Go. It provides functionality to
 analyze genomic and metagenomic datasets in the go programming
 language.\cite{Kortschak005033} Using the go programming language the developers
@@ -61,7 +71,7 @@ To bring the visualization and analysis
 capabilities to the web the creators of Cytoscape have developed
 Cytoscape.js\footnote{\url{js.cytoscapejs.org}}, a Javascript library to create
 interactive graph visualizations. 
-
+% LAB: Ulemper?
 
 Caleydo is a framework for building applications for visualizing and exploring
 biomolecular data\cite{cleydo}. Until 2014 it was a standalone tool that needed
@@ -82,6 +92,7 @@ contributed by the bioinformatics community. BioJS builds on
 node.js\footnote{\url{nodejs.org}} providing both server-side and client-side
 libraries. 
 
+% LAB: DB/ provenance related work? Som Galaxy, Pacyderm, CWL, etc
 
 \subsection*{WIP: Biological Databases} 
 Maybe some words here on how to get data out of the different biological
@@ -100,7 +111,7 @@ Pathways to completely re-design and re-implement
 the R interface in Kvik. From having an R server that can run a set of functions
 from an R script, it now has a clean interface to call any function from any R
 package, not just retrieving data as a text string but in a wide range of
-formats. We also re-built the database interface, now moving it into its own
+formats. We also re-built the database interface, which is now a seperate
 service. This makes it possible to leverage its caching capabilities to improve
 latency. 
 
