@@ -1,17 +1,14 @@
-In recent years the biological community has generated and collected an
-% LAB: med collection tenker jeg på å laste ned ting fra nettet (slik de gjør det i Princeton) vs produksjon/ generering som er å lage ny data
+In recent years the biological community has  generated  an
 unprecedented ammount of data. While the cost of data collection has
 drastically decreased, data analysis continue to be a larger fraction of the
 total experiment cost.\cite{sboner2011real}  An important part of data analysis
 includes the time spent by human experts interpreting the results. This calls
-% LAB: novel methods -> better tools (for det er vel det Kvik løser; enklere å lage verktøy som faktisk er nyttig for de som analyserer data)
-for novel methods in data analysis and exploration. 
+for novel methods for building data analysis tools for data exploration and
+interpretation. 
 
 Several tools are now available in various programming languages for biological
-data analysis. 
-% LAB: novel -> a wide variety of
-These include novel bioinformatics methodologies and graphical
-analysis tools.
+data analysis.  These include a wide variety of bioinformatics methodologies and
+graphical analysis tools.
 In the R statistical programming language developers share software through
 repositories such as CRAN\footnote{\url{cran.r-project.org}} or
 Bioconductor\footnote{\url{bioconductor.org}}.  In other languages, libraries
@@ -20,12 +17,10 @@ and biogo\cite{biogo} for Python or Go, respectively. Projects such as
 Galaxy\footnote{\url{galaxyproject.org}} and Common Workflow Language
 (CWL)\footnote{\url{commonwl.org}} enable resarchers to build and run
 biological data analysis pipelines consisting of a wide range of tools.
-% LAB: synes dette er for lite fokusert, og at fokus bør være å gjøre det enkelt å bygge spesialiserte verktøy, med god peformance, og enkel maintainance. Dette gjør målet litt smalere og enklere å oppnå. Jeg mener også at en av F1000 reviewerene likte denne fokusen veldig godt.
-Although these framework are tremendously helpful, we need novel approaches
-to integrate them with interactive visualizations and clean user-interfaces to
-make them more accessible to the researchers interpreting the results. 
+Although these framework are tremendously helpful, we need novel approaches to
+build applications that integrate high-performance bioinformatics tools to
+provide specialized user-interfaces and interactive visualizations
 
-% LAB: Siden dette er en ikke-bioinformatikk konferanse kan det gis ett eksempel på hvorfor dette er nødvendig. 
 In the field of systems biology, data exploration applications need to link
 results to relevant prior knowledge. In the later years there has been a
 tremendous effort to curate databases with relevant information on genes and
@@ -35,16 +30,15 @@ Encyclopedia of Genes and Genomes (KEGG)\footnote{\url{kegg.jp}} both provide
 interfaces to retrieve data that can be used to better the understanding of
 data analysis results. 
 
-% LAB: Ville snudd på denne; Motivasjon først, og "argumentet" sist
-While it would make development easy, we argue that data exploration
-applications in systems biology should not be written in a single programming
-language.  Different programming languages solve different tasks.  For example,
-new biological data analysis techniques are quickly realeased in R and its
-package repositories; high-performance computer vision tasks are performed in
-C++ and OpenCV; and portable user interfaces more easily built in HTML, CSS and
-JavaScript.  Therefore applications that integrate novel statistical analysis
-tools, interactive visualizations, and biological databases likely need to
-include several components written in different languages. 
+Different programming languages solve different tasks.  For example, new
+biological data analysis techniques are quickly realeased in R and its package
+repositories; high-performance computer vision tasks are performed in C++ and
+OpenCV; and portable user interfaces more easily built in HTML, CSS and
+JavaScript.  While it would make development easy, we argue that data
+exploration applications in systems biology should not be written in a single
+programming language. Therefore applications that integrate novel statistical
+analysis tools, interactive visualizations, and biological databases likely
+need to include several components written in different languages. 
 
 % LAB: dette blir vel "muntlig". Jeg synes at dette er stedet å løfte opp
 % utfordringene med å utvikle ordentlig software, dvs:
@@ -72,15 +66,16 @@ Rkt\footnote{\url{coreos.com/rkt}} exist. Initiatives such as
 BioContainers\footnote{\url{biocontainers.pro}} now provide containers
 pre-installed with different bioinformatics tools. 
 
-To build these services we need a framework that fulfills the following
-requirements: 
+We identified a set of reusable services that application developers can use to
+build a wide range of applications.  To build these services we need a framework
+that fulfills the following requirements: 
 
 % LAB: I mange beskrives løsningen før kravet. Så kan si at dette er features.
 \begin{enumerate}
-    \item It provides a language-independent approach for integrating, or
+    \item Provide a language-independent approach for integrating, or
         embedding, statistical software, such as R, directly in 
         interactive data exploration applications.
-    \item It has a low latency language-independent interface to online
+    \item Low latency language-independent interface to online
         % LAB: behovet for provenance er ikke nevnt før
         reference databases in biology that captures provenance of the
         meta-data. 
@@ -93,20 +88,17 @@ requirements:
         interactive applications, and makes it easy to scale out to many users.
 \end{enumerate} 
 
-% LAB: Blir litt rart å beskrive dette etter at kravene er listet opp. Så første setning kan flyttes høyere opp.
-% LAB: Og "The key services" kan flettes inn i neste paragraf.
-First, we identified a set of reusable services that application developers can
-use to build a wide range of applications. The key services of a biological data
+In this paper, we describe a novel approach for building data exploration
+applications in systems biology. We show that by building applications as a set
+of services we can reuse and share its components between
+applications. 
+The key services of a biological data
 exploration application are i) a compute service for executing statistical
 analyses in languages such as R, and ii) a database query service for retrieving
 information from biological databases. We believe that the user-facing logic is
 best left out to the application developer, providing language-indenpendent
 interfaces to both services. 
-
-In this paper, we describe a novel approach for building data exploration
-applications in systems biology. We show that by building applications as a set
-of services we can reuse and share its components between
-applications. In addition, by packaging the services using container technology
+In addition, by packaging the services using container technology
 we promote reproducible research and simplify application deployment. We have
 used our approach to build a number of applications, both command-line and
 web-based. In this paper we describe how we used our approach to develop MIxT,
