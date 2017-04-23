@@ -1,31 +1,8 @@
-% Jeg tror det er tre spørsmål som kan besvares her:
-% 1. Hvor mye enklere/bedre er det å utvikle apps med Kvik microservices?
-% 2. Overhead/ improvement for enkelt-microservices. Dvs overhead for de som
-% tilbyr noe mer en alternativet (container tilbyr enklere deployment men har en
-% overhead på...), og improvement for de som optiamliserer noe (Kvik vs OpenCPU,
-% eventuelt begge deler (caching for MsigDB reduserer query tid men har en
-% storage overhead)
-% 3. Performance analyse av MIxT. Hvor er det overheadene er for en query? Overhead for mange samtidige queries?
-%
-% Metodologi:
-% 1. Kvik-MIxT vs 1000-R-linjer-MIxT? Og kanskje anektdoter som at container
-% kunne flyttes til AWS. Eller noe helt annet.
-% 2. En av de enklere web apps som er laget før. Eventuelt en benchmark app.
-% 3. MIxT operasjoner.
-%
 We show the viability of the microservices approach in Kvik by describing the
 MIxT web application for exploring and comparing
 transcriptional profiles from blood and tumor samples. 
 
-% \subsection*{Design} 
-
-% LAB: Foreslår at dette er ett eget kapittel, eller ihvertfall del-kapittel
-
-% LAB: Disse beksrivelsene er greie for denne konferansen, selv om de
-% antageligvis ville vært for detaljert til ett vanlig CS paper. 
-% LAB: Men jeg savner tall slik det er er i MIxT beskrivelsen. Disse vil gi en
-% ide om hvor komplisert og regneintensiv operasjonene er, hvor mye data som
-% sendes, etc. Merk! jeg ser det er noen tall lenger ned om nodes, edges, mm.
+\subsection*{MIxT Analysis Tasks}
 
 We define six data exploration tasks that the web application should help users
 perform: 
@@ -74,6 +51,8 @@ the co-expression gene sets.
 % denne informasjonen som ihvertfall CS folk er mest interessert i. Dette er
 % også viktig for å kunne forstå performance resultatene som kommer senere.
 
+\subsection*{MIxT Design and Implementation} 
+
 \begin{figure*}[h!]
 \centering
 \caption{MIxT module overview page. The screenshot show the user interface for
@@ -88,7 +67,6 @@ overlap analyses from the module genes and known gene sets from MSigDB.}
 From these six analysis tasks we designed and implemented MIxT as a web
 application that integrates statistical analyses and information from biological
 databases together with interactive visualizations.
-% LAB: her er det 3 services, mens det bare var 2 tidligere. 
 The MIxT web application
 consists of three services: i) the web application itself containing the
 user-interface and visualizations; ii) the compute service performing the MIxT
@@ -96,13 +74,7 @@ analyses delivering data to the web application; and iii) the database service
 providing up-to-date information from biological databases. Each of these
 services run within Docker containers making the process of deploying the
 application simple. 
-% LAB: dette er motivert/ beskrevet før og kan fjernes her
-By composing the
-application of a set of services we can substitute parts of the application
-without re-writing the entire application.
-For example if we want to use OpenCPU to interface with data analysis we can do
-so by simply exchanging the Kvik compute service with OpenCPU. Both services
-communicate over HTTP and their interfaces are the same. 
+
 
 % LAB: Denne...
 We structured the MIxT application with a separate view for each analysis task.
@@ -142,3 +114,21 @@ library.}
 \includegraphics[width=2.5in]{figures/clinical-comp.png}
 \label{fig_second_case}
 \end{figure} 
+
+\subsection*{Evaluation} 
+We evaluate the performance of the services by running a set of benchmarks. To
+evaluate the database service we measure the query time for retrieving
+information about a specific gene with and without caching. This illustrates how
+we can improve performance in an application by using a database service rather
+than accessing the database directly. We also measure storage requirements for
+the caching mechanism to show that it does not require a large storage capacity.
+To show that it scales we show the qurey time for 1, 10, 100, and 1000
+concurrent requiests.
+
+We evaluate the compute service by performing two operations, first generate a
+set of numbers then plot them and return the resulting visualization. We show
+that the latency is low enough to ise it in an interactive application. To show
+that it performs under heavy load we perform the same operations using 1, 10,
+100, and 1000 concurrent requests. 
+
+TODO: INSERT NUMBERS

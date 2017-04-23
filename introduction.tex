@@ -6,9 +6,18 @@ includes the time spent by human experts interpreting the results. This calls
 for novel methods for building data analysis tools for data exploration and
 interpretation. 
 
-Several tools are now available in various programming languages for biological
-data analysis.  These include a wide variety of bioinformatics methodologies and
-graphical analysis tools.
+In the field of systems biology, data exploration applications need to link
+results to relevant prior knowledge. In the later years there has been a
+tremendous effort to curate databases with relevant information on genes and
+processes. Databases such as the Molecular Signatures Database
+(MSigDB)\footnote{\url{software.broadinstitute.org/gsea/msigdb}} and the Kyoto
+Encyclopedia of Genes and Genomes (KEGG)\footnote{\url{kegg.jp}} both provide
+interfaces to retrieve data that can be used to better the understanding of
+data analysis results. 
+
+Several tools for biological data analysis are now available in various
+programming languages. These include a wide variety of bioinformatics
+methodologies and graphical analysis tools.
 In the R statistical programming language developers share software through
 repositories such as CRAN\footnote{\url{cran.r-project.org}} or
 Bioconductor\footnote{\url{bioconductor.org}}.  In other languages, libraries
@@ -18,17 +27,8 @@ Galaxy\footnote{\url{galaxyproject.org}} and Common Workflow Language
 (CWL)\footnote{\url{commonwl.org}} enable resarchers to build and run
 biological data analysis pipelines consisting of a wide range of tools.
 Although these framework are tremendously helpful, we need novel approaches to
-build applications that integrate high-performance bioinformatics tools to
-provide specialized user-interfaces and interactive visualizations
-
-In the field of systems biology, data exploration applications need to link
-results to relevant prior knowledge. In the later years there has been a
-tremendous effort to curate databases with relevant information on genes and
-processes. Databases such as the Molecular Signatures Database
-(MSigDB)\footnote{\url{software.broadinstitute.org/gsea/msigdb}} and the Kyoto
-Encyclopedia of Genes and Genomes (KEGG)\footnote{\url{kegg.jp}} both provide
-interfaces to retrieve data that can be used to better the understanding of
-data analysis results. 
+build applications that integrate high-performance bioinformatics tools with 
+specialized user-interfaces and interactive visualizations
 
 Different programming languages solve different tasks.  For example, new
 biological data analysis techniques are quickly realeased in R and its package
@@ -39,17 +39,6 @@ exploration applications in systems biology should not be written in a single
 programming language. Therefore applications that integrate novel statistical
 analysis tools, interactive visualizations, and biological databases likely
 need to include several components written in different languages. 
-
-% LAB: dette blir vel "muntlig". Jeg synes at dette er stedet å løfte opp
-% utfordringene med å utvikle ordentlig software, dvs:
-% 1. Noe som virker
-% 2. Som har god nok performance
-% 3. Hvor det er mulig etterpå å forstå hva analysen gjorde
-% 4. Som skalerer til større datasett
-% 5. Som er mulig å vedlikeholde etterpå
-% 6. Som har deler som kan gjennbrukes av andre
-% Ofte er det bare 1. som blir gjort. Men feks for oss i Elixir som skal tilby
-% tjenester som faktisk virker, så er det de andre punktene som er viktig.
 
 A microservice architecture structures an application into small reusable,
 loosely coupled parts. These communicate via lightweight programming
@@ -66,45 +55,31 @@ Rkt\footnote{\url{coreos.com/rkt}} exist. Initiatives such as
 BioContainers\footnote{\url{biocontainers.pro}} now provide containers
 pre-installed with different bioinformatics tools. 
 
-We identified a set of reusable services that application developers can use to
-build a wide range of applications.  To build these services we need a framework
-that fulfills the following requirements: 
+From our experience we have identified a set of components and features we
+need to build data exploration applications.
 
-% LAB: I mange beskrives løsningen før kravet. Så kan si at dette er features.
 \begin{enumerate}
-    \item Provide a language-independent approach for integrating, or
-        embedding, statistical software, such as R, directly in 
-        interactive data exploration applications.
-    \item Low latency language-independent interface to online
-        % LAB: behovet for provenance er ikke nevnt før
-        reference databases in biology that captures provenance of the
-        meta-data. 
-    % LAB: behovet er ikke motivert for disse tre.
-    \item It provides software packages for building microservices that are easy
-        to develop and maintain. 
-    \item Its components are easy to deploy and share between applications and
-        projects. 
-    \item Its components provide low response times necessary to develop
-        interactive applications, and makes it easy to scale out to many users.
+    \item A low-latency language-independent approach for integrating, or
+        embedding, statistical software, such as R, directly in an application. 
+    \item Low latency language-independent interface to online reference
+        databases in biology that users can query to better understand resulst
+        from statistical analyses. 
+    \item A simple method for deploying and sharing the components of an
+        application between projects. 
 \end{enumerate} 
+
 
 In this paper, we describe a novel approach for building data exploration
 applications in systems biology. We show that by building applications as a set
-of services we can reuse and share its components between
-applications. 
-The key services of a biological data
-exploration application are i) a compute service for executing statistical
-analyses in languages such as R, and ii) a database query service for retrieving
-information from biological databases. We believe that the user-facing logic is
-best left out to the application developer, providing language-indenpendent
-interfaces to both services. 
-In addition, by packaging the services using container technology
-we promote reproducible research and simplify application deployment. We have
+of services we can reuse and share its components between applications. 
+The key services of a biological data exploration application are i) a compute
+service for executing statistical analyses in languages such as R, ii) a
+database query service for retrieving information from biological databases, and
+iii) the user-facing visualizations and user-interfaces. 
+In addition, by packaging the services using container technology they are easy
+to deploy, simple to reproduce, and easy to share between projects. 
+We have
 used our approach to build a number of applications, both command-line and
 web-based. In this paper we describe how we used our approach to develop MIxT,
 a web application for exploring and comparing transcriptional profiles from
-blood and tumor samples. The MIxT web application integrates statistical
-analysis together with biological databases and interactive visualizations.
-
-% LAB: Related bio work? Annen microservice related work? Hvorfor ikke bare
-% bruke de?
+blood and tumor samples. 
