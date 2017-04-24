@@ -27,10 +27,14 @@ facilitating multiple parallel requests. This makes OpenCPU suitable
 for building a service that can run statistical analyses. 
 OpenCPU provides a Javascript library for interfacing with R, as well as Docker
 containers for easy installation and OpenCPU has been used to build multiple
-applications.\footnote{\url{opencpu.org/apps.html}}. To achieve better
-performance we chose to build our compute service rather than using OpenCPU.
-However, in Kvik we provide a Go package to interface with OpenCPU since it
-follows the same interface as our servers. 
+applications.\footnote{\url{opencpu.org/apps.html}}. 
+The compute service in Kvik follows many of the design patterns in
+OpenCPU. Both systems interface with R packages using a hybrid state pattern
+over HTTP. Both systems provide the same interface to execute analyses and
+retrieve results.  While OpenCPU is implemented on top of R and Apache, Kvik is
+implemented from the ground up in Go. Because of the similarities in the
+interface to R in Kvik we provide packages for interfacing with our own R server
+or OpenCPU R servers
 
 Renjin is a JVM-based interpreter for the R programming language.\cite{renjin}
 It enables integrating the R interpreter in web applications. Since it is built
@@ -44,7 +48,7 @@ Renjin.
 \subsection*{Parallel and Distributed Execution}
 Biogo is a bioinformatics library written in Go. It provides functionality to
 analyze genomic and metagenomic datasets in the Go programming
-language.\cite{Kortschak005033} Using the Go programming language the developers
+language.\cite{biogo} Using the Go programming language the developers
 are able to provide high-performance parallel processing in a clean and simple
 programming language. Go provides the ease of programming as popular scripting
 languages such as R, but the performance of low-level langauges such as C++. 

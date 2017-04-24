@@ -1,38 +1,64 @@
+% Pros/Cons of using a microservice approach. 
+% Lessons learned? 
+
+% pros: 
+%   lett å dele og gjenbruke 
+%   lage en apps med flere språk 
+%   slipper én stor app
+%   lette klienter 
+
+% cons:
+%   kan være vanskelig å monitorere/
+%   development time kan være lengre, men det blir bra til slutt
+%   krever av dev. kan noe om deploy 
+
+We argue that developing data exploration applications using a microservice
+architecture is a viable alternative to the traditional monolithic applications.
+By packaging each component of an application in a software container
+application developers can reuse and share parts of an application across
+research teams and projects. 
+
+Although the partition of components can help break up an application into
+manageable parts, there is more overhead with deploying and monitoring these
+than a single application. Leslie Lamport's famous quote \emph{You know you have
+a distributed system when the crash of a computer you’ve never heard of stops
+you from getting any work done.} perfectly describes the possible challenges
+application developers face when moving into a microservice architecture.
+Monitoring the health of the different services and keeping the services running
+is a challenge, but systems such as Kubernetes\footnote{\url{kubernetes.io}}
+provide the necessary functionality to manage containerized applications. 
+
 
 % LAB: foreslår å slå sammen discussion med related work
-The compute service in Kvik follows many of the design patterns in
-OpenCPU. Both systems interface with R packages using a hybrid state pattern
-over HTTP. Both systems provide the same interface to execute analyses and
-retrieve results.  While OpenCPU is implemented on top of R and Apache, Kvik is
-implemented from the ground up in Go. Because of the similarities in the
-interface to R in Kvik we provide packages for interfacing with our own R server
-or OpenCPU R servers through the
-\emph{gopencpu} package.\footnote{\url{github.com/fjukstad/kvik/tree/master/gopencpu}} 
+% The compute service in Kvik follows many of the design patterns in
+% OpenCPU. Both systems interface with R packages using a hybrid state pattern
+% over HTTP. Both systems provide the same interface to execute analyses and
+% retrieve results.  While OpenCPU is implemented on top of R and Apache, Kvik is
+% implemented from the ground up in Go. Because of the similarities in the
+% interface to R in Kvik we provide packages for interfacing with our own R server
+% or OpenCPU R servers through the
+% \emph{gopencpu} package.\footnote{\url{github.com/fjukstad/kvik/tree/master/gopencpu}} 
 
 
 \subsection*{Future work} 
-While we have buit 
+Although we have a first working prototype of the microservices and the MIxT web
+application, there are a few points we aim to addresss in the future. 
 
 We have built a database service that provides a sufficient interface for the
 MIxT web application. While we have developed the software packages for
 interfacing with more databases, these haven't been included in the database
-service yet. 
+service yet. In future versions we aim to make the database service be a
+one-stop interface for all our applications. We also aim to improve the
+provenance management within the service, enabling users to retrieve the exact 
 
 One large concern that we haven't addressed in this paper is security. In
 particular one security concern that we plan to address in Kvik is the
-restrictions on 
+restrictions on the execution of code in the compute service. We plan to address
+this in the next version of the compute service, using methods such as
+AppArmor\footnote{\url{wiki.ubuntu.com/AppArmor}} that can restrict a program's
+resource access. 
 
-Docker compose 
-
-This
-includes both access restrictions to parts of an application, e.g. access to a
-database, and security concerns regarding remote code execution within the
-compute service. 
-
-to the 
-biological databases that are 
-
-Security.
-Documentation.
-Scale. 
-% LAB: Scale = Spark-R?
+We also aim to explore different avenues for scaling up the compute service.
+Since we already interface with R we can use the Sparklyr or SparkR packages
+to run analyses on top of Spark. Using Spark as an execution engine for data
+anlyses will enable applications to explore even larger datasets. 

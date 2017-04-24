@@ -46,6 +46,7 @@ of genes and biological processes, the web application should provide a search
 functionality that lets users locate genes or gene lists and show association to
 the co-expression gene sets. 
 
+
 % LAB: her mangler det en beskrivelse av hvordan disse er implementert. Dvs
 % hvordan de bruker Kvik services. Er det mye gjennbruk av kode, etc. Det er
 % denne informasjonen som ihvertfall CS folk er mest interessert i. Dette er
@@ -53,16 +54,6 @@ the co-expression gene sets.
 
 \subsection*{MIxT Design and Implementation} 
 
-\begin{figure*}[h!]
-\centering
-\caption{MIxT module overview page. The screenshot show the user interface for
-exploring a single module. It consists of three panels. The top left panel
-contains the gene expression heatmap. The top right panel contains a table of
-the genes found in the module. The bottom panel contains the results of gene
-overlap analyses from the module genes and known gene sets from MSigDB.}
-\includegraphics[width=0.8\textwidth]{figures/module.png}
-\label{fig_first_case}
-\end{figure*} 
 
 From these six analysis tasks we designed and implemented MIxT as a web
 application that integrates statistical analyses and information from biological
@@ -115,6 +106,18 @@ library.}
 \label{fig_second_case}
 \end{figure} 
 
+
+\begin{figure*}[h!]
+\centering
+\caption{MIxT module overview page. The screenshot show the user interface for
+exploring a single module. It consists of three panels. The top left panel
+contains the gene expression heatmap. The top right panel contains a table of
+the genes found in the module. The bottom panel contains the results of gene
+overlap analyses from the module genes and known gene sets from MSigDB.}
+\includegraphics[width=0.8\textwidth]{figures/module.png}
+\label{fig_first_case}
+\end{figure*} 
+
 \subsection*{Evaluation} 
 We evaluate the performance of the services by running a set of benchmarks. To
 evaluate the database service we measure the query time for retrieving
@@ -122,13 +125,28 @@ information about a specific gene with and without caching. This illustrates how
 we can improve performance in an application by using a database service rather
 than accessing the database directly. We also measure storage requirements for
 the caching mechanism to show that it does not require a large storage capacity.
-To show that it scales we show the qurey time for 1, 10, 100, and 1000
-concurrent requiests.
+To show that it scales we show the query time for 1, 10, 100, and 1000
+concurrent requests.
 
-We evaluate the compute service by performing two operations, first generate a
-set of numbers then plot them and return the resulting visualization. We show
-that the latency is low enough to ise it in an interactive application. To show
+We evaluate the compute service by running a small example benchmark. The
+benchmark consists of two operations: first generate a
+set of numbers, then plot them and return the resulting visualization. We show
+that the latency is low enough to use it in an interactive application. To show
 that it performs under heavy load we perform the same operations using 1, 10,
-100, and 1000 concurrent requests. 
+100, and 1000 concurrent requests. We use two \emph{c4.large} instances on AWS
+EC2\footnote{See \url{aws.amazon.com/ec2/instance-types} for more
+information} running the Kvik compute service and OpenCPU base docker
+containers. The servers have caching disabled. 
+
+We first measure the total time to generate the numbers and generate the plot.
+From 100 runs we measured the mean execution time for both the compute service
+in Kvik and the OpenCPU. Using Kvik the mean execution time os 274ms while
+OpenCPU uses 506ms. We then investigate the throughput for usage patterns with
+1, 10, 100, and 1000 parallel connections. 
+
+time to complete the benchmark when
+using 1, 10, 100 or 1000 parallel connections. 
+
+Table 
 
 TODO: INSERT NUMBERS

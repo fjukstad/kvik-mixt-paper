@@ -28,22 +28,21 @@ Galaxy\footnote{\url{galaxyproject.org}} and Common Workflow Language
 biological data analysis pipelines consisting of a wide range of tools.
 Although these framework are tremendously helpful, we need novel approaches to
 build applications that integrate high-performance bioinformatics tools with 
-specialized user-interfaces and interactive visualizations
+specialized user-interfaces and interactive visualizations.
 
 Different programming languages solve different tasks.  For example, new
 biological data analysis techniques are quickly realeased in R and its package
 repositories; high-performance computer vision tasks are performed in C++ and
 OpenCV; and portable user interfaces more easily built in HTML, CSS and
-JavaScript.  While it would make development easy, we argue that data
-exploration applications in systems biology should not be written in a single
-programming language. Therefore applications that integrate novel statistical
+JavaScript.  
+Therefore applications that integrate novel statistical
 analysis tools, interactive visualizations, and biological databases likely
 need to include several components written in different languages. 
 
 A microservice architecture structures an application into small reusable,
 loosely coupled parts. These communicate via lightweight programming
 language-agnostic protocols such as HTTP, making it possible to write single
-applications in multiple different programming languages. This way the
+applications in multiple programming languages. This way the
 most suitable programming language is used for each specific part. To build a
 microservice application, developers bundle each service in a container.
 Containers are built from configuration files which describe the operating
@@ -53,14 +52,17 @@ application a trivial task. The most popular implementation of a software
 container is Docker\footnote{\url{docker.com}}, but others such as
 Rkt\footnote{\url{coreos.com/rkt}} exist. Initiatives such as
 BioContainers\footnote{\url{biocontainers.pro}} now provide containers
-pre-installed with different bioinformatics tools. 
+pre-installed with different bioinformatics tools. While the enabling technology
+is available, the microservices approach is not yet widely adopted in
+bioinformatics.\cite{williams2016growing}
 
 From our experience we have identified a set of components and features we
-need to build data exploration applications.
+needed to build data exploration applications.
 
 \begin{enumerate}
     \item A low-latency language-independent approach for integrating, or
-        embedding, statistical software, such as R, directly in an application. 
+        embedding, statistical software, such as R, directly in a data
+        exploration application. 
     \item Low latency language-independent interface to online reference
         databases in biology that users can query to better understand resulst
         from statistical analyses. 
@@ -70,7 +72,8 @@ need to build data exploration applications.
 
 
 In this paper, we describe a novel approach for building data exploration
-applications in systems biology. We show that by building applications as a set
+applications in systems biology. 
+We show that by building applications as a set
 of services we can reuse and share its components between applications. 
 The key services of a biological data exploration application are i) a compute
 service for executing statistical analyses in languages such as R, ii) a
@@ -78,8 +81,7 @@ database query service for retrieving information from biological databases, and
 iii) the user-facing visualizations and user-interfaces. 
 In addition, by packaging the services using container technology they are easy
 to deploy, simple to reproduce, and easy to share between projects. 
-We have
-used our approach to build a number of applications, both command-line and
-web-based. In this paper we describe how we used our approach to develop MIxT,
-a web application for exploring and comparing transcriptional profiles from
-blood and tumor samples. 
+We have used our approach to build a number of applications, both command-line
+and web-based. In this paper we describe how we used our approach to develop
+MIxT, a web application for exploring and comparing transcriptional profiles
+from blood and tumor samples. 

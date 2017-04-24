@@ -8,14 +8,12 @@ We then generalize the ideas to a set of principles and services that can be
 reused and shared between applications, and show their design and
 implementation. 
 
-% TODO: Lars, Hvordan skal vi sitere vanessas artikkel? submitted for publ. men
-% hvor og hvordan skal det skrives? 
 \subsection*{Motivating Example} 
 The aim of the Matched Interactions Across Tissues (MIxT) study was to identify
 genes and pathways in the primary breast tumor that are tightly linked to genes
-and pathways in the patient blood cells. We generated and analyzed expression
+and pathways in the patient blood cells.\cite{vanessa} We generated and analyzed expression
 profiles from blood and matched tumor cells in 173 breast cancer patients
-included in the Norwegian Women and Cancer (NOWAC) study.\cite{vanessa}
+included in the Norwegian Women and Cancer (NOWAC) study.
 The MIxT analysis starts by identifying sets of genes tightly co-expressed
 across all patients in each tissue. Each group of genes or modules were
 annotated based on known a priori biological knowledge about gene functionality.
@@ -38,8 +36,8 @@ to explore the results without any coding background. We needed an application
 that could interface with MSigDB to fetch gene set meta-data and the Entrez
 Programming Utilities (E-utils) to retrieve gene meta-data. To make the
 interfaces to the statistical analyses and databases re-usable by other
-applications later it was necessary for these to communicate using open
-protocols. 
+applications that we aim to implement later it was necessary for these to
+communicate using open protocols. 
 
 In addition, we required that the application was containerized. This allows us
 to deploy the application on a wide range of hardware, from local installations
@@ -50,10 +48,6 @@ to deployments to cloud providers such as Amazon Web Services
 Our experience can be generalized into the following design principles for
 building applications in bioinformatics: 
 
-% LAB: Jeg foreslår å dele dette opp igjen. Først en liste med principles: hva,
-% hvorfor, og fordeler med å gjøre det slik. Deretter en liste med hvordan disse
-% er implementert: hva, hvordan, hvorfor, fordeler med å gjøre det slik. I
-% sistnevnte kan feks valget av R beskrives.
 
 \textbf{Principle 1}: Build applications as collections of language-agnostic
 microservices. This enables re-use of components and does not enforce any
@@ -64,13 +58,13 @@ By composing an application of services communicating over standard protocols it
 is possible to re-use existing tools in new applications. 
 
 \textbf{Principle 2}: Use software containers to package each service. This has
-a number of benefits; it simplifies deployment, managing application
-dependencies and libraries is no longer a problem, and it simplifies sharing of
-services between developers. 
+a number of benefits; it simplifies deployment, ensures that dependencies and
+libraries are installed, and it simplifies sharing of services between
+developers. 
 
 Using these design principles we built the MIxT web application using the
 microservices in Kvik to interface with statistical analyses and biological
-databases.  We built a compute service for executing statistical analyses and a
+databases. Kvik provides a compute service for executing statistical analyses and a
 database service for retrieving relevant information on genes and biological
 processes.  Using these it is possible to develop specialized data exploration
 application in any modern programming language.  In the rest of the section we
@@ -84,8 +78,8 @@ The main cornerstone of every data exploration application in systems biology is
 a dataset. Datasets go through a series of transformations before they can be
 interpreted by experts. Because of the complexity of these datasets, package
 repositories such as BioConductor provide software for reading and analyzing the
-data. Because of the complex datasets there are challenges in building systems
-for exploring them: 
+data. Because of the complex datasets, there are a number of requirements for
+systems that can explore them
 i) datasets require specialized software to be read,
 ii) datasets can be too big to fit on a desktop computer,
 iii) statistical methods for analyzing the datasets are too computationally
@@ -95,7 +89,7 @@ and
 v) users need to know exactly what transformations has been done to a dataset to
 reproduce the analyses. 
 
-From these challenges we have designed the compute service in Kvik. The compute
+From these requirements we have designed the compute service in Kvik. The compute
 service interfaces directly with the R programming language, making it possible
 to call functions from any R package. Application developers can use the
 compute service to execute analyses and return results. By interfacing directly
@@ -115,9 +109,9 @@ The compute service offers three main operations to interface with R.
 i) to call a function from an R package,
 ii) to get the results from a previous function call,
 and iii) a catch-all term that both calls a function and returns the results. 
-We use the same terminology as OpenCPU and have named the three operations Call,
-Get, and RPC respectively. These three operations provide the necessary
-interface for applications to include data in the applications. %% mer?  
+We use the same terminology as OpenCPU\cite{opencpu} and have named the three
+operations Call, Get, and RPC respectively. These three operations provide the
+necessary interface for applications to include data in the applications.
 
 \subsubsection*{Database Service} 
 To understand analysis results experts query databases and scientific
@@ -127,15 +121,17 @@ of. While the databases can provide helpful information, there are some
 challenges including them in interactive data exploration applications: 
 
 i) the APIs aren't fast enough to use in interactive applications where the
-application has to perform multiple database calls, and 
-ii) some databases put restrictions on the number of database calls. 
+application has to perform multiple database calls, 
+ii) some databases put restrictions on the number of database calls, and 
+iii) there is no uniform way for storing database lookup provenance to reproduce
+the database lookups. 
 
 To solve these problems we built a database service for application developers
 to include. The service includes a simple caching mechanism that solves the two
 challenges. If we cache queries to the database we can speed up subsequent calls
 and reduce the load on the respective databases. Both the query from the
 application and the response from the databases are stored for later use.
-The database service provides an interface to biological databases for
+The database service provides an open HTTP interface to biological databases for
 retrieving meta-data on genes and processes. We have currently packages for
 interfacing with E-utilities\footnote{\url{eutils.ncbi.nlm.nih.gov}},
 MSigDB\footnote{\url{software.broadinstitute.org/gsea/msigdb}}, Hugo Gene
@@ -144,7 +140,6 @@ Encyclopedia of Genes and Genomes (KEGG)\footnote{\url{kegg.jp}}.
 
 
 \subsubsection*{Applications} 
-% LAB: hvorfor er det bedre å bruke Kvik en å gjøre det selv?
 Kvik provides services to perform database lookup and execute statistical
 analyses. Since we provide both services as software containers, application
 developers simply run these and write applications that interface with them.
@@ -152,19 +147,11 @@ Using our services application developers have a platform for running
 statistical analyses, and a fast clean interface to get metadata about genes and
 processes. 
 
-% LAB: I denne beskrivelsen er poenget å forklare hvordan den er implementert.
-% Så hvordan er web app implementert? Hva slags kall gjør den? Hvor kjører web
-% app, R package, og services? Hvordan henter man data fra MSigDB? Hvor er data
-% lagret?
 Figure \ref{kvik-mixt} shows how the the MIxT application is built using Kvik
 microservices. In MIxT we built a specialized web application that interfaces
 with Kvik to get data from biological databases and to run statistical analyses
 from the mixt R package\footnote{\url{github.com/vdumeaux/mixtR}}. 
 
-% LAB: container er ikke vist her
-% LAB: data er ikke vist her
-% LAB: er heller ikke klart hva som kjøres hvor, og hvilke deler som snakker med
-% hverandre
 \begin{figure}[h!]
 \centering
 \includegraphics{figures/kvik-mixt.png}
@@ -175,12 +162,9 @@ provides the services for running the statistical analyses from the R package,
 and the database lookups found in the web application.} \label{kvik-mixt}
 \end{figure} 
 
-% LAB: hvordan?  LAB: mangler beskrivelse av reference databases
-% LAB: hva med data management? hvor er data lagret? er disse versjonert?  LAB:
-% Kort om hva en appliacation gjør og ikke gjør. Og hvor den kjøres.
-
 \subsection*{Implementation} 
-In ths section we describe the implementation details in Kvik its microservices.
+In ths section we describe the implementation details of the microservices we
+provide in Kvik.
 
 Kvik is implemented as a collection of Go packages required to build services
 that can integrate statistical software in a data exploration and provide an
