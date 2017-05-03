@@ -1,19 +1,5 @@
-% Pros/Cons of using a microservice approach. 
-% Lessons learned? 
-
-% pros: 
-%   lett å dele og gjenbruke 
-%   lage en apps med flere språk 
-%   slipper én stor app
-%   lette klienter 
-
-% cons:
-%   kan være vanskelig å monitorere/
-%   development time kan være lengre, men det blir bra til slutt
-%   krever av dev. kan noe om deploy 
-
 We argue that developing data exploration applications using a microservice
-architecture is a viable alternative to the traditional monolithic applications.
+architecture is a viable alternative to the traditional monolithic approach.
 By packaging each component of an application in a software container
 application developers can reuse and share parts of an application across
 research teams and projects. 
@@ -28,28 +14,24 @@ Monitoring the health of the different services and keeping the services running
 is a challenge, but systems such as Kubernetes\footnote{\url{kubernetes.io}}
 provide the necessary functionality to manage containerized applications. 
 
-
-% LAB: foreslår å slå sammen discussion med related work
-% The compute service in Kvik follows many of the design patterns in
-% OpenCPU. Both systems interface with R packages using a hybrid state pattern
-% over HTTP. Both systems provide the same interface to execute analyses and
-% retrieve results.  While OpenCPU is implemented on top of R and Apache, Kvik is
-% implemented from the ground up in Go. Because of the similarities in the
-% interface to R in Kvik we provide packages for interfacing with our own R server
-% or OpenCPU R servers through the
-% \emph{gopencpu} package.\footnote{\url{github.com/fjukstad/kvik/tree/master/gopencpu}} 
-
-
 \subsection*{Future work} 
 Although we have a first working prototype of the microservices and the MIxT web
-application, there are a few points we aim to addresss in the future. 
+application, there are a few points we aim to address in future work.
 
-We have built a database service that provides a sufficient interface for the
+The first issue is to improve the user experience in the MIxT web application.
+Since it is performing many of the analyses on demand, the user interface may
+seem unresponsive. We are working on mechanisms that gives the user feedback
+when the computations are taking a long time. 
+
+The database service provides a sufficient interface for the
 MIxT web application. While we have developed the software packages for
 interfacing with more databases, these haven't been included in the database
 service yet. In future versions we aim to make the database service be a
-one-stop interface for all our applications. We also aim to improve the
-provenance management within the service, enabling users to retrieve the exact 
+interface for all our applications. 
+We also aim to improve how we capture data provenance. We aim to provide
+database versions and meta-data about when a specific item was retrieved from
+the database.
+
 
 One large concern that we haven't addressed in this paper is security. In
 particular one security concern that we plan to address in Kvik is the

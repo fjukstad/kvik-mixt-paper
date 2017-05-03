@@ -1,41 +1,41 @@
 \begin{abstract} % abstract, must be under 350 words
-        As the systems biology community generates and collects data at an
-        unprecedented rate, there is a growing need for interactive data
-        exploration tools to explore the datasets. 
-        These
-        tools need to combine advanced statistical analyses, relevant knowledge
-        from biological databases, and interactive visualizations in an
-        application with clear user interfaces.  To answer specific research
-        questions tools must provide specialized user interfaces and
-        visualizations. While these are application-specific, the underlying
-        components of a data analysis tool can be shared and reused later.
-        Application developers can therefore compose applications of reusable
-        services rather than implementing a single monolithic application from
-        the ground up for each project. 
-        
-        Our approach for developing data exploration applications in systems
-        biology builds on the microservice architecture. Microservice
-        architectures separates an application into smaller components that
-        communicate using language-agnostic protocols. We show that this design
-        is suitable in bioinformatics applications where applications often use
-        different tools, written in different languages, by different research
-        groups. Packaging each service in a software container  enables
-        re-use and sharing of key components between applications, reducing
-        development, deployment, and maintenance time. 
+As the systems biology community generates and collects data at an
+unprecedented rate, there is a growing need for interactive data
+exploration tools to explore the datasets. 
+These
+tools need to combine advanced statistical analyses, relevant knowledge
+from biological databases, and interactive visualizations in an
+application with clear user interfaces.  To answer specific research
+questions tools must provide specialized user interfaces and
+visualizations. While these are application-specific, the underlying
+components of a data analysis tool can be shared and reused later.
+Application developers can therefore compose applications of reusable
+services rather than implementing a single monolithic application from
+the ground up for each project. 
 
-        We demonstrate the viability of our approach through a web application,
-        MIxT blood-tumor, for exploring and comparing transcriptional profiles
-        from blood and tumor samples in breast cancer patients. The application
-        integrates advanced statistical software, up-to-date
-        information from biological databases, and modern data visualization
-        libraries. 
+Our approach for developing data exploration applications in systems
+biology builds on the microservice architecture. Microservice
+architectures separates an application into smaller components that
+communicate using language-agnostic protocols. We show that this design
+is suitable in bioinformatics applications where applications often use
+different tools, written in different languages, by different research
+groups. Packaging each service in a software container  enables
+re-use and sharing of key components between applications, reducing
+development, deployment, and maintenance time. 
 
-        The web application for exploring
-        transcriptional profiles, MIxT, is online at
-        \url{mixt-blood-tumor.bci.mcgill.ca} and open-sourced at 
-        \url{github.com/fjukstad/mixt}. Packages to build the supporting
-        microservices are open-sourced as a part of Kvik at
-        \url{github.com/fjukstad/kvik}. 
+We demonstrate the viability of our approach through a web application,
+MIxT blood-tumor, for exploring and comparing transcriptional profiles
+from blood and tumor samples in breast cancer patients. The application
+integrates advanced statistical software, up-to-date
+information from biological databases, and modern data visualization
+libraries. 
+
+The web application for exploring
+transcriptional profiles, MIxT, is online at
+\url{mixt-blood-tumor.bci.mcgill.ca} and open-sourced at 
+\url{github.com/fjukstad/mixt}. Packages to build the supporting
+microservices are open-sourced as a part of Kvik at
+\url{github.com/fjukstad/kvik}. 
 
 \end{abstract}
 

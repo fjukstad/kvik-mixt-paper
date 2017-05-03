@@ -26,7 +26,7 @@ works in a single-user setting within an R session, or a multi-user setting
 facilitating multiple parallel requests. This makes OpenCPU suitable
 for building a service that can run statistical analyses. 
 OpenCPU provides a Javascript library for interfacing with R, as well as Docker
-containers for easy installation and OpenCPU has been used to build multiple
+containers for easy installation. OpenCPU has been used to build multiple
 applications.\footnote{\url{opencpu.org/apps.html}}. 
 The compute service in Kvik follows many of the design patterns in
 OpenCPU. Both systems interface with R packages using a hybrid state pattern
@@ -90,9 +90,7 @@ network creation and analysis through a REST API\cite{ono2015cyrest}.  To bring
 the visualization and analysis capabilities to the web the creators of Cytoscape
 have developed Cytoscape.js\footnote{\url{js.cytoscapejs.org}}, a Javascript
 library to create interactive graph visualizations. 
-% LAB: Ulemper?
 
-% Kanskje droppe disse? nevner ikke noe a det de holder på med seinrere... 
 Caleydo is a framework for building applications for visualizing and exploring
 biomolecular data\cite{cleydo}. Until 2014 it was a standalone tool that needed
 to be downloaded, but the Caleydo team are now making the tools web-based. There
@@ -112,11 +110,10 @@ contributed by the bioinformatics community. BioJS builds on
 node.js\footnote{\url{nodejs.org}} providing both server-side and client-side
 libraries. 
 
-% LAB: DB/ provenance related work? Som Galaxy, Pacyderm, CWL, etc
 
-\subsection*{Biological Databases} 
-Maybe some words here on how to get data out of the different biological
-databases? + possible provenance. 
+% \subsection*{Biological Databases} 
+% Maybe some words here on how to get data out of the different biological
+% databases? + possible provenance. 
 
 \subsection*{Containerized analysis} 
 In the later years software containers have been widely adopted by both
@@ -130,7 +127,7 @@ In bioinformatics researchers are starting to bundle their software using
 software containers, such as Docker. There are repositories such as
 BioContainers\cite{dabiocontainers} and BioBoxes\cite{Belmann2015} that provide
 containers preinstalled with software for doing analyses and running different
-applications. Systems such as Galaxy now allows researchers to build analysis
+applications. Systems such as Galaxy now allow researchers to build analysis
 pipelines where each step is executed within a software container. 
 
 % Pipeline, distributed exec, provenance. 
