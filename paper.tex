@@ -1,32 +1,32 @@
-\documentclass[sigconf]{acmart}
+\documentclass[twocolumn]{article}
 
 \usepackage[utf8]{inputenc} %unicode support
 \usepackage{hyperref}
 \usepackage{graphicx}
-% \usepackage{subfig}
 
-% DOI
-\acmDOI{10.475/123_4}
-% ISBN
-\acmISBN{978-1-4503-2894-4}
+% Date author hack
+\author{Bjørn Fjukstad$^1$, Vanessa Dumeaux$^2$, Karina Standahl Olsen$^3$,
+Michael Hallet$^2$, \\Eiliv Lund$^3$, and Lars Ailo Bongo$^1$} 
+\date{
+    $^1$Department of Computer Science, UiT The Arctic University of Norway\\
+    $^2$Department of Biology, Concordia University\\
+    $^3$Department of Community Medicine, UiT The Arctic University of
+    Norway\\[2ex]
+}
 
-%Conference
- \acmConference[ACM-BCB'17]{The 8th ACM Conference on Bioinformatics,
- Computational Biology, and Health Informatics (ACM BCB)}{August 2017}{Boston,
- Massachusetts USA} 
- \acmYear{2017}
- \copyrightyear{2017}
-% \acmPrice{15.00}
+
+%% This option for a more "official" author block. 
+% \usepackage{authblk}
+% \input{authors} 
 
 %%% Begin ...
 \begin{document}
 \title{Building applications for interactive data exploration in systems biology}
 
-\input{authors} 
+\maketitle
+
 \input{abstract} 
 
-\keywords{Interactive data exploration, containers, reproducible, microservices}
-\maketitle
 
 \section*{Introduction}
 \input{introduction.tex} 
@@ -51,6 +51,6 @@
 The authors declare that they have no competing interests.
 % if your bibliography is in bibtex format, use those commands:
 
-\bibliographystyle{ACM-Reference-Format}
+\bibliographystyle{ieeetr}
 \bibliography{references}
 \end{document}
