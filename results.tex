@@ -141,6 +141,7 @@ the online database down to one.
 
 
 \begin{table}[h]
+    \resizebox{8cm}{!}{        
     \begin{tabular}{| l | c | c | c | c | c | }
         \hline 
         & 1 & 2 & 5 & 10 & 15 \\ 
@@ -149,7 +150,7 @@ the online database down to one.
       \hline
       Cache & 64ms & 64ms & 130ms & 137ms & 154ms\\
       \hline  
-    \end{tabular}
+    \end{tabular}}
     \caption[]{Time to retrieve a gene summary for a single gene, comparing
     different number of concurrent requests.}
 \label{db}
@@ -173,6 +174,7 @@ different number of concurrent connections. We see that the compute service in
 Kvik performs better than the OpenCPU alternative. 
 
 \begin{table}[h]
+    \resizebox{8cm}{!}{    
     \begin{tabular}{| l | c | c | c | c | c | }
         \hline 
        & 1 & 2 & 5 & 10 & 15 \\ 
@@ -181,7 +183,7 @@ Kvik performs better than the OpenCPU alternative.
       \hline
       OpenCPU & 500ms & 635ms & 984ms & 1876ms & 2700ms\\
       \hline  
-    \end{tabular}
+    \end{tabular}}
 \caption[]{Time to complete the R microbenchmark with different number of
     concurrent 
 connections.}
