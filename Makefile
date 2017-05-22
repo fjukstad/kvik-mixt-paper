@@ -5,4 +5,4 @@ all:
 	pdflatex paper.tex
 	
 clean:
-	rm *.log *.aux *.out *.pdf
+	rm *.log *.aux *.out *.pdf *.blg
